@@ -1,0 +1,12 @@
+package com.rojagaar.payload;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class SubCategoryDto {
+    private String subCategoryName;
+}
