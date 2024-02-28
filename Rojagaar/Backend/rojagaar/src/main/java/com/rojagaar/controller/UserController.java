@@ -62,4 +62,20 @@ public class UserController {
         List<UserDto> userDtos = this.userService.getAllUser();
         return new ResponseEntity<>(userDtos,HttpStatus.FOUND);
     }
+
+    @PostMapping("register")
+    public ResponseEntity<ApiResponse> registerUser(@RequestParam String userName,@RequestParam String password) {
+        UserDto userDto = new UserDto();
+        userDto.setUserName(userName);
+        userDto.setPassword(password);
+        UserDto checkUser = this.userService.getUserDetails(userName);
+        if(checkUser != null)
+            return new ResponseEntity<>(new ApiResponse("User Already exist"),HttpStatus.NOT_ACCEPTABLE);
+        else{
+            this.userService.createUser(userDto);
+            return new ResponseEntity<>(new ApiResponse("User Registered Successfully"),HttpStatus.CREATED);
+        }
+    }
+
+    
 }
