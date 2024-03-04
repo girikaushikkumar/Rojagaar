@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    @Size(min = 6,message = "user Name should be minimum 6 character")
+//    @Size(min = 6,message = "user Name should be minimum 6 character")
     private String userName;
-    @Email(message = "give a valid email id")
+//    @Email(message = "give a valid email id")
     private String email;
     private String name;
     private String gender;

@@ -12,4 +12,7 @@ public interface UserService {
     public UserDto getUserDetails(String userName);
 
     public List<UserDto> getAllUser();
+
+    public UserDto LoginUser(String userName, String password);
+    public boolean checkUserName(UserDto userDto);
 }

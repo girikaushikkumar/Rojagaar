@@ -3,9 +3,9 @@ import React from 'react';
 import { getFontFamily } from '../../assets/fonts/helper';
 import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/style/scaling';
 
-const SubmitBtn = ({title}) => {
+const SubmitBtn = ({title,loading,handleSubmit}) => {
   return (
-     <TouchableOpacity style={styles.btn}>
+     <TouchableOpacity style={styles.btn} onPress={handleSubmit}>
        <Text style={styles.text}>{title}</Text>
      </TouchableOpacity>
   );

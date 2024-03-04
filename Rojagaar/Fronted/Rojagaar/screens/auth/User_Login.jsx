@@ -1,5 +1,5 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InputBox from '../../components/Forms/InputBox';
 import { getFontFamily } from '../../assets/fonts/helper';
@@ -7,11 +7,52 @@ import SubmitBtn from '../../components/Forms/SubmitBtn';
 import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/style/scaling';
 import { Routes } from '../../navigation/Routes ';
 import globalStyle from '../../assets/style/globalStyle';
-const User_Login = ({navigation}) => {
-    const[userName,setUserName] = useState('');
-    const[password,setPassword] = useState('');
-    
+import { loginUser } from '../../api/User';
+import { AuthContext } from '../../context/authContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const User_Login = ({navigation}) => {
+    //global state
+    const [state,setState] = useContext(AuthContext);
+
+
+    const[userName,setUserName] = useState("");
+    const[password,setPassword] = useState("");
+    const [error, setError] = useState('');
+
+    
+    const handleSubmit = async() =>{
+      try {
+        console.log(userName);
+        console.log(password);
+        if (!userName || !password) {
+          Alert.alert("Please fill all the fields");
+          return;
+        } 
+
+        const user = await loginUser(userName,password);
+        if(!user.status){
+          setError(user.error.response.data.message);
+        }
+        else{
+            setError('');
+            setState(user.data);
+            await AsyncStorage.setItem('@auth', JSON.stringify(user.data));
+            // Alert.alert(user.data && user.data.message);
+            navigation.navigate('Home');
+        }
+
+        
+      } catch (error) {
+        Alert.alert("Error", error.message || "An error occurred");
+      }
+    };
+
+    const getLcoalStorageData = async () => {
+      let data = await AsyncStorage.getItem("@auth");
+      console.log("Local Storage ==> ", data);
+    };
+    getLcoalStorageData();
   return (
     <SafeAreaView  style={[globalStyle.backgroundWhite,globalStyle.flex]}>
        <Image
@@ -36,6 +77,7 @@ const User_Login = ({navigation}) => {
 
       <SubmitBtn
         title={'Login'}
+        handleSubmit={handleSubmit}
       />
 
     <Text style={styles.linkText}>

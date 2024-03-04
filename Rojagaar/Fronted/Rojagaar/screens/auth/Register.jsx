@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InputBox from '../../components/Forms/InputBox';
@@ -8,11 +8,65 @@ import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/styl
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Routes } from '../../navigation/Routes ';
 import globalStyle from '../../assets/style/globalStyle';
+import axios from 'axios';
+import { registerUser } from '../../api/User';
 const Register = ({navigation}) => {
-    const[userName,setUserName] = useState('');
-    const[password,setPassword] = useState('');
+    const[userName,setUserName] = useState("");
+    const[password,setPassword] = useState("");
     const[confirmPassword,setConfirmPassword] = useState('');
+    const[loading,setLoading] = useState(false);
 
+    const handleSubmit = async () => {
+      try {
+        setLoading(true);
+        // Validation checks
+        if (userName.length < 6 || password.length < 6) {
+          Alert.alert("Please enter a username and password with at least 6 characters.");
+          setLoading(false);
+          return;
+        }
+
+        if (!/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+          Alert.alert("Password must contain a combination of letters and numbers.");
+          setLoading(false);
+          return;
+      }
+        if (!userName || !password) {
+          Alert.alert("Please fill all the fields");
+          setLoading(false);
+          return;
+        } else if (password !== confirmPassword) {
+          Alert.alert("Password mismatched");
+          setLoading(false);
+          return;
+        }
+    
+        const response = await registerUser(userName,password);
+
+        console.log(response.data);
+        console.log("Response status code:", response.status);
+    
+        if (response.status === 201) {
+          // Registration successful
+          Alert.alert(response.data.message);
+          navigation.navigate('User_Login');
+        } else if (response.status === 200) {
+          // UserName Already exist
+          // console.log(response.data.message);
+          Alert.alert(response.data.message);
+        } else {
+          // Handle other status codes
+          Alert.alert("Registration failed", "Unexpected error occurred.");
+        }
+      } catch (error) {
+        console.log("Error:", error);
+        alert("Registration failed: " + error.message);
+        setLoading(false);
+      }
+    };
+    
+    
+    
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite,globalStyle.flex]}>
        <Image
@@ -41,6 +95,8 @@ const Register = ({navigation}) => {
 
       <SubmitBtn 
          title={'SignUp'}
+        //  loading={loading}
+         handleSubmit={handleSubmit}
       />
       <Text style={styles.linkText}>
         Already have an account ?{" "}

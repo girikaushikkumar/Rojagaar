@@ -1,12 +1,21 @@
 package com.rojagaar.controller;
 
+import com.rojagaar.model.User;
 import com.rojagaar.payload.ApiResponse;
 import com.rojagaar.payload.UserDto;
+import com.rojagaar.payload.auth.JwtAuthRequest;
+import com.rojagaar.payload.auth.JwtAuthResponse;
+import com.rojagaar.security.JwtHelper;
 import com.rojagaar.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +29,19 @@ import java.util.Map;
 @RequestMapping("api/user/")
 @Validated
 public class UserController {
+
+
+    @Autowired
+    private JwtHelper jwtHelper;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @PostMapping("createUser")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDto userDto , BindingResult bindingResult) {
@@ -68,14 +88,56 @@ public class UserController {
         UserDto userDto = new UserDto();
         userDto.setUserName(userName);
         userDto.setPassword(password);
-        UserDto checkUser = this.userService.getUserDetails(userName);
-        if(checkUser != null)
-            return new ResponseEntity<>(new ApiResponse("User Already exist"),HttpStatus.NOT_ACCEPTABLE);
+        boolean checkUser = this.userService.checkUserName(userDto);
+        if(checkUser) {
+            return new ResponseEntity<>(new ApiResponse("Username already exists. Please choose a different username."), HttpStatus.OK);
+        }
         else{
-            this.userService.createUser(userDto);
-            return new ResponseEntity<>(new ApiResponse("User Registered Successfully"),HttpStatus.CREATED);
+            return new ResponseEntity<>(new ApiResponse("Registration successful"),HttpStatus.CREATED);
         }
     }
 
-    
+//    @PostMapping("login")
+//    public ResponseEntity<UserDto> loginUser(@RequestParam String userName,@RequestParam String password) {
+//        System.out.println("dfdf");
+//        UserDto userDto = this.userService.LoginUser(userName,password);
+//        return new ResponseEntity<>(userDto,HttpStatus.OK);
+//    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest request){
+
+        this.doAuthenticate(request.getUserName(), request.getPassword());
+
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUserName());
+        System.out.println(userDetails.getUsername()+" "+userDetails.getPassword());
+        String token = this.jwtHelper.generateToken(userDetails);
+
+        JwtAuthResponse response = new JwtAuthResponse();
+        response.setToken(token);
+        response.setMessage("User successfully logged in");
+        UserDto user = this.userService.getUserDetails(request.getUserName());
+
+        response.setUser(user);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+
+    private void doAuthenticate(String email, String password) {
+
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(email, password);
+        try {
+            authenticationManager.authenticate(authentication);
+
+
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException(" Invalid Username or Password  !!");
+        }
+
+    }
+
+
+
+
 }

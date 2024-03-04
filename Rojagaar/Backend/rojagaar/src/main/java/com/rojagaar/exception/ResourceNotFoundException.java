@@ -2,6 +2,7 @@ package com.rojagaar.exception;
 
 public class ResourceNotFoundException extends RuntimeException{
 
+    String message;
     String resourceName;
     String fieldName;
     String fieldValue;
@@ -11,5 +12,10 @@ public class ResourceNotFoundException extends RuntimeException{
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
+    }
+
+    public ResourceNotFoundException(String message) {
+        super(String.format(message));
+        this.message=message;
     }
 }
