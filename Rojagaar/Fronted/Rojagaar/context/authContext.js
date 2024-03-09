@@ -1,41 +1,34 @@
+import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import axios from "axios";
-import { createContext, useEffect, useState } from "react";
-
 
 const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-
-    //global state
-    const [state,setState] = useState({
-        user : null,
-        token : "",
+    // global state
+    const [userState, setUserState] = useState({
+        user: null,
+        token: '',
     });
 
-    //initial local storage data
+    // default axios settings
+    // axios.defaults.baseURL = 'http://192.168.42.244:8080/api';
+
+    // get initial storage data
     useEffect(() => {
-        const loadLocalStorageData = async () => {
-            let data = await AsyncStorage.getItem("@auth");
+        const getLocalStorageData = async() => {
+            let data = await AsyncStorage.getItem('@auth');
             let loginData = JSON.parse(data);
+            setUserState({...userState, user: loginData?.user, token: loginData?.token});
+        }
 
-            setState({...state,user:loginData?.user,token: loginData?.token});
-        };
-        loadLocalStorageData();
-    },[]);
+        getLocalStorageData();
+    }, []);
 
-    let token = state && state.token;
-
-    //default axios setting
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    axios.defaults.baseURL="http://192.168.42.235:8080/api";
-
-    return(
-        <AuthContext.Provider value={[state,setState]}>
+    return (
+        <AuthContext.Provider value={[userState, setUserState]}>
             {children}
         </AuthContext.Provider>
-    );
+    )
+}
 
-};
-
-export {AuthContext,AuthProvider};
+export {AuthContext, AuthProvider};

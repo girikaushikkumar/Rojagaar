@@ -1,15 +1,19 @@
-import {Text, View } from 'react-native';
 import React from 'react';
-import Register from './screens/auth/Register';
-import User_Login from './screens/auth/User_Login';
 import { NavigationContainer } from '@react-navigation/native';
-import MainNavigation from './navigation/MainNavigation ';
+import { AuthProvider } from './context/authContext';
+import { RootNavigator } from './navigation/RootNavigator';
+import { FooterNavigator } from './navigation/FooterNavigation';
+
 
 const App = () => {
   return (
     <NavigationContainer>
-      <MainNavigation/>
+      <AuthProvider>
+        <RootNavigator/>
+      </AuthProvider>
     </NavigationContainer>
+
+   
     
   );
 };

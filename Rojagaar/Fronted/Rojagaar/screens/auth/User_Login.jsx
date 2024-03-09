@@ -1,5 +1,5 @@
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React,{ useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InputBox from '../../components/Forms/InputBox';
 import { getFontFamily } from '../../assets/fonts/helper';
@@ -8,51 +8,44 @@ import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/styl
 import { Routes } from '../../navigation/Routes ';
 import globalStyle from '../../assets/style/globalStyle';
 import { loginUser } from '../../api/User';
-import { AuthContext } from '../../context/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../context/authContext';
 
 const User_Login = ({navigation}) => {
     //global state
-    const [state,setState] = useContext(AuthContext);
-
+    const [userState, setUserState] = useContext(AuthContext);
+    console.log("user state: ", userState);
 
     const[userName,setUserName] = useState("");
     const[password,setPassword] = useState("");
-    const [error, setError] = useState('');
-
-    
+   
     const handleSubmit = async() =>{
       try {
-        console.log(userName);
-        console.log(password);
         if (!userName || !password) {
           Alert.alert("Please fill all the fields");
           return;
         } 
 
-        const user = await loginUser(userName,password);
-        if(!user.status){
-          setError(user.error.response.data.message);
-        }
-        else{
-            setError('');
-            setState(user.data);
-            await AsyncStorage.setItem('@auth', JSON.stringify(user.data));
-            // Alert.alert(user.data && user.data.message);
-            navigation.navigate('Home');
+        const response = await loginUser(userName,password);
+        if(response.status === 200) {
+          console.log('response data: ', response.data);
+          Alert.alert(response.data.message);
+          setUserState(response.data)
+          await AsyncStorage.setItem('@auth', JSON.stringify(response.data));
+          navigation.navigate(Routes.Home);
         }
 
-        
       } catch (error) {
-        Alert.alert("Error", error.message || "An error occurred");
+        Alert.alert("Check Username or Password");
+        console.log("Error:", error);
       }
     };
 
-    const getLcoalStorageData = async () => {
-      let data = await AsyncStorage.getItem("@auth");
-      console.log("Local Storage ==> ", data);
-    };
-    getLcoalStorageData();
+    // const getLcoalStorageData = async () => {
+    //   let data = await AsyncStorage.getItem("@auth");
+    //   console.log("Local Storage ==> ", data);
+    // };
+    // getLcoalStorageData();
   return (
     <SafeAreaView  style={[globalStyle.backgroundWhite,globalStyle.flex]}>
        <Image

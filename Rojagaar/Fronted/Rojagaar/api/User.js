@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE_URL = 'http://192.168.42.235:8080/api';
+const API_BASE_URL = 'http://192.168.42.244:8080/api';
  const registerUser = async(userName, password) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/user/register`, null, {
@@ -21,25 +21,12 @@ const API_BASE_URL = 'http://192.168.42.235:8080/api';
 
  const loginUser = async(userName, password) => {
     try {
-        const {data} =  await axios.post(`${API_BASE_URL}/user/login`,null, {
-            params: {
-                userName:userName,
-                password: password
-            }
-        });
-
-        return {
-          status: true,
-          data
-      };
+        const response =  await axios.post(`${API_BASE_URL}/user/login`,{userName,password});
+        console.log('response::: ', response);
+        return response;
 
     } catch (error) {
-      console.log('Error in admin login: ', error.response.data.message);
-      return {
-          status: false,
-          error
-      };
-
+      throw error;
     }
 };
 

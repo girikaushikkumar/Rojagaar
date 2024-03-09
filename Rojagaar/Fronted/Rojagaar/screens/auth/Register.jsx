@@ -5,10 +5,8 @@ import InputBox from '../../components/Forms/InputBox';
 import { getFontFamily } from '../../assets/fonts/helper';
 import SubmitBtn from '../../components/Forms/SubmitBtn';
 import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/style/scaling';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Routes } from '../../navigation/Routes ';
 import globalStyle from '../../assets/style/globalStyle';
-import axios from 'axios';
 import { registerUser } from '../../api/User';
 const Register = ({navigation}) => {
     const[userName,setUserName] = useState("");
