@@ -1,6 +1,6 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import React from "react";
-import { horizontalScale, scaleFontSize, verticalScale } from "../../assets/style/scaling";
+import { horizontalScale,scaleFontSize, verticalScale } from "../../assets/style/scaling";
 
 const InputBox = ({
   inputTitle,

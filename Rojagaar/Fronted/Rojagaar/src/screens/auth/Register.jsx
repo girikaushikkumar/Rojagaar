@@ -2,12 +2,12 @@ import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InputBox from '../../components/Forms/InputBox';
-import { getFontFamily } from '../../assets/fonts/helper';
+import { getFontFamily } from '../../assets/fonts/helper'; 
 import SubmitBtn from '../../components/Forms/SubmitBtn';
-import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/style/scaling';
-import { Routes } from '../../navigation/Routes ';
+import { horizontalScale,scaleFontSize, verticalScale } from '../../assets/style/scaling'; 
 import globalStyle from '../../assets/style/globalStyle';
 import { registerUser } from '../../api/User';
+import { Routes } from '../../navigation/Routes';
 const Register = ({navigation}) => {
     const[userName,setUserName] = useState("");
     const[password,setPassword] = useState("");

@@ -1,9 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthProvider } from './context/authContext';
-import { RootNavigator } from './navigation/RootNavigator';
-import { FooterNavigator } from './navigation/FooterNavigation';
-
+import { AuthProvider } from './src/context/authContext';
+import { RootNavigator } from './src/navigation/RootNavigator';
 
 const App = () => {
   return (

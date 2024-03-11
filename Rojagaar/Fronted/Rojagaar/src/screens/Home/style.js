@@ -2,8 +2,10 @@ import { StyleSheet } from 'react-native';
 
 
 export const style = StyleSheet.create({
+    container: {
+        justifyContent: 'space-between'
+    },
     footer : {
-        marginTop:438,
         backgroundColor:'#f5eeeb'
     }
 });

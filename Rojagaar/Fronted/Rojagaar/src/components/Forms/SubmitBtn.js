@@ -1,7 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import { getFontFamily } from '../../assets/fonts/helper';
-import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/style/scaling';
+import { getFontFamily } from '../../assets/fonts/helper'; 
+import { horizontalScale,scaleFontSize, verticalScale  } from '../../assets/style/scaling';
 
 const SubmitBtn = ({title,loading,handleSubmit}) => {
   return (

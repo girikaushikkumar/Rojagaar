@@ -3,14 +3,13 @@ import React,{ useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InputBox from '../../components/Forms/InputBox';
 import { getFontFamily } from '../../assets/fonts/helper';
-import SubmitBtn from '../../components/Forms/SubmitBtn';
-import { horizontalScale, scaleFontSize, verticalScale } from '../../assets/style/scaling';
-import { Routes } from '../../navigation/Routes ';
+import { Routes } from '../../navigation/Routes';
 import globalStyle from '../../assets/style/globalStyle';
-import { loginUser } from '../../api/User';
+import { loginUser } from '../../api/User'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../context/authContext';
-
+import { horizontalScale,scaleFontSize, verticalScale } from '../../assets/style/scaling'; 
+import SubmitBtn from '../../components/Forms/SubmitBtn';
 const User_Login = ({navigation}) => {
     //global state
     const [userState, setUserState] = useContext(AuthContext);
