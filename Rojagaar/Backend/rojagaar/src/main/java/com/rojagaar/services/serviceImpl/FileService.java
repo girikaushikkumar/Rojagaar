@@ -5,7 +5,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.gridfs.model.GridFSFile;
 
+import com.rojagaar.exception.ResourceNotFoundException;
 import com.rojagaar.model.LoadFile;
+import com.rojagaar.model.User;
+import com.rojagaar.repository.UserRepo;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.bson.BsonValue;
@@ -33,7 +36,10 @@ public class FileService {
     @Autowired
     private GridFsOperations operations;
 
-    public String addFile(MultipartFile upload) throws IOException {
+    @Autowired
+    private UserRepo userRepo;
+
+    public String addFile(MultipartFile upload,String userName) throws IOException {
 
         //define additional metadata
         DBObject metadata = new BasicDBObject();
@@ -41,7 +47,9 @@ public class FileService {
 
         //store in database which returns the objectID
         Object fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(), metadata);
-
+        User user = this.userRepo.findByUserName(userName).orElseThrow(()->new ResourceNotFoundException("UserName","",userName));
+        user.setImage(fileID.toString());
+        this.userRepo.save(user);
         //return as a string
         return fileID.toString();
     }

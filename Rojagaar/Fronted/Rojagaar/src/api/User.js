@@ -30,4 +30,18 @@ const API_BASE_URL = 'http://192.168.42.244:8080/api';
     }
 };
 
-export {registerUser,loginUser};
+const getImage = async (imageId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/image/retrieve`, {
+      params: { imageId }
+    });
+    return response.data.uri; // Assuming the response.data contains the image URI
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
+
+export {registerUser,loginUser,getImage};

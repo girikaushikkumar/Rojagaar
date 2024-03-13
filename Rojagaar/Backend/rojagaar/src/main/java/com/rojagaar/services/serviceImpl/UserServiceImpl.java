@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
             return new ApiResponse("User Already exist");
         else {
             User user = this.dtoToUser(userDto);
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             this.userRepo.save(user);
             return new ApiResponse("User Created Successfully");
         }

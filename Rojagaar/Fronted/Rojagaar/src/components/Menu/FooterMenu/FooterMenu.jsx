@@ -20,7 +20,7 @@ const FooterMenu = () => {
         <FontAwesomeIcon icon={faUser} size={25} style={style.icon} />
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate(Routes.SavedJob)}>
         <FontAwesomeIcon icon={faBookmark} size={25} style={style.icon}/>
       </TouchableOpacity>
 
