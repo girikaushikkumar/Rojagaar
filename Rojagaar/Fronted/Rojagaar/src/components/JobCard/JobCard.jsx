@@ -7,46 +7,52 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import style from './style';
 import NamingAvatar from '../NamingAvatar/NamingAvatar';
-import axios from 'axios';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import DropdownMenu from '../Menu/DropdownMenu/DropdownMenu';
 
 const JobCard = ({job}) => {
-  const [imageData, setImageData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
+  // time calculation
+  function getTimeAgo(jobPostTimestamp) {
+    // Current timestamp
+    const currentTimestamp = Date.now();
 
-  useEffect(() => {
-    if (job.jobPosterPhoto) {
-      fetchImage(job.jobPosterPhoto);
+    // Calculate the time difference in milliseconds
+    const timeDifference = currentTimestamp - jobPostTimestamp;
+
+    // Convert the time difference into seconds, minutes, hours, days, or months
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30); // Approximation, not precise
+
+    let timeAgo;
+
+    if (months > 0) {
+      timeAgo = months === 1 ? '1 month ago' : `${months} months ago`;
+    } else if (days > 0) {
+      timeAgo = days === 1 ? '1 day ago' : `${days} days ago`;
+    } else if (hours > 0) {
+      timeAgo = hours === 1 ? '1 hour ago' : `${hours} hours ago`;
+    } else if (minutes > 0) {
+      timeAgo = minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
     } else {
-      setLoading(false);
+      timeAgo = seconds < 5 ? 'Just now' : `${seconds} seconds ago`;
     }
-  }, [job.jobPosterPhoto]);
 
-  const fetchImage = async imageId => {
-    try {
-      // console.log(imageId)
-      const response = await axios.get(
-        `http://192.168.42.244:8080/api/photo/get/${imageId}`,
-      );
-      // console.log(response.data);
-      setImageData(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching image:', error);
-      setError('Failed to load image');
-      setLoading(false);
-    }
-  };
+    return timeAgo;
+  }
+
+  
 
   return (
     <View style={style.container}>
       <View style={style.posteContainer}>
-        {loading ? (
-          <ActivityIndicator />
-        ) : imageData ? ( // Check if imageUri is not null
+        {job.jobPosterPhoto ? ( // Check if imageUri is not null
           <Image
             source={{
-              uri: 'data:image/jpeg;base64,' + imageData.toString('base64'),
+              uri: 'data:image/jpeg;base64,' + job.jobPosterPhoto.image.data.toString('base64'),
             }}
             style={style.avatarImage}
           />
@@ -63,7 +69,7 @@ const JobCard = ({job}) => {
 
       <View style={style.container1}>
         <Text style={style.title}>{job.jobDto.title}</Text>
-        <FontAwesomeIcon icon={faEllipsisVertical} size={25} />
+        <DropdownMenu/>
       </View>
 
       <View style={style.jobDescriptionContainer}>
@@ -81,11 +87,13 @@ const JobCard = ({job}) => {
 
       <View style={style.workingDateContainer}>
         <Text style={style.workingText1}>Working Date:</Text>
-        <Text style={style.workingText2}>{job.jobDto.date}</Text>
+        <Text style={style.workingText2}>
+          {new Date(job.jobDto.workingDate).toLocaleDateString()}
+        </Text>
       </View>
 
       <View style={style.footerContainer}>
-        <Text style={style.time}>25 minute ago</Text>
+        <Text style={style.time}>{getTimeAgo(job.jobDto.jobPostedDate)}</Text>
         <Text style={style.price}>{job.jobDto.wage}</Text>
       </View>
     </View>

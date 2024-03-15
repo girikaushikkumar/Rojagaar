@@ -28,7 +28,7 @@ public class PhotoService {
         );
         photo = this.photoRepo.insert(photo);
         User user = this.userRepo.findByUserName(id).orElseThrow(()->new ResourceNotFoundException("Id","",id));
-        user.setImage(photo.getId());
+        user.setPhoto(photo);
         this.userRepo.save(user);
         return photo.getId();
     }

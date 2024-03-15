@@ -1,0 +1,49 @@
+import {Modal, TouchableOpacity, View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
+import style from './style';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import ReactNativeModal from 'react-native-modal';
+const DropdownMenu = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+
+  const handleOptionClick = option => {
+    // Handle the click on an option here
+    console.log('Clicked on option:', option);
+    // You can perform different actions based on the option clicked
+    // For example: applying, viewing, saving, etc.
+  };
+  return (
+    <View style={style.container}>
+      <TouchableOpacity onPress={toggleModal}>
+        <FontAwesomeIcon
+          icon={faEllipsisVertical}
+          size={25}
+          style={style.EllipsisVertical}
+        />
+      </TouchableOpacity>
+      <ReactNativeModal
+        isVisible={isModalVisible}
+        onBackdropPress={toggleModal}
+        style={style.modal}>
+        <View style={style.modalContent}>
+          <TouchableOpacity onPress={() => handleOptionClick('Apply')}>
+            <Text style={style.option}>Apply</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleOptionClick('View')}>
+            <Text style={style.option}>View</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleOptionClick('Save')}>
+            <Text style={style.option}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      </ReactNativeModal>
+    </View>
+  );
+};
+
+export default DropdownMenu;

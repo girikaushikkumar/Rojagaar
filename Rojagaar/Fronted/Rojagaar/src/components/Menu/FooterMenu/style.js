@@ -8,7 +8,8 @@ export const style = StyleSheet.create({
         justifyContent:'space-between',
         alignItems: 'center',
         flexDirection:'row',
-        paddingHorizontal: horizontalScale(25)
+        paddingHorizontal: horizontalScale(25),
+        backgroundColor:'#f5eeeb'
     },
     text : {
         color:'red'

@@ -19,7 +19,8 @@ public class JobDto {
     private String location;
     private String Wage;
     private String workingTime;
-    private Date date;
+    private Date jobPostedDate;
+    private Date workingDate;
     private int noOfPeople;
     private boolean team;
     private String imageId;

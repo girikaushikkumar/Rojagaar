@@ -1,5 +1,6 @@
 package com.rojagaar.payload;
 
+import com.rojagaar.model.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ import lombok.Setter;
 public class JobDetailsResponse {
     private JobDto jobDto;
     private String JobPosterName;
-    private String JobPosterPhoto;
+    private Photo JobPosterPhoto;
 }

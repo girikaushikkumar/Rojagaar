@@ -7,14 +7,23 @@ import {style} from './style';
 import {AuthContext} from '../../context/authContext';
 import {FlatList} from 'react-native-gesture-handler';
 import JobCard from '../../components/JobCard/JobCard';
-import {Routes} from '../../navigation/Routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getAllJob} from '../../api/Post';
-import SubmitBtn from '../../components/Forms/SubmitBtn';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import SearchQuery from '../../components/SearchQuery/SearchQuery';
 const Home = ({navigation}) => {
-  
+  const [userState, setUserState] = useContext(AuthContext);
 
   const [job, setJob] = useState([]);
+
+  const handleLogout = async () => {
+    setUserState({
+      token: '',
+      user: null,
+    });
+
+    await AsyncStorage.removeItem('@auth');
+  };
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -27,16 +36,21 @@ const Home = ({navigation}) => {
     };
 
     fetchJobs();
-  }, []);
+  }, [job]);
 
   return (
-    <SafeAreaView
-      style={[globalStyle.backgroundWhite, globalStyle.flex, style.container]}>
-      <FlatList data={job} renderItem={({item}) => <JobCard job={item} />} />
+    <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex, style.container]}>
+      <SearchQuery/>
+      <TouchableOpacity onPress={handleLogout}>
+        <Text>Logout</Text>
+      </TouchableOpacity>
+      <FlatList
+        data={job}
+        renderItem={({item}) => <JobCard job={item} />}
+        showsVerticalScrollIndicator={false}
+      />
 
-      <View style={style.footer}>
-        <FooterMenu />
-      </View>
+      <FooterMenu />
     </SafeAreaView>
   );
 };

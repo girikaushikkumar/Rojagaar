@@ -87,5 +87,6 @@ const style = StyleSheet.create({
         color: '#000000',
         marginLeft:horizontalScale(10)
     },
+   
 });
 export default style;

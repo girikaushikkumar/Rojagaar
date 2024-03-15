@@ -12,7 +12,7 @@ const FooterMenu = () => {
   const navigation = useNavigation();
   return (
    <SafeAreaView style={style.container} >
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=> navigation.navigate(Routes.Home)}>
         <FontAwesomeIcon icon={faHouse} size={25} style={style.icon}/>
       </TouchableOpacity>
 

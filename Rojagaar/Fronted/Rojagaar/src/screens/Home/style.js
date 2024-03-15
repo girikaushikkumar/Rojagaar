@@ -5,7 +5,5 @@ export const style = StyleSheet.create({
     container: {
         justifyContent: 'space-between'
     },
-    footer : {
-        backgroundColor:'#f5eeeb'
-    }
+   
 });

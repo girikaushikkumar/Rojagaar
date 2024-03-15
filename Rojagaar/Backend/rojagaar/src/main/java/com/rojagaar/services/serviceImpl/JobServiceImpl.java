@@ -40,7 +40,7 @@ public class JobServiceImpl implements JobService {
                     jobDetailsResponse.setJobDto(jobDto);
                     User user = this.userRepo.findByUserName(jobDto.getJobPosterId()).get();
                     jobDetailsResponse.setJobPosterName(user.getName());
-                    jobDetailsResponse.setJobPosterPhoto(user.getImage());
+                    jobDetailsResponse.setJobPosterPhoto(user.getPhoto());
                     return jobDetailsResponse;
                 }
         ).collect(Collectors.toList());
