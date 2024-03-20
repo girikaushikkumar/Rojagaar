@@ -10,8 +10,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../context/authContext';
 import { horizontalScale,scaleFontSize, verticalScale } from '../../assets/style/scaling'; 
 import SubmitBtn from '../../components/Forms/SubmitBtn';
-const User_Login = ({navigation}) => {
+import { useNavigation } from '@react-navigation/native';
+const User_Login = () => {
     //global state
+    const navigation = useNavigation();
     const [userState, setUserState] = useContext(AuthContext);
     console.log("user state: ", userState);
 

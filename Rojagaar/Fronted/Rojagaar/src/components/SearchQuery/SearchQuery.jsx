@@ -1,6 +1,5 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { style } from './style';
 
 const SearchQuery = () => {

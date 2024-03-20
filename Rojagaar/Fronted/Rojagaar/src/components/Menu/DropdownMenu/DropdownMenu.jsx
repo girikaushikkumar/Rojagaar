@@ -1,10 +1,14 @@
-import {Modal, TouchableOpacity, View, Text} from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
 import React, {useState} from 'react';
 import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
 import style from './style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import ReactNativeModal from 'react-native-modal';
-const DropdownMenu = () => {
+import {useNavigation} from '@react-navigation/native';
+import { Routes } from '../../../navigation/Routes';
+import JobDetails from '../../../screens/JobDetails/JobDetails';
+const DropdownMenu = ({job}) => {
+  const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -17,6 +21,8 @@ const DropdownMenu = () => {
     // You can perform different actions based on the option clicked
     // For example: applying, viewing, saving, etc.
   };
+
+
   return (
     <View style={style.container}>
       <TouchableOpacity onPress={toggleModal}>
@@ -34,7 +40,7 @@ const DropdownMenu = () => {
           <TouchableOpacity onPress={() => handleOptionClick('Apply')}>
             <Text style={style.option}>Apply</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleOptionClick('View')}>
+          <TouchableOpacity onPress={() => navigation.navigate(Routes.JobDetails,{job})}>
             <Text style={style.option}>View</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleOptionClick('Save')}>

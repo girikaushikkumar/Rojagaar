@@ -2,12 +2,10 @@ import {View, Text, Image, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
-  faEllipsisVertical,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import style from './style';
 import NamingAvatar from '../NamingAvatar/NamingAvatar';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import DropdownMenu from '../Menu/DropdownMenu/DropdownMenu';
 
 const JobCard = ({job}) => {
@@ -69,7 +67,7 @@ const JobCard = ({job}) => {
 
       <View style={style.container1}>
         <Text style={style.title}>{job.jobDto.title}</Text>
-        <DropdownMenu/>
+        <DropdownMenu job={job}/>
       </View>
 
       <View style={style.jobDescriptionContainer}>

@@ -4,4 +4,6 @@ export const Routes={
     Home : 'Home',
     Profile:'Profile',
     SavedJob:'SavedJob',
+    JobDetails:'JobDetails',
+    Job : 'Job'
 }
