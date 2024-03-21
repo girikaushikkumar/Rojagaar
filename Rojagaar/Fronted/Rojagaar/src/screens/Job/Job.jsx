@@ -1,14 +1,28 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import {SafeAreaView, FlatList, Button, TouchableOpacity} from 'react-native';
+import React, {useContext} from 'react';
+import globalStyle from '../../assets/style/globalStyle';
+import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
+import {style} from './style';
+import JobCard from '../../components/JobCard/JobCard';
+import SearchQuery from '../../components/SearchQuery/SearchQuery';
+import {PostContext} from '../../context/PostContext';
+const Job = ({navigation}) => {
+  const [job] = useContext(PostContext);
 
-const Job = () => {
   return (
-    <View>
-      <Text>Job</Text>
-    </View>
-  )
-}
+    <SafeAreaView
+      style={[globalStyle.backgroundWhite, globalStyle.flex, style.container]}>
+      <SearchQuery />
+
+      <FlatList
+        data={job}
+        renderItem={({item}) => <JobCard job={item} />}
+        showsVerticalScrollIndicator={false}
+      />
+
+      <FooterMenu />
+    </SafeAreaView>
+  );
+};
 
 export default Job;
-
-const styles = StyleSheet.create({});

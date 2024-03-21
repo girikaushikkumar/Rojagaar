@@ -1,4 +1,4 @@
-import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import InputBox from '../../components/Forms/InputBox';
@@ -38,7 +38,7 @@ const Register = ({navigation}) => {
           setLoading(false);
           return;
         }
-    
+        setLoading(true);
         const response = await registerUser(userName,password);
 
         console.log(response.data);
@@ -56,6 +56,7 @@ const Register = ({navigation}) => {
           // Handle other status codes
           Alert.alert("Registration failed", "Unexpected error occurred.");
         }
+        setLoading(false);
       } catch (error) {
         console.log("Error:", error);
         alert("Registration failed: " + error.message);
@@ -90,18 +91,22 @@ const Register = ({navigation}) => {
             setValue={setConfirmPassword}
         />
        </View>
-
-      <SubmitBtn 
-         title={'SignUp'}
-        //  loading={loading}
-         handleSubmit={handleSubmit}
-      />
+      <View style={{alignItems:'center'}}>
+        <SubmitBtn 
+          title={'SignUp'} width={358} height= {60} 
+          //  loading={loading}
+          handleSubmit={handleSubmit}
+        />
+      </View>
+     
       <Text style={styles.linkText}>
         Already have an account ?{" "}
         <Text style={styles.link} onPress={()=>navigation.navigate(Routes.User_Login)}>
           Login
         </Text>{" "}
       </Text>
+
+      {loading && <ActivityIndicator size='large' color='#0000ff'/>}
     </SafeAreaView>
   )
 }

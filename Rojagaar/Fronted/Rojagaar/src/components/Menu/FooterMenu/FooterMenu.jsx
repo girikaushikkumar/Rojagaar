@@ -14,13 +14,13 @@ const FooterMenu = () => {
   const route = useRoute();
   return (
     <SafeAreaView style={style.container}>
-      <TouchableOpacity onPress={() => navigation.navigate(Routes.Home)}>
+      <TouchableOpacity onPress={() => navigation.navigate(Routes.Job)}>
         <FontAwesomeIcon
           icon={faHouse}
           size={25}
           style={[
             style.icon,
-            {color: route.name === Routes.Home ? activeColor : 'black'},
+            {color: route.name === Routes.Job ? activeColor : 'black'},
           ]}
         />
       </TouchableOpacity>

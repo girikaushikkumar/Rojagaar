@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Profile from '../screens/Profile/Profile';
 import User_Login from '../screens/auth/User_Login';
-import Home from '../screens/Home/Home';
+import Home from '../screens/Job/Job';
 import Register from '../screens/auth/Register';
 import SavedJob from '../screens/SavedJob/SavedJob';
 import {Routes} from './Routes';
@@ -48,8 +48,8 @@ const DrawerNavigator = ({job}) => {
         },
       }}>
       <Drawer.Screen
-        name={Routes.Home}
-        component={Home}
+        name= 'Home'
+        component={StackNavigator}
         options={{
           drawerIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faHouse} size={size} color={color} />
@@ -75,7 +75,6 @@ const DrawerNavigator = ({job}) => {
         }}
         />
 
-       <Drawer.Screen name={Routes.JobDetails} component={JobDetails} initialParams={{job}}/>
         
     </Drawer.Navigator>
   );
@@ -88,17 +87,15 @@ const AuthenticatedNavigator = () => {
   );
 };
 
-const StackNavigator = () => {
+const StackNavigator = ({job}) => {
   return (
   
       <Stack.Navigator
-      initialRouteName={Routes.Home}
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name={Routes.Home} component={Home} />
+      <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
-      <Stack.Screen name={Routes.JobDetails} component={JobDetails} />
-      <Stack.Screen name={Routes.Job} component={Job}/>
+      <Stack.Screen name={Routes.JobDetails} component={JobDetails} initialParams={{job}}/>
     </Stack.Navigator>
    
     
