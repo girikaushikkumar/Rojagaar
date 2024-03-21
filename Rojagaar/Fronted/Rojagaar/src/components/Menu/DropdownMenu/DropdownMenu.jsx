@@ -1,5 +1,5 @@
-import {TouchableOpacity, View, Text} from 'react-native';
-import React, {useState} from 'react';
+import {TouchableOpacity, View, Text, Alert} from 'react-native';
+import React, {useContext, useState} from 'react';
 import {faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
 import style from './style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -7,9 +7,12 @@ import ReactNativeModal from 'react-native-modal';
 import {useNavigation} from '@react-navigation/native';
 import { Routes } from '../../../navigation/Routes';
 import JobDetails from '../../../screens/JobDetails/JobDetails';
+import { addJobToCart } from '../../../api/JobCart';
+import { AuthContext } from '../../../context/authContext';
 const DropdownMenu = ({job}) => {
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userState] = useContext(AuthContext);
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
@@ -20,7 +23,13 @@ const DropdownMenu = ({job}) => {
     console.log('Clicked on option:', option);
     // You can perform different actions based on the option clicked
     // For example: applying, viewing, saving, etc.
+
   };
+
+  const handleSaveOption = () => {
+     addJobToCart(job.jobDto.id,userState.user.userName);
+     
+  }
 
 
   return (
@@ -43,7 +52,7 @@ const DropdownMenu = ({job}) => {
           <TouchableOpacity onPress={() => navigation.navigate(Routes.JobDetails,{job})}>
             <Text style={style.option}>View</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleOptionClick('Save')}>
+          <TouchableOpacity onPress={() => handleSaveOption()}>
             <Text style={style.option}>Save</Text>
           </TouchableOpacity>
         </View>

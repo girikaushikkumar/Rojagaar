@@ -9,7 +9,6 @@ import NamingAvatar from '../NamingAvatar/NamingAvatar';
 import DropdownMenu from '../Menu/DropdownMenu/DropdownMenu';
 
 const JobCard = ({job}) => {
-  
   // time calculation
   function getTimeAgo(jobPostTimestamp) {
     // Current timestamp

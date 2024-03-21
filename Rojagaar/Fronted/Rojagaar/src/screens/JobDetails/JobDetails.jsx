@@ -15,7 +15,6 @@ import SubmitBtn from '../../components/Forms/SubmitBtn';
 import globalStyle from '../../assets/style/globalStyle';
 import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
 const JobDetails = ({route}) => {
-  console.log(route.params);
   const {job} = route.params;
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>

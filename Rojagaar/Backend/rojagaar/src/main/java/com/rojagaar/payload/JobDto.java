@@ -12,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobDto {
+    private String id;
     private String title;
     private String description;
     private String category;
