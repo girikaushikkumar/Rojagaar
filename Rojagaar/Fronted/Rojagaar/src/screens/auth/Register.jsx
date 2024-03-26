@@ -75,11 +75,18 @@ const Register = ({navigation}) => {
        <Text style={styles.text}>Register</Text>
        <View style={styles.container}>
         <InputBox 
+            width={horizontalScale(323)}
+            height={verticalScale(60)}
+            fontSize={scaleFontSize(25)}
             inputTitle={"User Name "} 
             value={userName} 
             setValue={setUserName} />
         <InputBox
             inputTitle={"password"}
+            width={horizontalScale(323)}
+            height={verticalScale(60)}
+            fontSize={scaleFontSize(25)}
+
             secureTextEntry={true}
             autoComplete='password'
             value={password}
@@ -89,6 +96,10 @@ const Register = ({navigation}) => {
             inputTitle={"confirm password"}
             value={confirmPassword}
             setValue={setConfirmPassword}
+            width={horizontalScale(323)}
+            height={verticalScale(60)}
+            fontSize={scaleFontSize(25)}
+
         />
        </View>
       <View style={{alignItems:'center'}}>

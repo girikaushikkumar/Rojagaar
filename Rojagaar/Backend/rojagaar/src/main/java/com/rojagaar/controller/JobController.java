@@ -29,4 +29,10 @@ public class JobController {
         List<JobDetailsResponse> jobDetailsResponses = this.jobService.getAllJob();
         return new ResponseEntity<>(jobDetailsResponses,HttpStatus.OK);
     }
+
+    @GetMapping("getJobByUserId/{jobPosterId}")
+    public ResponseEntity<List<JobDto>> getJobByJobPosterId(@PathVariable String jobPosterId) {
+        List<JobDto> jobDtos = this.jobService.findJobByJobPosterId(jobPosterId);
+        return new ResponseEntity<>(jobDtos,HttpStatus.OK);
+    }
 }

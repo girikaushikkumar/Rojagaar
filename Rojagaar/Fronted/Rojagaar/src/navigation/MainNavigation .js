@@ -11,11 +11,20 @@ import CustomDrawer from '../components/CustomDrawer/CustomDrawer';
 import {getFontFamily} from '../assets/fonts/helper';
 import {horizontalScale, scaleFontSize} from '../assets/style/scaling';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBookmark, faHouse, faUser} from '@fortawesome/free-solid-svg-icons';
+import {
+  faBookmark,
+  faCirclePlus,
+  faEye,
+  faHouse,
+  faUser,
+  faUsersViewfinder,
+} from '@fortawesome/free-solid-svg-icons';
 import JobDetails from '../screens/JobDetails/JobDetails';
 import Job from '../screens/Job/Job';
-import { View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import PostJob from '../screens/PostJob/PostJob';
+import ViewJobPost from '../screens/ViewJobPost/ViewJobPost';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,7 +42,6 @@ const NonAuthenticatedNavigator = () => {
 
 const DrawerNavigator = ({job}) => {
   return (
-   
     <Drawer.Navigator
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
@@ -48,7 +56,7 @@ const DrawerNavigator = ({job}) => {
         },
       }}>
       <Drawer.Screen
-        name= 'Home'
+        name="Home"
         component={StackNavigator}
         options={{
           drawerIcon: ({color, size}) => (
@@ -56,50 +64,65 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
-      <Drawer.Screen 
-        name={Routes.Profile} 
-        component={Profile} 
+      <Drawer.Screen
+        name={Routes.Profile}
+        component={Profile}
         options={{
-          drawerIcon: ({color,size}) => (
-            <FontAwesomeIcon icon={faUser} size={size} color={color}/>
-          )
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faUser} size={size} color={color} />
+          ),
         }}
-        />
-      <Drawer.Screen 
-        name={Routes.SavedJob} 
-        component={SavedJob} 
+      />
+      <Drawer.Screen
+        name={Routes.SavedJob}
+        component={SavedJob}
         options={{
-          drawerIcon: ({color,size}) => (
+          drawerIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faBookmark} size={size} color={color} />
-          )
+          ),
         }}
-        />
+      />
 
-        
+      <Drawer.Screen
+        name={Routes.PostJob}
+        component={PostJob}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faCirclePlus} size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name={Routes.ViewJobPost}
+        component={ViewJobPost}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faEye} size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
 
 const AuthenticatedNavigator = () => {
-  return (
-    <DrawerNavigator/>
-
-  );
+  return <DrawerNavigator />;
 };
 
-const StackNavigator = ({job}) => {
+const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
   return (
-  
-      <Stack.Navigator
-      screenOptions={{headerShown: false}}>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
-      <Stack.Screen name={Routes.JobDetails} component={JobDetails} initialParams={{job}}/>
+      <Stack.Screen
+        name={Routes.JobDetails}
+        component={JobDetails}
+        initialParams={{job, jobPosterName, jobPosterPhoto}}
+      />
     </Stack.Navigator>
-   
-    
   );
 };
 
-export {AuthenticatedNavigator, NonAuthenticatedNavigator,StackNavigator};
+export {AuthenticatedNavigator, NonAuthenticatedNavigator, StackNavigator};

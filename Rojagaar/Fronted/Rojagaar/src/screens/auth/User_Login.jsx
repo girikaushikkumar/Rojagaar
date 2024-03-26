@@ -61,6 +61,9 @@ const User_Login = () => {
           inputTitle={'User Name'}
           value={userName}
           setValue={setUserName}
+          width={horizontalScale(323)}
+          height={verticalScale(60)}
+          fontSize={scaleFontSize(25)}
         />
         <InputBox
           inputTitle={'password'}
@@ -68,6 +71,10 @@ const User_Login = () => {
           autoComplete="password"
           value={password}
           setValue={setPassword}
+          width={horizontalScale(323)}
+          height={verticalScale(60)}
+          fontSize={scaleFontSize(25)}
+
         />
       </View>
 

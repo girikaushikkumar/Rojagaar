@@ -16,7 +16,13 @@ const Job = ({navigation}) => {
 
       <FlatList
         data={job}
-        renderItem={({item}) => <JobCard job={item} />}
+        renderItem={({item}) => (
+          <JobCard
+            job={item.jobDto}
+            jobPosterName={item.jobPosterName}
+            jobPosterPhoto={item.jobPosterPhoto}
+          />
+        )}
         showsVerticalScrollIndicator={false}
       />
 

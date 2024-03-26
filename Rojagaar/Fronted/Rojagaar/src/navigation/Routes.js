@@ -5,5 +5,7 @@ export const Routes={
     Profile:'Profile',
     SavedJob:'SavedJob',
     JobDetails:'JobDetails',
-    Job : 'Job'
+    Job : 'Job',
+    PostJob : 'PostJob',
+    ViewJobPost: 'ViewJobPost'
 }

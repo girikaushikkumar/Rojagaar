@@ -9,11 +9,14 @@ const InputBox = ({
   secureTextEntry = false,
   value,
   setValue,
+  width,
+  height,
+  fontSize,
 }) => {
   return (
     <View>
       <TextInput
-        style={styles.inputBox}
+        style={[styles.inputBox,{width,height,fontSize}]}
         placeholder={inputTitle}
         autoCorrect={false}
         keyboardType={keyboardType}
@@ -28,13 +31,10 @@ const InputBox = ({
 
 const styles = StyleSheet.create({
   inputBox: {
-    height:verticalScale(60),
-    width:horizontalScale(323),
     backgroundColor: "#FFFFFF",
     borderRadius:verticalScale(5),
     borderColor:'#887E7E',
     borderWidth:horizontalScale(1),
-    fontSize:scaleFontSize(25),
     backgroundColor:'#eef3f9'
   },
 });

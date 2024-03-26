@@ -47,6 +47,13 @@ public class JobServiceImpl implements JobService {
         return jobDetailsResponses;
     }
 
+    @Override
+    public List<JobDto> findJobByJobPosterId(String jobPosterId) {
+        List<Job> jobs = this.jobRepo.findByJobPosterId(jobPosterId);
+        List<JobDto> jobDtos = jobs.stream().map(job -> this.jobToDto(job)).collect(Collectors.toList());
+        return jobDtos;
+    }
+
     public Job dtoToJob(JobDto jobDto) {
         Job job = this.modelMapper.map(jobDto,Job.class);
         return job;

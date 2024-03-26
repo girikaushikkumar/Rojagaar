@@ -1,17 +1,17 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
 import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
 import style from './style';
 import globalStyle from '../../assets/style/globalStyle';
-import { AuthContext } from '../../context/authContext';
-import { getJobCartDetails } from '../../api/JobCart';
-import { FlatList } from 'react-native-gesture-handler';
+import {AuthContext} from '../../context/authContext';
+import {getJobCartDetails} from '../../api/JobCart';
+import {FlatList} from 'react-native-gesture-handler';
 import JobCard from '../../components/JobCard/JobCard';
 
 const SavedJob = () => {
   const [userState] = useContext(AuthContext);
-  const [job,setJob] = useState([]);
-  const [loading,setLoading] = useState(true);
+  const [job, setJob] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -25,24 +25,27 @@ const SavedJob = () => {
       }
     };
 
-
-
     fetchJobs();
-    
   }, []);
 
-
   return (
-    <SafeAreaView style={[globalStyle.backgroundWhite,globalStyle.flex,style.container]}>
+    <SafeAreaView
+      style={[globalStyle.backgroundWhite, globalStyle.flex, style.container]}>
       <FlatList
         data={job}
-        renderItem={({item}) => <JobCard job={item} />}
+        renderItem={({item}) => (
+          <JobCard
+            job={item.jobDto}
+            jobPosterName={item.jobPosterName}
+            jobPosterPhoto={item.jobPosterPhoto}
+          />
+        )}
         showsVerticalScrollIndicator={false}
       />
 
-      <FooterMenu/>
+      <FooterMenu />
     </SafeAreaView>
-  )
+  );
 };
 
 export default SavedJob;

@@ -6,10 +6,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import ReactNativeModal from 'react-native-modal';
 import {useNavigation} from '@react-navigation/native';
 import { Routes } from '../../../navigation/Routes';
-import JobDetails from '../../../screens/JobDetails/JobDetails';
 import { addJobToCart } from '../../../api/JobCart';
 import { AuthContext } from '../../../context/authContext';
-const DropdownMenu = ({job}) => {
+const DropdownMenu = ({job, jobPosterName, jobPosterPhoto}) => {
   const navigation = useNavigation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userState] = useContext(AuthContext);
@@ -27,7 +26,7 @@ const DropdownMenu = ({job}) => {
   };
 
   const handleSaveOption = () => {
-     addJobToCart(job.jobDto.id,userState.user.userName);
+     addJobToCart(job.id,userState.user.userName);
      
   }
 
@@ -49,7 +48,7 @@ const DropdownMenu = ({job}) => {
           <TouchableOpacity onPress={() => handleOptionClick('Apply')}>
             <Text style={style.option}>Apply</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate(Routes.JobDetails,{job})}>
+          <TouchableOpacity onPress={() => navigation.navigate(Routes.JobDetails,{job, jobPosterName, jobPosterPhoto})}>
             <Text style={style.option}>View</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleSaveOption()}>

@@ -9,4 +9,5 @@ public interface JobService {
     public void createJob(JobDto jobDto);
 
     public List<JobDetailsResponse> getAllJob();
+    public List<JobDto> findJobByJobPosterId(String jobPosterId);
 }

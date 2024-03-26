@@ -1,14 +1,12 @@
 import {View, Text, Image, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faLocationDot,
-} from '@fortawesome/free-solid-svg-icons';
+import {faLocationDot} from '@fortawesome/free-solid-svg-icons';
 import style from './style';
 import NamingAvatar from '../NamingAvatar/NamingAvatar';
 import DropdownMenu from '../Menu/DropdownMenu/DropdownMenu';
 
-const JobCard = ({job}) => {
+const JobCard = ({job, jobPosterName, jobPosterPhoto}) => {
   // time calculation
   function getTimeAgo(jobPostTimestamp) {
     // Current timestamp
@@ -41,36 +39,41 @@ const JobCard = ({job}) => {
     return timeAgo;
   }
 
-  
-
   return (
     <View style={style.container}>
       <View style={style.posteContainer}>
-        {job.jobPosterPhoto ? ( // Check if imageUri is not null
+        {jobPosterPhoto ? (
           <Image
             source={{
-              uri: 'data:image/jpeg;base64,' + job.jobPosterPhoto.image.data.toString('base64'),
+              uri: `data:image/jpeg;base64,${jobPosterPhoto.image.data.toString(
+                'base64',
+              )}`,
             }}
             style={style.avatarImage}
           />
-        ) : (
+        ) : jobPosterName ? (
           <NamingAvatar
-            name={job.jobPosterName}
+            name={jobPosterName}
             avatarSize={43}
             textSize={16}
             padding={5}
           />
-        )}
-        <Text style={style.nameText}>{job.jobPosterName}</Text>
+        ) : null // Render nothing if both jobPosterName and jobPosterPhoto are not available
+        }
+        <Text style={style.nameText}>{jobPosterName}</Text>
       </View>
 
       <View style={style.container1}>
-        <Text style={style.title}>{job.jobDto.title}</Text>
-        <DropdownMenu job={job}/>
+        <Text style={style.title}>{job.title}</Text>
+        <DropdownMenu 
+           job={job} 
+           jobPosterName={jobPosterName}
+           jobPosterPhoto={jobPosterPhoto}
+           />
       </View>
 
       <View style={style.jobDescriptionContainer}>
-        <Text style={style.jobDescription}>{job.jobDto.description}</Text>
+        <Text style={style.jobDescription}>{job.description}</Text>
       </View>
 
       <View style={style.locationContainer}>
@@ -79,19 +82,19 @@ const JobCard = ({job}) => {
           style={style.locationIcon}
           size={25}
         />
-        <Text style={style.locationText}>{job.jobDto.location}</Text>
+        <Text style={style.locationText}>{job.location}</Text>
       </View>
 
       <View style={style.workingDateContainer}>
         <Text style={style.workingText1}>Working Date:</Text>
         <Text style={style.workingText2}>
-          {new Date(job.jobDto.workingDate).toLocaleDateString()}
+          {new Date(job.workingDate).toLocaleDateString()}
         </Text>
       </View>
 
       <View style={style.footerContainer}>
-        <Text style={style.time}>{getTimeAgo(job.jobDto.jobPostedDate)}</Text>
-        <Text style={style.price}>{job.jobDto.wage}</Text>
+        <Text style={style.time}>{getTimeAgo(job.jobPostedDate)}</Text>
+        <Text style={style.price}>{job.wage}</Text>
       </View>
     </View>
   );

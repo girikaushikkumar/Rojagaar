@@ -15,69 +15,70 @@ import SubmitBtn from '../../components/Forms/SubmitBtn';
 import globalStyle from '../../assets/style/globalStyle';
 import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
 const JobDetails = ({route}) => {
-  const {job} = route.params;
+  const { job, jobPosterName, jobPosterPhoto } = route.params;
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
       <HeaderText text="Job Details" />
 
       <View style={style.posteContainer}>
-        {job.jobPosterPhoto ? ( // Check if imageUri is not null
+      {jobPosterPhoto ? (
           <Image
             source={{
-              uri:
-                'data:image/jpeg;base64,' +
-                job.jobPosterPhoto.image.data.toString('base64'),
+              uri: `data:image/jpeg;base64,${jobPosterPhoto.image.data.toString(
+                'base64',
+              )}`,
             }}
             style={style.avatarImage}
           />
-        ) : (
+        ) : jobPosterName ? (
           <NamingAvatar
-            name={job.jobPosterName}
+            name={jobPosterName}
             avatarSize={43}
             textSize={16}
             padding={5}
           />
-        )}
-        <Text style={style.nameText}>{job.jobPosterName}</Text>
+        ) : null // Render nothing if both jobPosterName and jobPosterPhoto are not available
+        }
+        <Text style={style.nameText}>{jobPosterName}</Text>
       </View>
 
       <ScrollView>
         <View style={style.jobDetailsContainer}>
           <View>
-            <Text style={style.title}>{job.jobDto.title}</Text>
+            <Text style={style.title}>{job.title}</Text>
             <Image
               source={require('../../assets/images/job.jpg')}
               style={style.jobImage}
             />
-            <Text style={style.description}>{job.jobDto.description}</Text>
+            <Text style={style.description}>{job.description}</Text>
           </View>
 
           <View style={style.OtherContainer}>
             <Text style={style.key}>Location : </Text>
-            <Text style={style.value}>{job.jobDto.location}</Text>
+            <Text style={style.value}>{job.location}</Text>
           </View>
           <View style={style.OtherContainer}>
             <Text style={style.key}>Team : </Text>
-            <Text style={style.value}>{job.jobDto.team ? 'Yes' : 'No'}</Text>
+            <Text style={style.value}>{job.team ? 'Yes' : 'No'}</Text>
           </View>
           <View style={style.OtherContainer}>
             <Text style={style.key}>Require Employee : </Text>
-            <Text style={style.value}>{job.jobDto.noOfPeople}</Text>
+            <Text style={style.value}>{job.noOfPeople}</Text>
           </View>
           <View style={style.OtherContainer}>
             <Text style={style.key}>Working Date : </Text>
             <Text style={style.value}>
               {' '}
-              {new Date(job.jobDto.workingDate).toLocaleDateString()}
+              {new Date(job.workingDate).toLocaleDateString()}
             </Text>
           </View>
           <View style={style.OtherContainer}>
             <Text style={style.key}>Working Time : </Text>
-            <Text style={style.value}>{job.jobDto.workingTime}</Text>
+            <Text style={style.value}>{job.workingTime}</Text>
           </View>
           <View style={style.OtherContainer}>
             <Text style={style.key}>Money : </Text>
-            <Text style={style.value}>{job.jobDto.wage}</Text>
+            <Text style={style.value}>{job.wage}</Text>
           </View>
           <Text></Text>
           <View style={style.button}>
