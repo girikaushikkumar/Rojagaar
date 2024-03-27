@@ -1,4 +1,4 @@
-import { ActivityIndicator, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { getJobByUserId } from '../../api/Post';
 import { AuthContext } from '../../context/authContext';
@@ -8,8 +8,9 @@ import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
 import style from './style';
 import globalStyle from '../../assets/style/globalStyle';
 import HeaderText from '../../components/HeaderText/HeaderText';
+import { Routes } from '../../navigation/Routes';
 
-const ViewJobPost = () => {
+const ViewJobPost = ({navigation}) => {
     const [job,setJob] = useState([]);
     const [loading,setLoading] = useState(true);
     const [userState] = useContext(AuthContext);
@@ -41,7 +42,14 @@ const ViewJobPost = () => {
         <HeaderText text = {'Job Post'}/>
         <FlatList
             data={job}
-            renderItem={({item}) => <JobCard job={item} />}
+            renderItem={({item}) => (
+                <TouchableOpacity onPress={()=> navigation.navigate(Routes.JobPostDetails,{job:item})}>
+                  <JobCard job={item} />
+                </TouchableOpacity>
+                
+            )
+           
+            }
             showsVerticalScrollIndicator={false}
         />
         <FooterMenu/>

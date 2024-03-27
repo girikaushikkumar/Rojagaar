@@ -1,12 +1,24 @@
-import {View, Text, Image, ActivityIndicator} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faLocationDot} from '@fortawesome/free-solid-svg-icons';
+import {faBookmark, faLocationDot, faSave} from '@fortawesome/free-solid-svg-icons';
 import style from './style';
 import NamingAvatar from '../NamingAvatar/NamingAvatar';
 import DropdownMenu from '../Menu/DropdownMenu/DropdownMenu';
+import { useNavigation } from '@react-navigation/native';
+import { Routes } from '../../navigation/Routes';
+import { addJobToCart } from '../../api/JobCart';
+import { AuthContext } from '../../context/authContext';
 
 const JobCard = ({job, jobPosterName, jobPosterPhoto}) => {
+  const [userState] = useContext(AuthContext);
+  const navigation = useNavigation();
   // time calculation
   function getTimeAgo(jobPostTimestamp) {
     // Current timestamp
@@ -39,63 +51,73 @@ const JobCard = ({job, jobPosterName, jobPosterPhoto}) => {
     return timeAgo;
   }
 
+  const handleSaveOption = () => {
+    addJobToCart(job.id,userState.user.userName);
+    
+ }
+
   return (
     <View style={style.container}>
-      <View style={style.posteContainer}>
-        {jobPosterPhoto ? (
-          <Image
-            source={{
-              uri: `data:image/jpeg;base64,${jobPosterPhoto.image.data.toString(
-                'base64',
-              )}`,
-            }}
-            style={style.avatarImage}
+        <View style={style.posteContainer}>
+          {
+            jobPosterPhoto ? (
+              <Image
+                source={{
+                  uri: `data:image/jpeg;base64,${jobPosterPhoto.image.data.toString(
+                    'base64',
+                  )}`,
+                }}
+                style={style.avatarImage}
+              />
+            ) : jobPosterName ? (
+              <NamingAvatar
+                name={jobPosterName}
+                avatarSize={43}
+                textSize={16}
+                padding={5}
+              />
+            ) : null // Render nothing if both jobPosterName and jobPosterPhoto are not available
+          }
+          <Text style={style.nameText}>{jobPosterName}</Text>
+        </View>
+
+        <View style={style.container1}>
+          <Text style={style.title}>{job.title}</Text>
+          <TouchableOpacity onPress={() => handleSaveOption()}>
+          <FontAwesomeIcon icon={faBookmark} size={25}/>
+
+          </TouchableOpacity>
+          {/* <DropdownMenu
+            job={job}
+            jobPosterName={jobPosterName}
+            jobPosterPhoto={jobPosterPhoto}
+          /> */}
+        </View>
+
+        <View style={style.jobDescriptionContainer}>
+          <Text style={style.jobDescription}>{job.description}</Text>
+        </View>
+
+        <View style={style.locationContainer}>
+          <FontAwesomeIcon
+            icon={faLocationDot}
+            style={style.locationIcon}
+            size={25}
           />
-        ) : jobPosterName ? (
-          <NamingAvatar
-            name={jobPosterName}
-            avatarSize={43}
-            textSize={16}
-            padding={5}
-          />
-        ) : null // Render nothing if both jobPosterName and jobPosterPhoto are not available
-        }
-        <Text style={style.nameText}>{jobPosterName}</Text>
-      </View>
+          <Text style={style.locationText}>{job.location}</Text>
+        </View>
 
-      <View style={style.container1}>
-        <Text style={style.title}>{job.title}</Text>
-        <DropdownMenu 
-           job={job} 
-           jobPosterName={jobPosterName}
-           jobPosterPhoto={jobPosterPhoto}
-           />
-      </View>
+        <View style={style.workingDateContainer}>
+          <Text style={style.workingText1}>Working Date:</Text>
+          <Text style={style.workingText2}>
+            {new Date(job.workingDate).toLocaleDateString()}
+          </Text>
+        </View>
 
-      <View style={style.jobDescriptionContainer}>
-        <Text style={style.jobDescription}>{job.description}</Text>
-      </View>
-
-      <View style={style.locationContainer}>
-        <FontAwesomeIcon
-          icon={faLocationDot}
-          style={style.locationIcon}
-          size={25}
-        />
-        <Text style={style.locationText}>{job.location}</Text>
-      </View>
-
-      <View style={style.workingDateContainer}>
-        <Text style={style.workingText1}>Working Date:</Text>
-        <Text style={style.workingText2}>
-          {new Date(job.workingDate).toLocaleDateString()}
-        </Text>
-      </View>
-
-      <View style={style.footerContainer}>
-        <Text style={style.time}>{getTimeAgo(job.jobPostedDate)}</Text>
-        <Text style={style.price}>{job.wage}</Text>
-      </View>
+        <View style={style.footerContainer}>
+          <Text style={style.time}>{getTimeAgo(job.jobPostedDate)}</Text>
+          <Text style={style.price}>{job.wage}</Text>
+        </View>
     </View>
   );
 };

@@ -3,7 +3,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Profile from '../screens/Profile/Profile';
 import User_Login from '../screens/auth/User_Login';
-import Home from '../screens/Job/Job';
 import Register from '../screens/auth/Register';
 import SavedJob from '../screens/SavedJob/SavedJob';
 import {Routes} from './Routes';
@@ -17,14 +16,12 @@ import {
   faEye,
   faHouse,
   faUser,
-  faUsersViewfinder,
 } from '@fortawesome/free-solid-svg-icons';
-import JobDetails from '../screens/JobDetails/JobDetails';
 import Job from '../screens/Job/Job';
-import {View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
 import PostJob from '../screens/PostJob/PostJob';
 import ViewJobPost from '../screens/ViewJobPost/ViewJobPost';
+import ApplyJob from '../screens/ApplyJob/ApplyJob';
+import JobPostDetails from '../screens/ViewJobPostDetails/JobPostDetails';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -116,11 +113,8 @@ const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
       <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
-      <Stack.Screen
-        name={Routes.JobDetails}
-        component={JobDetails}
-        initialParams={{job, jobPosterName, jobPosterPhoto}}
-      />
+      <Stack.Screen name={Routes.ApplyJob} component={ApplyJob} initialParams={{job, jobPosterName, jobPosterPhoto}}/>
+      <Stack.Screen name={Routes.JobPostDetails} component={JobPostDetails} initialParams={job} />
     </Stack.Navigator>
   );
 };

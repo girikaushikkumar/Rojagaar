@@ -6,8 +6,11 @@ import {style} from './style';
 import JobCard from '../../components/JobCard/JobCard';
 import SearchQuery from '../../components/SearchQuery/SearchQuery';
 import {PostContext} from '../../context/PostContext';
+import {AuthContext} from '../../context/authContext';
+import {Routes} from '../../navigation/Routes';
 const Job = ({navigation}) => {
   const [job] = useContext(PostContext);
+  const [userState] = useContext(AuthContext);
 
   return (
     <SafeAreaView
@@ -17,11 +20,20 @@ const Job = ({navigation}) => {
       <FlatList
         data={job}
         renderItem={({item}) => (
-          <JobCard
-            job={item.jobDto}
-            jobPosterName={item.jobPosterName}
-            jobPosterPhoto={item.jobPosterPhoto}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate(Routes.ApplyJob, {
+                job: item.jobDto,
+                jobPosterName: item.jobPosterName,
+                jobPosterPhoto: item.jobPosterPhoto,
+              })
+            }>
+            <JobCard
+              job={item.jobDto}
+              jobPosterName={item.jobPosterName}
+              jobPosterPhoto={item.jobPosterPhoto}
+            />
+          </TouchableOpacity>
         )}
         showsVerticalScrollIndicator={false}
       />

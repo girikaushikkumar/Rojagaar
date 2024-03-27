@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
 import style from './style';
@@ -7,8 +7,9 @@ import {AuthContext} from '../../context/authContext';
 import {getJobCartDetails} from '../../api/JobCart';
 import {FlatList} from 'react-native-gesture-handler';
 import JobCard from '../../components/JobCard/JobCard';
+import { Routes } from '../../navigation/Routes';
 
-const SavedJob = () => {
+const SavedJob = ({navigation}) => {
   const [userState] = useContext(AuthContext);
   const [job, setJob] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,11 +35,22 @@ const SavedJob = () => {
       <FlatList
         data={job}
         renderItem={({item}) => (
-          <JobCard
+          <TouchableOpacity
+          onPress={() =>
+              navigation.navigate(Routes.ApplyJob, {
+                job: item.jobDto,
+                jobPosterName: item.jobPosterName,
+                jobPosterPhoto: item.jobPosterPhoto,
+              })
+            }
+          >
+           <JobCard
             job={item.jobDto}
             jobPosterName={item.jobPosterName}
             jobPosterPhoto={item.jobPosterPhoto}
           />
+          </TouchableOpacity>
+         
         )}
         showsVerticalScrollIndicator={false}
       />
