@@ -1,5 +1,5 @@
-import {SafeAreaView, Text, View, Image, ScrollView} from 'react-native';
-import React from 'react';
+import {SafeAreaView, Text, View, Image, ScrollView, Alert} from 'react-native';
+import React, { useContext } from 'react';
 import globalStyle from '../../assets/style/globalStyle';
 import HeaderText from '../../components/HeaderText/HeaderText';
 import style from './style';
@@ -7,9 +7,23 @@ import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
 import JobDetails from '../../components/JobDetails/JobDetails';
 import SubmitBtn from '../../components/Forms/SubmitBtn';
 import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
+import { applyJob } from '../../api/Post';
+import { AuthContext } from '../../context/authContext';
+import { Routes } from '../../navigation/Routes';
 
-const ApplyJob = ({route}) => {
+const ApplyJob = ({route,navigation}) => {
   const {job, jobPosterName, jobPosterPhoto} = route.params;
+  const [userState] = useContext(AuthContext);
+  // console.log(userState);
+  const handleApply = async() => {
+    try {
+      const response = await applyJob(userState.user.userName,job.id,new Date(),"Pending");
+      Alert.alert(response.data.message);
+      navigation.navigate(Routes.Job);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
@@ -43,7 +57,7 @@ const ApplyJob = ({route}) => {
           jobPosterPhoto={jobPosterPhoto}
         />
         <View style={style.button}>
-          <SubmitBtn title={'Apply'} width={324} height={60} />
+          <SubmitBtn title={'Apply'} width={324} height={60} handleSubmit={handleApply}/>
         </View>
       </ScrollView>
       <FooterMenu />

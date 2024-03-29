@@ -8,5 +8,7 @@ export const Routes={
     PostJob : 'PostJob',
     ViewJobPost: 'ViewJobPost',
     ApplyJob:'ApplyJob',
-    JobPostDetails:'JobPostDetails'
+    JobPostDetails:'JobPostDetails',
+    ApplicationStatus:'Application Status',
+    ViewPostDetails:'ViewPostDetails',
 }

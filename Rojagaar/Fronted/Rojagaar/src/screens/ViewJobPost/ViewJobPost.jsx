@@ -48,7 +48,6 @@ const ViewJobPost = ({navigation}) => {
                 </TouchableOpacity>
                 
             )
-           
             }
             showsVerticalScrollIndicator={false}
         />

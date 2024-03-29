@@ -22,6 +22,8 @@ import PostJob from '../screens/PostJob/PostJob';
 import ViewJobPost from '../screens/ViewJobPost/ViewJobPost';
 import ApplyJob from '../screens/ApplyJob/ApplyJob';
 import JobPostDetails from '../screens/ViewJobPostDetails/JobPostDetails';
+import ApplicationStatus from '../screens/ApplicationStatus/ApplicationStatus';
+import ViewPostDetails from '../screens/ViewPostDetails/ViewPostDetails';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -99,6 +101,15 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
+      <Drawer.Screen
+        name={Routes.ApplicationStatus}
+        component={ApplicationStatus}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faEye} size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -115,6 +126,7 @@ const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
       <Stack.Screen name={Routes.ApplyJob} component={ApplyJob} initialParams={{job, jobPosterName, jobPosterPhoto}}/>
       <Stack.Screen name={Routes.JobPostDetails} component={JobPostDetails} initialParams={job} />
+      <Stack.Screen name={Routes.ViewPostDetails} component={ViewPostDetails} initialParams={{job, jobPosterName, jobPosterPhoto}}/>
     </Stack.Navigator>
   );
 };

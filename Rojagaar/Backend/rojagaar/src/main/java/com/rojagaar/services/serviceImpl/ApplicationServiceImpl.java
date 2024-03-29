@@ -1,13 +1,21 @@
 package com.rojagaar.services.serviceImpl;
 
 import com.rojagaar.model.Application;
-import com.rojagaar.payload.ApiResponse;
-import com.rojagaar.payload.ApplicationDto;
+import com.rojagaar.model.Job;
+import com.rojagaar.model.User;
+import com.rojagaar.payload.*;
 import com.rojagaar.repository.ApplicationRepo;
+import com.rojagaar.repository.JobCartRepo;
+import com.rojagaar.repository.JobRepo;
+import com.rojagaar.repository.UserRepo;
 import com.rojagaar.services.ApplicationService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
@@ -16,6 +24,12 @@ public class ApplicationServiceImpl implements ApplicationService {
     private ApplicationRepo applicationRepo;
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private JobRepo jobRepo;
+
+    @Autowired
+    private UserRepo userRepo;
     @Override
     public ApiResponse applyForJob(ApplicationDto applicationDto) {
         if(this.applicationRepo.findByUserIdAndJobId(applicationDto.getUserId(),applicationDto.getJobId()).isPresent()) {
@@ -23,6 +37,33 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
         this.applicationRepo.save(this.dtoToApplication(applicationDto));
         return new ApiResponse("Applied Successfully");
+    }
+
+    @Override
+    public List<ApplicationStatus> getApplicationStatus(String userId) {
+        Optional<List<Application>> OptionalApplication = this.applicationRepo.findByUserId(userId);
+        if(OptionalApplication.isPresent()) {
+            List<ApplicationStatus> applicationStatuses = new ArrayList<>();
+            List<Application> application = OptionalApplication.get();
+            for(Application app : application) {
+                Optional<Job> OptionalJob = this.jobRepo.findById(app.getJobId());
+                if (OptionalJob.isPresent()) {
+                    Job job = OptionalJob.get();
+                    ApplicationStatus applicationStatus = new ApplicationStatus();
+                    applicationStatus.setApplication(app); //set application
+                    //now set the JobDetailsRespose
+                    JobDetailsResponse jobDetailsResponse = new JobDetailsResponse();
+                    jobDetailsResponse.setJobDto(modelMapper.map(job, JobDto.class));
+                    User user = this.userRepo.findByUserName(job.getJobPosterId()).get();
+                    jobDetailsResponse.setJobPosterName(user.getName());
+                    jobDetailsResponse.setJobPosterPhoto(user.getPhoto());
+                    applicationStatus.setJobDetailsResponse(jobDetailsResponse);
+                    applicationStatuses.add(applicationStatus);
+                }
+            }
+            return applicationStatuses;
+        }
+        return null;
     }
 
     public Application dtoToApplication(ApplicationDto applicationDto) {
