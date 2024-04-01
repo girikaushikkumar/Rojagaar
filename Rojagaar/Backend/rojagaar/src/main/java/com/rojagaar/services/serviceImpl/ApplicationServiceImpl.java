@@ -1,5 +1,6 @@
 package com.rojagaar.services.serviceImpl;
 
+import com.rojagaar.exception.ResourceNotFoundException;
 import com.rojagaar.model.Application;
 import com.rojagaar.model.Job;
 import com.rojagaar.model.User;
@@ -90,6 +91,14 @@ public class ApplicationServiceImpl implements ApplicationService {
         } else
              return null;
     }
+
+    @Override
+    public void updateApplicationStatus(String id,String status) {
+        Application application = this.applicationRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Application","id",id));
+        application.setStatus(status);
+        this.applicationRepo.save(application);
+    }
+
 
     public Application dtoToApplication(ApplicationDto applicationDto) {
         return this.modelMapper.map(applicationDto,Application.class);

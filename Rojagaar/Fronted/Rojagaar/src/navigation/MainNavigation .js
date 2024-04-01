@@ -24,6 +24,7 @@ import ApplyJob from '../screens/ApplyJob/ApplyJob';
 import JobPostDetails from '../screens/ViewJobPostDetails/JobPostDetails';
 import ApplicationStatus from '../screens/ApplicationStatus/ApplicationStatus';
 import ViewPostDetails from '../screens/ViewPostDetails/ViewPostDetails';
+import JobPostStatus from '../screens/JobPostStatus/JobPostStatus';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -127,6 +128,7 @@ const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
       <Stack.Screen name={Routes.ApplyJob} component={ApplyJob} initialParams={{job, jobPosterName, jobPosterPhoto}}/>
       <Stack.Screen name={Routes.JobPostDetails} component={JobPostDetails} initialParams={job} />
       <Stack.Screen name={Routes.ViewPostDetails} component={ViewPostDetails} initialParams={{job, jobPosterName, jobPosterPhoto}}/>
+      <Stack.Screen name={Routes.JobPostStatus} component={JobPostStatus} initialParams={job}/>
     </Stack.Navigator>
   );
 };

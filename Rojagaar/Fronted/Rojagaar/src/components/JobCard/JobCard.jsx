@@ -10,13 +10,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faBookmark, faLocationDot, faSave} from '@fortawesome/free-solid-svg-icons';
 import style from './style';
 import NamingAvatar from '../NamingAvatar/NamingAvatar';
-import DropdownMenu from '../Menu/DropdownMenu/DropdownMenu';
 import { useNavigation } from '@react-navigation/native';
-import { Routes } from '../../navigation/Routes';
 import { addJobToCart } from '../../api/JobCart';
 import { AuthContext } from '../../context/authContext';
 
-const JobCard = ({job, jobPosterName, jobPosterPhoto}) => {
+const JobCard = ({job, jobPosterName, jobPosterPhoto, bookmark}) => {
   const [userState] = useContext(AuthContext);
   const navigation = useNavigation();
   // time calculation
@@ -84,7 +82,7 @@ const JobCard = ({job, jobPosterName, jobPosterPhoto}) => {
         <View style={style.container1}>
           <Text style={style.title}>{job.title}</Text>
           <TouchableOpacity onPress={() => handleSaveOption()}>
-          <FontAwesomeIcon icon={faBookmark} size={25}/>
+          {bookmark ? <FontAwesomeIcon icon={faBookmark} size={25}/> : null}
 
           </TouchableOpacity>
           {/* <DropdownMenu

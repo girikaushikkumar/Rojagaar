@@ -32,6 +32,7 @@ const Job = ({navigation}) => {
               job={item.jobDto}
               jobPosterName={item.jobPosterName}
               jobPosterPhoto={item.jobPosterPhoto}
+              bookmark = {true}
             />
           </TouchableOpacity>
         )}

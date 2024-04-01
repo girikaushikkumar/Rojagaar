@@ -11,4 +11,5 @@ export const Routes={
     JobPostDetails:'JobPostDetails',
     ApplicationStatus:'Application Status',
     ViewPostDetails:'ViewPostDetails',
+    JobPostStatus:'JobPostStatus',
 }

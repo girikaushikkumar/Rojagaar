@@ -7,9 +7,9 @@ import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
 import JobDetails from '../../components/JobDetails/JobDetails';
 import SubmitBtn from '../../components/Forms/SubmitBtn';
 import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
-import { applyJob } from '../../api/Post';
 import { AuthContext } from '../../context/authContext';
 import { Routes } from '../../navigation/Routes';
+import { applyJob } from '../../api/Application';
 
 const ApplyJob = ({route,navigation}) => {
   const {job, jobPosterName, jobPosterPhoto} = route.params;

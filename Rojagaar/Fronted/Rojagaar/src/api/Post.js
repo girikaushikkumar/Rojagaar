@@ -44,22 +44,3 @@ export const getJobByUserId = async(jobPosterId) => {
   return response;
 }
 
-export const applyJob = async( userId,jobId,applicationDate,status) => {
-  const response = await axios.post(`${API_BASE_URL}/application/applyForJob`,{
-    userId,
-    jobId,
-    applicationDate,
-    status
-  });
-  return response;
-};
-
-export const jobStatus = async(userId) => {
-  const response = await axios.get(`${API_BASE_URL}/application/getApplicationStatus/${userId}`);
-  return response;
-}
-
-export const getJobSeekerDetails = async(jobId) => {
-  const response = await axios.get(`${API_BASE_URL}/application/getJobSeekerDetails/${jobId}`);
-  return response;
-}

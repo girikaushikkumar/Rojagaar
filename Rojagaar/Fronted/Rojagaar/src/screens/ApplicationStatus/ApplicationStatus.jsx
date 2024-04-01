@@ -1,12 +1,12 @@
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {AuthContext} from '../../context/authContext';
-import {jobStatus} from '../../api/Post';
 import globalStyle from '../../assets/style/globalStyle';
 import HeaderText from '../../components/HeaderText/HeaderText';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import style from './style';
 import JobStatusDetails from '../../components/JobStatusDetails/JobStatusDetails';
+import { jobStatus } from '../../api/Application';
 const ApplicationStatus = () => {
   const [userState] = useContext(AuthContext);
   const [selectedStatus, setSelectedStatus] = useState('Pending'); // State to manage selected status

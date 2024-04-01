@@ -32,4 +32,10 @@ public class ApplicationController {
         List<JobStatus> jobStatuses = this.applicationService.getUserDetails(jobId);
         return new ResponseEntity<>(jobStatuses,HttpStatus.OK);
     }
+
+    @PutMapping("updateApplicationStatus/{id}/{status}")
+    public ResponseEntity<ApiResponse> updateApplicationStatus(@PathVariable String id,@PathVariable String status) {
+        this.applicationService.updateApplicationStatus(id,status);
+        return new ResponseEntity<>(new ApiResponse("Application Status updated Successfully"),HttpStatus.OK);
+    }
 }
