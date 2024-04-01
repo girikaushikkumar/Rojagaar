@@ -7,11 +7,11 @@ const JobDetails = ({job}) => {
     <SafeAreaView>
       <View style={style.jobDetailsContainer}>
         <View>
-          <Text style={style.title}>{job.title}</Text>
-          <Image
+          <Text style={style.title}>{job.category}</Text>
+          {/* <Image
             source={require('../../assets/images/job.jpg')}
             style={style.jobImage}
-          />
+          /> */}
           <Text style={style.description}>{job.description}</Text>
         </View>
 

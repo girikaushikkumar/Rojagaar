@@ -58,3 +58,8 @@ export const jobStatus = async(userId) => {
   const response = await axios.get(`${API_BASE_URL}/application/getApplicationStatus/${userId}`);
   return response;
 }
+
+export const getJobSeekerDetails = async(jobId) => {
+  const response = await axios.get(`${API_BASE_URL}/application/getJobSeekerDetails/${jobId}`);
+  return response;
+}

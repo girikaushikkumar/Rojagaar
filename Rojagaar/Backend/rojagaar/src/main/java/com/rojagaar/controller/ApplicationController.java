@@ -1,8 +1,6 @@
 package com.rojagaar.controller;
 
-import com.rojagaar.payload.ApiResponse;
-import com.rojagaar.payload.ApplicationDto;
-import com.rojagaar.payload.ApplicationStatus;
+import com.rojagaar.payload.*;
 import com.rojagaar.services.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,5 +25,11 @@ public class ApplicationController {
     public ResponseEntity<List<ApplicationStatus>> getApplicationStatus(@PathVariable String userId) {
         List<ApplicationStatus> applicationStatus = this.applicationService.getApplicationStatus(userId);
         return new ResponseEntity<>(applicationStatus,HttpStatus.OK);
+    }
+
+    @GetMapping("getJobSeekerDetails/{jobId}")
+    public ResponseEntity<List<JobStatus>> getJobSeekerDetails(@PathVariable String jobId) {
+        List<JobStatus> jobStatuses = this.applicationService.getUserDetails(jobId);
+        return new ResponseEntity<>(jobStatuses,HttpStatus.OK);
     }
 }

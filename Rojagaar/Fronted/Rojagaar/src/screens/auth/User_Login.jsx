@@ -19,7 +19,7 @@ const User_Login = () => {
   //global state
   const navigation = useNavigation();
   const [userState, setUserState] = useContext(AuthContext);
-  console.log('user state: ', userState);
+  // console.log('user state: ', userState);
 
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');

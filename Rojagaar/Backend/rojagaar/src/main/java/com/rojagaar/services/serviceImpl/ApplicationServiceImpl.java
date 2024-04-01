@@ -66,6 +66,31 @@ public class ApplicationServiceImpl implements ApplicationService {
         return null;
     }
 
+    @Override
+    public List<JobStatus> getUserDetails(String jobId) {
+//        System.out.println(jobId);
+        Optional<List<Application>> OptionalApplications = this.applicationRepo.findByjobId(jobId);
+        if (OptionalApplications.isPresent()) {
+            List<JobStatus> jobStatuses = new ArrayList<>();
+            List<Application> applications = OptionalApplications.get();
+
+            for(Application application : applications) {
+//                System.out.println(userId+"   hiii");
+                Optional<User> OptionalUser = this.userRepo.findByUserName(application.getUserId());
+                if (OptionalUser.isPresent()) {
+                    JobStatus jobStatus = new JobStatus();
+                    jobStatus.setApplication(application);
+                    User user = OptionalUser.get();
+                    jobStatus.setUserDto(this.modelMapper.map(user, UserDto.class));
+                    jobStatuses.add(jobStatus);
+                }
+            }
+
+            return jobStatuses;
+        } else
+             return null;
+    }
+
     public Application dtoToApplication(ApplicationDto applicationDto) {
         return this.modelMapper.map(applicationDto,Application.class);
     }

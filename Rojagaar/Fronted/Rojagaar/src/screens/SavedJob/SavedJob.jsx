@@ -8,6 +8,7 @@ import {getJobCartDetails} from '../../api/JobCart';
 import {FlatList} from 'react-native-gesture-handler';
 import JobCard from '../../components/JobCard/JobCard';
 import { Routes } from '../../navigation/Routes';
+import HeaderText from '../../components/HeaderText/HeaderText';
 
 const SavedJob = ({navigation}) => {
   const [userState] = useContext(AuthContext);
@@ -32,6 +33,7 @@ const SavedJob = ({navigation}) => {
   return (
     <SafeAreaView
       style={[globalStyle.backgroundWhite, globalStyle.flex, style.container]}>
+      <HeaderText text={'Saved Job'}/>
       <FlatList
         data={job}
         renderItem={({item}) => (

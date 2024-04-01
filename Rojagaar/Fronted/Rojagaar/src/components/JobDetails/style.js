@@ -25,9 +25,13 @@ const style = StyleSheet.create({
         textAlign:'center'
     },
     jobDetailsContainer:{
-        marginTop:verticalScale(20),
-        marginLeft:horizontalScale(15),
-        marginRight:horizontalScale(15),
+        // marginTop:verticalScale(20),
+        // marginLeft:horizontalScale(15),
+        // marginRight:horizontalScale(15),
+        backgroundColor:'#dedddc',
+        padding:horizontalScale(10),
+        margin:horizontalScale(10),
+        borderRadius:horizontalScale(10)
     },
     title: {
         fontFamily:getFontFamily('Inter',600),
