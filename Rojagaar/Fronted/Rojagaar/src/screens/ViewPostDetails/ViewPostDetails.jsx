@@ -22,7 +22,7 @@ const ViewPostDetails = ({route}) => {
   const {job, jobPosterName, jobPosterPhoto} = route.params;
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
-      <HeaderText text="Job Details" />
+      {/* <HeaderText text="Job Details" /> */}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.posteContainer}>
           {

@@ -1,20 +1,24 @@
 package com.rojagaar.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Photo {
+public class Team {
     @Id
     private String id;
-    private Binary image;
+    private String teamName;
+    private String leaderId;
+    private List<User> teamMember;
+    private Photo photo;
+    private List<String> roles;
+    private List<User> joinRequest;
 }

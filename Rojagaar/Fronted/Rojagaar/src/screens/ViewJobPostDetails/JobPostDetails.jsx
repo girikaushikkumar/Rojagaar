@@ -20,7 +20,7 @@ const JobPostDetails = ({route}) => {
   },[status]);
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
-      <HeaderText text={'Job Details'}/>
+      {/* <HeaderText text={'Job Details'}/> */}
       <JobDetails job={job.job} />
     </SafeAreaView>
   );

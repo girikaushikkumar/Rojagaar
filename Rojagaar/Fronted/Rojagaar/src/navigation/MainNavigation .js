@@ -11,11 +11,14 @@ import {getFontFamily} from '../assets/fonts/helper';
 import {horizontalScale, scaleFontSize} from '../assets/style/scaling';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
+  faBars,
   faBookmark,
   faCirclePlus,
   faEye,
   faHouse,
+  faPeopleGroup,
   faUser,
+  faUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import Job from '../screens/Job/Job';
 import PostJob from '../screens/PostJob/PostJob';
@@ -25,6 +28,10 @@ import JobPostDetails from '../screens/ViewJobPostDetails/JobPostDetails';
 import ApplicationStatus from '../screens/ApplicationStatus/ApplicationStatus';
 import ViewPostDetails from '../screens/ViewPostDetails/ViewPostDetails';
 import JobPostStatus from '../screens/JobPostStatus/JobPostStatus';
+import { TouchableOpacity } from 'react-native';
+import { DrawerActions, useNavigation } from '@react-navigation/native';
+import CreateTeam from '../screens/Team/CreateTeam/CreateTeam';
+import JoinTeam from '../screens/Team/JoinTeam/JoinTeam';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -111,6 +118,24 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
+       <Drawer.Screen
+        name={Routes.CreateTeam}
+        component={CreateTeam}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faPeopleGroup} size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name={Routes.JoinTeam}
+        component={JoinTeam}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faUserPlus} size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -120,8 +145,19 @@ const AuthenticatedNavigator = () => {
 };
 
 const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
+  const navigation = useNavigation();
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator 
+    screenOptions={{
+                headerLeft: () => {
+                    return (
+                        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+                            <FontAwesomeIcon icon={faBars} color="#000000" size={24} style={{marginLeft: 10}}/>
+                        </TouchableOpacity>
+                    )
+                }
+            }}
+    >
       <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
