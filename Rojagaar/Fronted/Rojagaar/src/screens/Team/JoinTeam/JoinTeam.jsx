@@ -16,21 +16,18 @@ import { AuthContext } from '../../../context/authContext';
 const JoinTeam = () => {
   const [team, setTeam] = useState([]);
   const [userState] = useContext(AuthContext);
-  console.log(team.id)
 
   useEffect(() => {
     fetchData = async () => {
       const response = await getTeamInfo();
-      console.log(response.data);
       setTeam(response.data);
     };
     fetchData();
-  }, []);
+  }, [team]);
 
   const handleJoinTeam=async(teamId)=>{
     try {
       const response = await joinRequest(teamId,userState.user.userName);
-      console.log(response.data);
       Alert.alert(response.data.message);
     } catch (error) {
       console.log(error);

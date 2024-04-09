@@ -37,14 +37,25 @@ public class TeamServiceImpl implements TeamService {
         if (team == null) {
             return new ApiResponse("Team not found");
         }
+//        System.out.println(team.getJoinRequest().size());
+        if(team.getTeamMember()!= null ){
+            for (User user1 : team.getTeamMember()) {
+                if(user1.getUsername().equals(user.getUsername()))
+                    return new ApiResponse("You are already a member of this team");
+            }
 
-        if(team.getTeamMember()!= null && team.getTeamMember().contains(user))
-            return new ApiResponse("You are already a member of this team");
-        if (team.getJoinRequest() != null && team.getJoinRequest().contains(user))
-            return new ApiResponse("You have already sent a request to join this team");
+        }
+
+        if (team.getJoinRequest() != null ) {
+            for(User user1 : team.getJoinRequest()) {
+                if(user1.getUsername().equals(user.getUsername()))
+                    return new ApiResponse("You have already sent a request to join this team");
+            }
+        }
         if (team.getJoinRequest() == null) {
             team.setJoinRequest(new ArrayList<>());
         }
+
         team.getJoinRequest().add(user);
 
         this.teamRepo.save(team);

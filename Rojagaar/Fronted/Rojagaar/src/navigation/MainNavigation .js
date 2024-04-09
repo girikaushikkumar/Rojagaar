@@ -32,9 +32,13 @@ import { TouchableOpacity } from 'react-native';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import CreateTeam from '../screens/Team/CreateTeam/CreateTeam';
 import JoinTeam from '../screens/Team/JoinTeam/JoinTeam';
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import ApplicationStatusTabTitle from '../components/ApplicationStatusTabTitle/ApplicationStatusTabTitle';
+import JobStatusDetails from '../components/JobStatusDetails/JobStatusDetails';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const ApplicationStatusTab = createMaterialTopTabNavigator();
 
 const NonAuthenticatedNavigator = () => {
   return (
@@ -46,6 +50,36 @@ const NonAuthenticatedNavigator = () => {
     </Stack.Navigator>
   );
 };
+
+export const ApplicationStatusTabNavigation = () => {
+  return(
+    <ApplicationStatusTab.Navigator 
+       screenOptions={{
+        tabBarIndicatorStyle:{
+          backgroundColor:'transparent'
+        },
+        tabBarStyle: {
+          zIndex:0,
+          elevation:0
+        }
+       }}
+    >
+    <ApplicationStatusTab.Screen name='Tab1'
+      options={{tabBarLabel:({focused}) => <ApplicationStatusTabTitle isFocused={focused} title={'Pending'}/>}}
+      component={JobStatusDetails} initialParams={{status: 'Pending'}}
+    />
+    <ApplicationStatusTab.Screen name='Tab2'
+      options={{tabBarLabel:({focused}) => <ApplicationStatusTabTitle isFocused={focused} title={'Accepted'}/>}}
+      component={JobStatusDetails} initialParams={{status: 'Accepted'}}
+    />
+    <ApplicationStatusTab.Screen name='Tab3'
+      options={{tabBarLabel:({focused}) => <ApplicationStatusTabTitle isFocused={focused} title={'Rejected'}/>}}
+      component={JobStatusDetails} initialParams={{status: 'Rejected'}}
+    />
+
+    </ApplicationStatusTab.Navigator>
+  );
+}
 
 const DrawerNavigator = ({job}) => {
   return (

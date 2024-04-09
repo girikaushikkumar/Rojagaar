@@ -12,7 +12,7 @@ export const applyJob = async( userId,jobId,applicationDate,status) => {
     return response;
   };
   
-  export const jobStatus = async(userId) => {
+  export const getJobStatus = async(userId) => {
     const response = await axios.get(`${API_BASE_URL}/application/getApplicationStatus/${userId}`);
     return response;
   };

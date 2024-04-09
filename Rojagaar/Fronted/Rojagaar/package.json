@@ -18,6 +18,7 @@
     "@react-native-async-storage/async-storage": "^1.22.3",
     "@react-native-community/datetimepicker": "^7.6.3",
     "@react-navigation/drawer": "^6.6.14",
+    "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.1.12",
     "@react-navigation/stack": "^6.3.25",
     "axios": "^1.6.7",
@@ -30,11 +31,13 @@
     "react-native-gesture-handler": "^2.15.0",
     "react-native-image-picker": "^7.1.1",
     "react-native-modal": "^13.0.1",
+    "react-native-pager-view": "^6.3.0",
     "react-native-reanimated": "^3.8.1",
     "react-native-responsive-dimensions": "^3.1.1",
     "react-native-safe-area-context": "^4.9.0",
     "react-native-screens": "^3.29.0",
-    "react-native-svg": "^15.0.0"
+    "react-native-svg": "^15.0.0",
+    "react-native-tab-view": "^3.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
