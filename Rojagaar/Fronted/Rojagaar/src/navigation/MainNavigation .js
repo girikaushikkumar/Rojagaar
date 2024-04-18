@@ -56,7 +56,7 @@ export const ApplicationStatusTabNavigation = () => {
     <ApplicationStatusTab.Navigator 
        screenOptions={{
         tabBarIndicatorStyle:{
-          backgroundColor:'transparent'
+          // backgroundColor:'transparent'
         },
         tabBarStyle: {
           zIndex:0,

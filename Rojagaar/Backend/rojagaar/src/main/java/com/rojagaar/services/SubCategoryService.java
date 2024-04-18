@@ -6,7 +6,7 @@ import com.rojagaar.payload.SubCategoryDto;
 import java.util.List;
 
 public interface SubCategoryService {
-    public void createSubCategory(SubCategoryDto subCategory, String CategoryName);
+    public void createSubCategory(SubCategoryDto subCategory, String CategoryId);
     public void updateSubCategory(SubCategoryDto subCategory,String subCategoryName);
     public void delteSubCategory(String subCategoryName);
     public List<SubCategory> getAllSubCategory();

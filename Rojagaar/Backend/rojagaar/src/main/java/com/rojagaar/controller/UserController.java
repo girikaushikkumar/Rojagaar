@@ -1,7 +1,9 @@
 package com.rojagaar.controller;
 
+import com.rojagaar.model.Address;
 import com.rojagaar.model.User;
 import com.rojagaar.payload.ApiResponse;
+import com.rojagaar.payload.Skills;
 import com.rojagaar.payload.UserDto;
 import com.rojagaar.payload.auth.JwtAuthRequest;
 import com.rojagaar.payload.auth.JwtAuthResponse;
@@ -20,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,11 +62,27 @@ public class UserController {
         return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("updateUser")
-    public ResponseEntity<ApiResponse> updateUser(@RequestBody UserDto userDto,@RequestParam String userName) {
-        this.userService.updateUser(userDto,userName);
-        return new ResponseEntity<>(new ApiResponse("Updated successfully"),HttpStatus.OK);
+    @PutMapping("updateUser/{userName}")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable String userName) {
+        UserDto user = this.userService.updateUser(userDto,userName);
+//        System.out.println("userDto");
+//        System.out.println(userDto1.toString());
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
+    @PutMapping("updateUserSkill/{userName}")
+    public ResponseEntity<UserDto> updateUserSkill(@RequestBody List<Skills> skills, @PathVariable String userName) {
+        UserDto user = this.userService.setSkills(skills, userName);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("updateLocation/{userName}")
+    public ResponseEntity<UserDto> updateLocation(@RequestBody Address address,@PathVariable String userName) {
+        System.out.println(userName);
+        UserDto user = this.userService.updateLocation(address,userName);
+        return new ResponseEntity<>(user,HttpStatus.OK);
+    }
+
 
     @DeleteMapping("deleteUser")
     public ResponseEntity<ApiResponse> deleteUser(@RequestParam String userName) {

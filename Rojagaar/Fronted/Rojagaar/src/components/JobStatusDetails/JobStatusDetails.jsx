@@ -20,7 +20,7 @@ const JobStatusDetails = ({route}) => {
       setJobStatus(response.data);
     };
     getApplicationStatus();
-  }, []);
+  }, [jobStatus]);
 
   const getStatusColor = () => {
     switch (status) {

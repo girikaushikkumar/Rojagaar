@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto {
-    private String id;
-    private String categoryName;
-    private List<String> subCategory;
+public class Skills {
+    private String skill;
+    private List<String> subSkills;
 }

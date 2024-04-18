@@ -1,5 +1,6 @@
 package com.rojagaar.model;
 
+import com.rojagaar.payload.Skills;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,6 @@ public class User implements UserDetails {
     private String id;
 
     private String userName;
-
     private String email;
     private String name;
     private String gender;
@@ -36,7 +36,7 @@ public class User implements UserDetails {
     private Address address;
     @DBRef
     private Photo photo;
-
+    List<Skills> skills;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authories = Collections.singletonList(new SimpleGrantedAuthority("Admin"));

@@ -34,6 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
         } else {
             Category category1 = new Category();
             category1.setCategoryName(categoryDto.getCategoryName());
+            category1.setSubCategory(categoryDto.getSubCategory());
             this.categoryRepo.save(category1);
             return new ApiResponse("Category created Successfully");
         }
@@ -47,6 +48,8 @@ public class CategoryServiceImpl implements CategoryService {
         for(Category category:categories) {
             CategoryDto categoryDto = new CategoryDto();
             categoryDto.setCategoryName(category.getCategoryName());
+            categoryDto.setId(category.getId());
+            categoryDto.setSubCategory(category.getSubCategory());
             categoryDtos.add(categoryDto);
         }
         return categoryDtos;

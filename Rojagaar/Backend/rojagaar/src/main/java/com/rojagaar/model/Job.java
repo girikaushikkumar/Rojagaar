@@ -30,4 +30,5 @@ public class Job {
     private boolean team;
     private String imageId;
     private String jobPosterId;
+
 }

@@ -21,8 +21,8 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     @Autowired
     private CategoryRepo categoryRepo;
     @Override
-    public void createSubCategory(SubCategoryDto subCategoryDto, String CategoryName) {
-        Category category = this.categoryRepo.findByCategoryName(CategoryName).orElseThrow(()->new ResourceNotFoundException("Category","Name",CategoryName));
+    public void createSubCategory(SubCategoryDto subCategoryDto, String CategoryId) {
+        Category category = this.categoryRepo.findById(CategoryId).orElseThrow(()->new ResourceNotFoundException("Category","Name",CategoryId));
         SubCategory subCategory = new SubCategory();
         subCategory.setSubCategoryName(subCategoryDto.getSubCategoryName());
         subCategory.setCategory(category);
@@ -48,7 +48,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     }
 
     @Override
-    public List<SubCategory> getAllSubCategoryAccordingToCategory(String categoryName) {
+    public List<SubCategory> getAllSubCategoryAccordingToCategory(String categoryId) {
 //        System.out.println(categoryName);
 //        List<SubCategory> subCategories = this.subCategoryRepo.findAll();
 //        List<SubCategory> subCategories1 = new ArrayList<>();
@@ -62,7 +62,7 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 //        }
 
         List<SubCategory> subCategories = this.subCategoryRepo.findAll().
-                stream().filter(subCategory -> categoryName.equals(subCategory.getCategory().getCategoryName())).collect(Collectors.toList());
+                stream().filter(subCategory -> categoryId.equals(subCategory.getCategory().getId())).collect(Collectors.toList());
         return subCategories;
     }
 }

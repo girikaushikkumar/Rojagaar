@@ -1,19 +1,223 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   SafeAreaView,
   Image,
   Text,
-  StyleSheet,
   ScrollView,
   View,
+  TouchableOpacity,
+  Keyboard,
+  Alert,
 } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 import FooterMenu from '../../components/Menu/FooterMenu/FooterMenu';
 import {style} from './style';
 import globalStyle from '../../assets/style/globalStyle';
 import {AuthContext} from '../../context/authContext';
 import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
+import {TextInput} from 'react-native-gesture-handler';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {
+  faCheck,
+  faEnvelope,
+  faMobileScreen,
+  faPencilAlt,
+  faPersonCane,
+  faUser,
+  faUserTie,
+  faVenusMars,
+} from '@fortawesome/free-solid-svg-icons';
+import SubmitBtn from '../../components/Forms/SubmitBtn';
+import SkillsScreen from './SkillsScreen';
+import {updateUser} from '../../api/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LocationTab from './LocationTab';
 const Profile = () => {
-  const [userState] = useContext(AuthContext);
+  const [userState, setUserState] = useContext(AuthContext);
+  const [name, setName] = useState(userState.user.name);
+  const [phoneNo, setPhoneNo] = useState(userState.user.phoneNo);
+  const [email, setEmail] = useState(userState.user.email);
+  const [age, SetAge] = useState(userState.user.age);
+  const [gender, setGender] = useState(userState.user.gender);
+  const [editMode, setEditMode] = useState(false);
+
+  const [activeTab, setActiveTab] = useState('BASIC DETAILS');
+
+  const handleTabPress = tabName => {
+    setActiveTab(tabName);
+  };
+
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
+  const BasicDetailsContent = () => (
+    <View>
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faUserTie} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Name</Text>
+          {editMode ? ( // Render TextInput in edit mode
+            <TextInput
+              style={style.textInput}
+              placeholder="Enter Fullname"
+              onChangeText={text => setName(text)}
+              value={name}
+            />
+          ) : (
+            // Render Text component in view mode
+            <Text style={style.textValue}>{name}</Text>
+          )}
+        </View>
+      </View>
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faUser} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>User Name</Text>
+          <Text style={style.textValue}>{userState.user.userName}</Text>
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faMobileScreen} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Mobile</Text>
+          {editMode ? ( // Render TextInput in edit mode
+            <TextInput
+              style={style.textInput}
+              placeholder="Enter Phone Number"
+              onChangeText={text => setPhoneNo(text)}
+              value={phoneNo.toString()}
+            />
+          ) : (
+            // Render Text component in view mode
+            <Text style={style.textValue}>{phoneNo}</Text>
+          )}
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faEnvelope} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Email</Text>
+          {editMode ? ( // Render TextInput in edit mode
+            <TextInput
+              style={style.textInput}
+              placeholder="Enter Email"
+              onChangeText={text => setEmail(text)}
+              value={email}
+            />
+          ) : (
+            // Render Text component in view mode
+            <Text style={style.textValue}>{email}</Text>
+          )}
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faPersonCane} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Age</Text>
+          {editMode ? ( // Render TextInput in edit mode
+            <TextInput
+              style={style.textInput}
+              placeholder="Enter Age"
+              onChangeText={text => SetAge(text)}
+              value={age.toString()}
+            />
+          ) : (
+            // Render Text component in view mode
+            <Text style={style.textValue}>{age}</Text>
+          )}
+        </View>
+      </View>
+
+      <View style={[style.basicInfoContainer, {borderBottomWidth: 2}]}>
+        <FontAwesomeIcon icon={faVenusMars} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Gender</Text>
+          {editMode ? ( // Render TextInput in edit mode
+            <Picker
+              selectedValue={gender}
+              style={style.picker}
+              onValueChange={itemValue => setGender(itemValue)}>
+              <Picker.Item label="Select Gender" value="" />
+              <Picker.Item label="Male" value="male" />
+              <Picker.Item label="Female" value="female" />
+              <Picker.Item label="Other" value="other" />
+            </Picker>
+          ) : (
+            // Render Text component in view mode
+            <Text style={style.textValue}>{gender}</Text>
+          )}
+        </View>
+      </View>
+
+      <TouchableOpacity
+        onPress={editMode ? handleUpdate : handleEdit}
+        style={style.button}>
+        <Text style={style.buttonText}>{editMode ? 'Update' : 'Edit'}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  const LocationContent = () => (
+    <View>
+      <LocationTab/>
+    </View>
+  );
+
+  const SkillContent = () => (
+    <View>
+      <Text>Skill Content</Text>
+      <SkillsScreen />
+    </View>
+  );
+
+  const handleEdit = () => {
+    setEditMode(!editMode);
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const response = await updateUser(
+        name,
+        userState.user.userName,
+        phoneNo,
+        email,
+        age,
+        gender,
+      );
+
+      if (response.status === 200) {
+        console.log(response.data);
+        const responseData = {
+          user: response.data,
+          token: userState.token,
+        };
+        setUserState(responseData);
+        await AsyncStorage.setItem('@auth', JSON.stringify(responseData));
+        Alert.alert('User Update successfully');
+      }
+    } catch (error) {
+      Alert.alert('something went wrong');
+    }
+    setEditMode(false);
+  };
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'BASIC DETAILS':
+        return <BasicDetailsContent />;
+      case 'LOCATION':
+        return <LocationContent />;
+      case 'SKILL':
+        return <SkillContent />;
+      default:
+        return null;
+    }
+  };
+
   // console.log(userState);
   return (
     <SafeAreaView
@@ -40,64 +244,28 @@ const Profile = () => {
         </View>
         <Text style={style.name}>{userState.user.name}</Text>
 
-        <View style={style.userInfoContainer}>
-          <View style={style.textAlignContainer}>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>UserName : </Text>
-                <Text style={style.textValue}>{userState.user.userName}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Phone Number : </Text>
-                <Text style={style.textValue}>{userState.user.phoneNo}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Age : </Text>
-                <Text style={style.textValue}>{userState.user.age}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Gender : </Text>
-                <Text style={style.textValue}>{userState.user.gender}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Skill : </Text>
-                <Text style={style.textValue}>{userState.user.skill}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Email : </Text>
-                <Text style={style.textValue}>{userState.user.email}</Text>
-            </View>
-          </View>
+        <View style={style.tabNavigate}>
+          <TouchableOpacity
+            onPress={() => handleTabPress('BASIC DETAILS')}
+            style={[
+              style.tab,
+              activeTab === 'BASIC DETAILS' && style.activeTab,
+            ]}>
+            <Text style={style.text}>BASIC DETAILS</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleTabPress('LOCATION')}
+            style={[style.tab, activeTab === 'LOCATION' && style.activeTab]}>
+            <Text style={style.text}>LOCATION</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleTabPress('SKILL')}
+            style={[style.tab, activeTab === 'SKILL' && style.activeTab]}>
+            <Text style={style.text}>SKILL</Text>
+          </TouchableOpacity>
         </View>
 
-        <View style={style.userInfoContainer}>
-          <View style={style.textAlignContainer}>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Village : </Text>
-                <Text style={style.textValue}>{userState.user.address.village}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Post Office : </Text>
-                <Text style={style.textValue}>{userState.user.address.post}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Block : </Text>
-                <Text style={style.textValue}>{userState.user.address.block}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>District : </Text>
-                <Text style={style.textValue}>{userState.user.address.district}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>State : </Text>
-                <Text style={style.textValue}>{userState.user.address.state}</Text>
-            </View>
-            <View style={style.textContainer}>
-                <Text style={style.textKey}>Pin code : </Text>
-                <Text style={style.textValue}>{userState.user.address.pincode}</Text>
-            </View>
-          </View>
-        </View>
-        
+        <View>{renderContent()}</View>
       </ScrollView>
       <FooterMenu />
     </SafeAreaView>

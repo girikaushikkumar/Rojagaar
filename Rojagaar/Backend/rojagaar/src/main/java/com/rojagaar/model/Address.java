@@ -11,10 +11,11 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class Address {
     private String village;
-    private String post;
-    private String Block;
     private String District;
+    private String tourism;
+    private String road;
     private String state;
     private long pincode;
+    private String country;
 
 }

@@ -18,9 +18,9 @@ public class SubCategoryController {
     private SubCategoryService subCategoryService;
 
     @PostMapping("create")
-    public ResponseEntity<ApiResponse> createSubCategory(@RequestBody SubCategoryDto subCategoryDto, @RequestParam String categoryName) {
-        this.subCategoryService.createSubCategory(subCategoryDto,categoryName);
-        return new ResponseEntity<>(new ApiResponse("SubCategory created Successfully"), HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse> createSubCategory(@RequestBody SubCategoryDto subCategoryDto, @RequestParam String CategoryId) {
+        this.subCategoryService.createSubCategory(subCategoryDto,CategoryId);
+        return new ResponseEntity<>(new ApiResponse("SubCategory created Successfully"), HttpStatus.OK);
     }
 
     @PutMapping("update")
@@ -32,7 +32,7 @@ public class SubCategoryController {
     @GetMapping("getAllSubCategory")
     public ResponseEntity<List<SubCategory>> getAllSubCategory() {
         List<SubCategory> subCategories = this.subCategoryService.getAllSubCategory();
-        return new ResponseEntity<>(subCategories,HttpStatus.FOUND);
+        return new ResponseEntity<>(subCategories,HttpStatus.OK);
     }
 
     @DeleteMapping("delete")
@@ -41,9 +41,9 @@ public class SubCategoryController {
         return new ResponseEntity<>(new ApiResponse("Delete Successfully"),HttpStatus.OK);
     }
 
-    @GetMapping("getSubCategoryAccordingCategory")
-    public ResponseEntity<List<SubCategory>> getSubCategoryAccorCategory(@RequestParam String categoryName) {
-        List<SubCategory> subCategories = this.subCategoryService.getAllSubCategoryAccordingToCategory(categoryName);
-        return new ResponseEntity<>(subCategories,HttpStatus.FOUND);
+    @GetMapping("getSubCategoryAccordingCategory/{categoryId}")
+    public ResponseEntity<List<SubCategory>> getSubCategoryAccorCategory(@PathVariable String categoryId) {
+        List<SubCategory> subCategories = this.subCategoryService.getAllSubCategoryAccordingToCategory(categoryId);
+        return new ResponseEntity<>(subCategories,HttpStatus.OK);
     }
 }

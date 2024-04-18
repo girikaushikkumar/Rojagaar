@@ -42,6 +42,23 @@ const getImage = async (imageId) => {
   }
 };
 
+export const updateUser = async (name,userName,phoneNo,email,age,gender) => {
+  const response = await axios.put(`${API_BASE_URL}/user/updateUser/${userName}`,{name,phoneNo,email,age,gender});
+  return response;
+}
+
+export const updateSkills = async (skills,userName) => {
+  const response = await axios.put(`${API_BASE_URL}/user/updateUserSkill/${userName}`,{skills});
+  
+  console.log(response.data);
+  return response;
+};
+
+export const updateLocation = async (userName,village,District,tourism,road,state,pincode,country) => {
+  const response = await axios.put(`${API_BASE_URL}/user/updateLocation/${userName}`,{village,District,tourism,road,state,pincode,country});
+  return response;
+}
+
 
 
 

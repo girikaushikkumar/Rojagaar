@@ -1,8 +1,10 @@
 package com.rojagaar.services.serviceImpl;
 
 import com.rojagaar.exception.ResourceNotFoundException;
+import com.rojagaar.model.Address;
 import com.rojagaar.model.User;
 import com.rojagaar.payload.ApiResponse;
+import com.rojagaar.payload.Skills;
 import com.rojagaar.payload.UserDto;
 import com.rojagaar.repository.UserRepo;
 import com.rojagaar.services.UserService;
@@ -45,14 +47,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(UserDto userDto, String userName) {
+    public UserDto updateUser(UserDto userDto, String userName) {
         User user = this.userRepo.findByUserName(userName).orElseThrow(()->new ResourceNotFoundException("User","UserName",userName));
         user.setAge(userDto.getAge());
-        user.setSkill(userDto.getSkill());
         user.setEmail(userDto.getEmail());
         user.setName(userDto.getName());
-        user.setAddress(userDto.getAddress());
-        this.userRepo.save(user);
+        user.setGender(userDto.getGender());
+        user.setPhoneNo(userDto.getPhoneNo());
+        User updatedUser = this.userRepo.save(user);
+        UserDto userDto1 = this.userToDto(updatedUser);
+        userDto1.setUserName(updatedUser.getUsername());
+
+        return userDto1;
     }
 
     @Override
@@ -77,13 +83,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto LoginUser(String userName, String password) {
-        System.out.println("hii");
+    public User LoginUser(String userName, String password) {
         User user = this.userRepo.findByUserNameAndPassword(userName, password)
                 .orElseThrow(() -> new ResourceNotFoundException("check userName and password"));
 
-        UserDto userDto = this.userToDto(user);
-        return userDto;
+
+        return user;
     }
 
     @Override
@@ -99,6 +104,28 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+    @Override
+    public UserDto setSkills(List<Skills> skills, String userName) {
+        User user = this.userRepo.findByUserName(userName).orElseThrow(()->new ResourceNotFoundException("User","UserName",userName));
+
+        user.setSkills(skills);
+        User updatedUser = this.userRepo.save(user);
+        UserDto userDto = this.userToDto(updatedUser);
+        userDto.setUserName(updatedUser.getUsername());
+        return userDto;
+    }
+
+    @Override
+    public UserDto updateLocation(Address address, String userName) {
+        User user = this.userRepo.findByUserName(userName).orElseThrow(()->new ResourceNotFoundException("User","UserName",userName));
+        user.setAddress(address);
+        User updatedUser = this.userRepo.save(user);
+        UserDto userDto = this.userToDto(updatedUser);
+        userDto.setUserName(updatedUser.getUsername());
+        return userDto;
+    }
+
 
     public User dtoToUser(UserDto userDto) {
         User user = this.modelMapper.map(userDto,User.class);
