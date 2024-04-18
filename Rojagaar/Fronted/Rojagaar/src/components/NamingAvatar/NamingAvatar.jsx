@@ -34,8 +34,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'gray',
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft:horizontalScale(15),
-        marginTop:verticalScale(9)
     },
     text: {
         color: '#000000',

@@ -61,7 +61,7 @@ const handleSave = async() => {
       console.log(updated);
     }
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 
   console.log('Selected Data:',selectedData)
@@ -70,23 +70,26 @@ const handleSave = async() => {
 
 
 const handleSelectedData = () => {
-  const newData = selectedCategories.map((category) => {
+  const formattedData = selectedCategories.map((category) => {
     return {
       skill: category.categoryName,
-      subSkills: selectedSubcategories.filter((subcategory) =>
-        category.subCategory.includes(subcategory)
-      ),
+      subSkills: selectedSubcategories
+        .filter((subcategory) => category.subCategory.includes(subcategory)),
     };
   });
-  // Check for empty subCategory and assign an empty array if needed
-  newData.forEach((item) => {
-    if (!item.subSkills.length) {
-      item.subSkills = [];
-    }
-  });
-  setSelectedData(newData);
-  console.log('added');
+
+  // Convert subSkills arrays to arrays of strings
+  const formattedDataStrings = formattedData.map((item) => ({
+    skill: item.skill,
+    subSkills: item.subSkills.map((subSkill) => subSkill),
+  }));
+
+  setSelectedData(formattedDataStrings);
 };
+
+
+
+
 
   return (
     <View>

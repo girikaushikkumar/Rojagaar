@@ -35,6 +35,8 @@ import JoinTeam from '../screens/Team/JoinTeam/JoinTeam';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import ApplicationStatusTabTitle from '../components/ApplicationStatusTabTitle/ApplicationStatusTabTitle';
 import JobStatusDetails from '../components/JobStatusDetails/JobStatusDetails';
+import Hiring from '../screens/Hire/Hiring';
+import { faHireAHelper } from '@fortawesome/free-brands-svg-icons';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -170,6 +172,17 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
+
+  <Drawer.Screen
+          name={Routes.Hiring}
+          component={Hiring}
+          options={{
+            drawerIcon: ({color, size}) => (
+              <FontAwesomeIcon icon={faHireAHelper} size={size} color={color} />
+            ),
+          }}
+        />
+
     </Drawer.Navigator>
   );
 };

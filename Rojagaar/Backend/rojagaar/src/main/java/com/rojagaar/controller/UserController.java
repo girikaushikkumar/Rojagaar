@@ -24,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,7 @@ public class UserController {
     }
 
     @PutMapping("updateUserSkill/{userName}")
-    public ResponseEntity<UserDto> updateUserSkill(@RequestBody List<Skills> skills, @PathVariable String userName) {
+    public ResponseEntity<UserDto> updateUserSkill(@RequestBody ArrayList<Skills> skills, @PathVariable String userName) {
         UserDto user = this.userService.setSkills(skills, userName);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

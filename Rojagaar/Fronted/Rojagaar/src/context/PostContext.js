@@ -21,7 +21,7 @@ const PostProvider = ({children}) => {
         };
     
         fetchJobs();
-      }, [job]);
+      }, []);
 
       if(loading){
         return (

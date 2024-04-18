@@ -48,7 +48,7 @@ export const updateUser = async (name,userName,phoneNo,email,age,gender) => {
 }
 
 export const updateSkills = async (skills,userName) => {
-  const response = await axios.put(`${API_BASE_URL}/user/updateUserSkill/${userName}`,{skills});
+  const response = await axios.put(`${API_BASE_URL}/user/updateUserSkill/${userName}`,skills);
   
   console.log(response.data);
   return response;
