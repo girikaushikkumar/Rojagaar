@@ -16,6 +16,7 @@ import {
   faCirclePlus,
   faEye,
   faHouse,
+  faLayerGroup,
   faPeopleGroup,
   faUser,
   faUserPlus,
@@ -28,15 +29,16 @@ import JobPostDetails from '../screens/ViewJobPostDetails/JobPostDetails';
 import ApplicationStatus from '../screens/ApplicationStatus/ApplicationStatus';
 import ViewPostDetails from '../screens/ViewPostDetails/ViewPostDetails';
 import JobPostStatus from '../screens/JobPostStatus/JobPostStatus';
-import { TouchableOpacity } from 'react-native';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import {TouchableOpacity} from 'react-native';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
 import CreateTeam from '../screens/Team/CreateTeam/CreateTeam';
 import JoinTeam from '../screens/Team/JoinTeam/JoinTeam';
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import ApplicationStatusTabTitle from '../components/ApplicationStatusTabTitle/ApplicationStatusTabTitle';
 import JobStatusDetails from '../components/JobStatusDetails/JobStatusDetails';
 import Hiring from '../screens/Hire/Hiring';
-import { faHireAHelper } from '@fortawesome/free-brands-svg-icons';
+import {faHireAHelper} from '@fortawesome/free-brands-svg-icons';
+import JobInvites from '../screens/JobInvites/JobInvites';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -54,34 +56,50 @@ const NonAuthenticatedNavigator = () => {
 };
 
 export const ApplicationStatusTabNavigation = () => {
-  return(
-    <ApplicationStatusTab.Navigator 
-       screenOptions={{
-        tabBarIndicatorStyle:{
+  return (
+    <ApplicationStatusTab.Navigator
+      screenOptions={{
+        tabBarIndicatorStyle: {
           // backgroundColor:'transparent'
         },
         tabBarStyle: {
-          zIndex:0,
-          elevation:0
-        }
-       }}
-    >
-    <ApplicationStatusTab.Screen name='Tab1'
-      options={{tabBarLabel:({focused}) => <ApplicationStatusTabTitle isFocused={focused} title={'Pending'}/>}}
-      component={JobStatusDetails} initialParams={{status: 'Pending'}}
-    />
-    <ApplicationStatusTab.Screen name='Tab2'
-      options={{tabBarLabel:({focused}) => <ApplicationStatusTabTitle isFocused={focused} title={'Accepted'}/>}}
-      component={JobStatusDetails} initialParams={{status: 'Accepted'}}
-    />
-    <ApplicationStatusTab.Screen name='Tab3'
-      options={{tabBarLabel:({focused}) => <ApplicationStatusTabTitle isFocused={focused} title={'Rejected'}/>}}
-      component={JobStatusDetails} initialParams={{status: 'Rejected'}}
-    />
-
+          zIndex: 0,
+          elevation: 0,
+        },
+      }}>
+      <ApplicationStatusTab.Screen
+        name="Tab1"
+        options={{
+          tabBarLabel: ({focused}) => (
+            <ApplicationStatusTabTitle isFocused={focused} title={'Pending'} />
+          ),
+        }}
+        component={JobStatusDetails}
+        initialParams={{status: 'Pending'}}
+      />
+      <ApplicationStatusTab.Screen
+        name="Tab2"
+        options={{
+          tabBarLabel: ({focused}) => (
+            <ApplicationStatusTabTitle isFocused={focused} title={'Accepted'} />
+          ),
+        }}
+        component={JobStatusDetails}
+        initialParams={{status: 'Accepted'}}
+      />
+      <ApplicationStatusTab.Screen
+        name="Tab3"
+        options={{
+          tabBarLabel: ({focused}) => (
+            <ApplicationStatusTabTitle isFocused={focused} title={'Rejected'} />
+          ),
+        }}
+        component={JobStatusDetails}
+        initialParams={{status: 'Rejected'}}
+      />
     </ApplicationStatusTab.Navigator>
   );
-}
+};
 
 const DrawerNavigator = ({job}) => {
   return (
@@ -154,7 +172,7 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
-       <Drawer.Screen
+      <Drawer.Screen
         name={Routes.CreateTeam}
         component={CreateTeam}
         options={{
@@ -173,16 +191,25 @@ const DrawerNavigator = ({job}) => {
         }}
       />
 
-  <Drawer.Screen
-          name={Routes.Hiring}
-          component={Hiring}
-          options={{
-            drawerIcon: ({color, size}) => (
-              <FontAwesomeIcon icon={faHireAHelper} size={size} color={color} />
-            ),
-          }}
-        />
+      <Drawer.Screen
+        name={Routes.Hiring}
+        component={Hiring}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faHireAHelper} size={size} color={color} />
+          ),
+        }}
+      />
 
+<Drawer.Screen
+        name={Routes.JobInvites}
+        component={JobInvites}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faLayerGroup} size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -194,24 +221,45 @@ const AuthenticatedNavigator = () => {
 const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
   const navigation = useNavigation();
   return (
-    <Stack.Navigator 
-    screenOptions={{
-                headerLeft: () => {
-                    return (
-                        <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-                            <FontAwesomeIcon icon={faBars} color="#000000" size={24} style={{marginLeft: 10}}/>
-                        </TouchableOpacity>
-                    )
-                }
-            }}
-    >
+    <Stack.Navigator
+      screenOptions={{
+        headerLeft: () => {
+          return (
+            <TouchableOpacity
+              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+              <FontAwesomeIcon
+                icon={faBars}
+                color="#000000"
+                size={24}
+                style={{marginLeft: 10}}
+              />
+            </TouchableOpacity>
+          );
+        },
+      }}>
       <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
-      <Stack.Screen name={Routes.ApplyJob} component={ApplyJob} initialParams={{job, jobPosterName, jobPosterPhoto}}/>
-      <Stack.Screen name={Routes.JobPostDetails} component={JobPostDetails} initialParams={job} />
-      <Stack.Screen name={Routes.ViewPostDetails} component={ViewPostDetails} initialParams={{job, jobPosterName, jobPosterPhoto}}/>
-      <Stack.Screen name={Routes.JobPostStatus} component={JobPostStatus} initialParams={job}/>
+      <Stack.Screen
+        name={Routes.ApplyJob}
+        component={ApplyJob}
+        initialParams={{job, jobPosterName, jobPosterPhoto}}
+      />
+      <Stack.Screen
+        name={Routes.JobPostDetails}
+        component={JobPostDetails}
+        initialParams={job}
+      />
+      <Stack.Screen
+        name={Routes.ViewPostDetails}
+        component={ViewPostDetails}
+        initialParams={{job, jobPosterName, jobPosterPhoto}}
+      />
+      <Stack.Screen
+        name={Routes.JobPostStatus}
+        component={JobPostStatus}
+        initialParams={job}
+      />
     </Stack.Navigator>
   );
 };

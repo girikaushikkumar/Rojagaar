@@ -1,5 +1,7 @@
 package com.rojagaar.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.rojagaar.serialization.BinaryDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Photo {
     @Id
     private String id;
+
+    @JsonDeserialize(using = BinaryDeserializer.class)
     private Binary image;
 }

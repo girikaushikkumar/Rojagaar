@@ -25,5 +25,18 @@ const style = StyleSheet.create({
         color: '#000000',
         marginLeft:horizontalScale(10)
     },
+    btn: {
+        backgroundColor: '#0B6EFE',
+        borderRadius: verticalScale(5),
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:horizontalScale(90),
+        height:verticalScale(40)
+      },
+      btntext: {
+        fontFamily: getFontFamily('Inter', 600),
+        fontSize: scaleFontSize(24),
+        color: '#FFFFFF'
+      }
 });
 export default style;

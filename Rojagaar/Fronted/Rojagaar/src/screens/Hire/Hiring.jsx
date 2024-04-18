@@ -1,81 +1,109 @@
-import {FlatList, Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { Button, FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
 import style from './style';
-import {getAllEmployee} from '../../api/Hire';
+import { getAllEmployee, sendJobInvitation } from '../../api/Hire';
 import globalStyle from '../../assets/style/globalStyle';
 import SearchQuery from '../../components/SearchQuery/SearchQuery';
 import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import SubmitBtn from '../../components/Forms/SubmitBtn';
 import PopupWithInput from '../../components/PopupWithInput/PopupWithInput';
+import { AuthContext } from '../../context/authContext';
 
 const Hiring = () => {
+  const [userState] = useContext(AuthContext);
   const [employee, setEmployee] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null); // State to store the selected employee
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (item) => { // Pass the item as an argument
+    setSelectedEmployee(item); // Set the selected employee
     setIsModalVisible(true);
   };
 
   const handleCloseModal = () => {
     setIsModalVisible(false);
+    setSelectedEmployee(null); // Clear selected employee on close
   };
 
-  const handleSubmit = (description) => {
-    console.log('Submitted description:', description);
-    // Perform any action with the submitted description
+  const handleSubmit = async(description) => {
+    if (selectedEmployee) {
+      // console.log('Submitted description:', description);
+      console.log('Selected Employee:', selectedEmployee);
+      try {
+        const response = await sendJobInvitation(
+          userState.user.userName,
+          userState.user.name,
+          userState.user.photo,
+          userState.user.phoneNo,
+          userState.user.address,
+          description,
+          new Date(),
+          "Pending",
+          selectedEmployee
+        );
+        console.log(response.data);
+      } catch (error) {
+        
+      }
+      // Perform any action with the submitted description and selected employee data
+    } else {
+      console.warn('No employee selected. Please select an employee before submitting.');
+    }
   };
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await getAllEmployee();
-      console.log(response.data);
+      // console.log(response.data);
       setEmployee(response.data);
     };
     fetchData();
   }, []);
+
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
       <SearchQuery />
       <FlatList
         data={employee}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View style={style.container}>
             <View style={style.posteContainer}>
-              {
-                item.photo ? (
-                  <Image
-                    source={{
-                      uri: `data:image/jpeg;base64,${item.photo.image.data.toString(
-                        'base64',
-                      )}`,
-                    }}
-                    style={style.avatarImage}
-                  />
-                ) : item.name ? (
-                  <NamingAvatar
-                    name={item.name}
-                    avatarSize={43}
-                    textSize={16}
-                    padding={5}
-                  />
-                ) : null // Render nothing if both jobPosterName and jobPosterPhoto are not available
-              }
+              {item.photo ? (
+                <Image
+                  source={{
+                    uri: `data:image/jpeg;base64,${item.photo.image.data.toString(
+                      'base64',
+                    )}`,
+                  }}
+                  style={style.avatarImage}
+                />
+              ) : item.name ? (
+                <NamingAvatar
+                  name={item.name}
+                  avatarSize={43}
+                  textSize={16}
+                  padding={5}
+                />
+              ) : null}
               <Text style={style.nameText}>{item.name}</Text>
             </View>
+            <Text>{item.username}</Text>
             <Text>Address</Text>
             <Text>Ratting</Text>
-            <SubmitBtn title={'Hire'} width={90} height={40} handleSubmit={handleOpenModal}/>
-            <PopupWithInput
-                visible={isModalVisible}
-                onClose={handleCloseModal}
-                onSubmit={handleSubmit}
-            />
+            <TouchableOpacity style={style.btn} onPress={() => handleOpenModal(item)}>
+              <Text style={style.btntext}>Hire</Text>
+            </TouchableOpacity>
           </View>
         )}
+      />
+      <PopupWithInput
+        visible={isModalVisible}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmit}
       />
     </SafeAreaView>
   );
 };
 
 export default Hiring;
+
