@@ -39,6 +39,7 @@ import JobStatusDetails from '../components/JobStatusDetails/JobStatusDetails';
 import Hiring from '../screens/Hire/Hiring';
 import {faHireAHelper} from '@fortawesome/free-brands-svg-icons';
 import JobInvites from '../screens/JobInvites/JobInvites';
+import HiringStatus from '../screens/HiringStatus/HiringStatus';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -207,6 +208,15 @@ const DrawerNavigator = ({job}) => {
         options={{
           drawerIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faLayerGroup} size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name={Routes.HiringStatus}
+        component={HiringStatus}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faEye} size={size} color={color} />
           ),
         }}
       />

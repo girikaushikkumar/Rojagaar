@@ -15,5 +15,6 @@ export const Routes={
     CreateTeam:'Create Team',
     JoinTeam:'Join Team',
     Hiring:'Hire',
-    JobInvites:'Job invites'
+    JobInvites:'Job invites',
+    HiringStatus:'Hiring Status'
 }

@@ -1,5 +1,5 @@
 import {
-    Alert,
+  Alert,
   FlatList,
   SafeAreaView,
   StyleSheet,
@@ -10,11 +10,14 @@ import {
 import React, {useContext, useEffect, useState} from 'react';
 import style from './style';
 import {AuthContext} from '../../context/authContext';
-import {findAllInvitationByUserName, updateJobInvitationStatus} from '../../api/Hire';
+import {
+  findAllInvitationByUserName,
+  updateJobInvitationStatus,
+} from '../../api/Hire';
 import globalStyle from '../../assets/style/globalStyle';
 import HeaderText from '../../components/HeaderText/HeaderText';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import { faCheckCircle, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 
 const JobInvites = () => {
   const [userState] = useContext(AuthContext);
@@ -32,10 +35,10 @@ const JobInvites = () => {
 
   const handleApplicationStatus = async (id, status) => {
     try {
-        const response = await updateJobInvitationStatus(id,status);
-        Alert.alert(response.data.message);
+      const response = await updateJobInvitationStatus(id, status);
+      Alert.alert(response.data.message);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
     // try {
     //   const response = await updateJobStatus(id, st);
@@ -59,8 +62,7 @@ const JobInvites = () => {
               <View style={style.subContainer}>
                 <Text style={style.text}>Address:</Text>
                 <Text style={style.value}>
-                  {item.address.village} ,{' '}
-                  {item.address.district}
+                  {item.address.village} , {item.address.district}
                 </Text>
               </View>
 
@@ -105,7 +107,7 @@ const JobInvites = () => {
                       style.value,
                       {
                         color:
-                           item.status === 'Accepted'
+                          item.status === 'Accepted'
                             ? '#0be321'
                             : item.status === 'Rejected'
                             ? '#ed1111'

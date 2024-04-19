@@ -37,6 +37,26 @@ const style = StyleSheet.create({
         fontFamily: getFontFamily('Inter', 600),
         fontSize: scaleFontSize(24),
         color: '#FFFFFF'
-      }
+      },
+      subContainer: {
+        flexDirection:'row',
+        justifyContent:'space-between',
+      },
+      text : {
+        fontFamily:getFontFamily('Inter',600),
+        fontSize:scaleFontSize(15),
+        fontWeight:'bold',
+        color:'#000'
+    },
+    value : {
+        fontFamily:getFontFamily('Inter',600),
+        fontSize:scaleFontSize(15),
+        fontWeight:'bold',
+    },
+    rating: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
 export default style;
