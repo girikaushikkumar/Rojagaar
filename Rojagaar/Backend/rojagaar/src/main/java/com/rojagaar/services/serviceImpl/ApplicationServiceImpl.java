@@ -70,7 +70,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public List<JobStatus> getUserDetails(String jobId) {
 //        System.out.println(jobId);
-        Optional<List<Application>> OptionalApplications = this.applicationRepo.findByjobId(jobId);
+        Optional<List<Application>> OptionalApplications = this.applicationRepo.findByJobId(jobId);
         if (OptionalApplications.isPresent()) {
             List<JobStatus> jobStatuses = new ArrayList<>();
             List<Application> applications = OptionalApplications.get();

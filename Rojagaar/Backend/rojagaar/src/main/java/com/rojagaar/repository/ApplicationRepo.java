@@ -11,5 +11,5 @@ public interface ApplicationRepo extends MongoRepository<Application,String> {
     @Query("{'userId':?0,'jobId' : ?1}")
     Optional<Application> findByUserIdAndJobId(String userId,String jobId);
     Optional<List<Application>> findByUserId(String userId);
-    Optional<List<Application>> findByjobId(String jobId);
+    Optional<List<Application>> findByJobId(String jobId);
 }

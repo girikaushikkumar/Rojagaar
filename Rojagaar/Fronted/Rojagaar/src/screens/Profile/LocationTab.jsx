@@ -42,7 +42,7 @@ const LocationTab = () => {
     Geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        console.log('Latitude:', latitude, 'Longitude:', longitude);
+        // console.log('Latitude:', latitude, 'Longitude:', longitude);
         fetchAddress(latitude, longitude);
       },
       (error) => {

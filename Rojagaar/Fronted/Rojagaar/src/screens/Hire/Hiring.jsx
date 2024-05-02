@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import style from './style';
-import {getAllEmployee, sendJobInvitation} from '../../api/Hire';
+import {getAllEmployee, getEmployeeByAddressAndSkill, sendJobInvitation} from '../../api/Hire';
 import globalStyle from '../../assets/style/globalStyle';
 import SearchQuery from '../../components/SearchQuery/SearchQuery';
 import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
@@ -18,8 +18,11 @@ import SubmitBtn from '../../components/Forms/SubmitBtn';
 import PopupWithInput from '../../components/PopupWithInput/PopupWithInput';
 import {AuthContext} from '../../context/authContext';
 import Rating from '../../components/Rating/Rating';
+import { useRoute } from '@react-navigation/native';
 
 const Hiring = () => {
+  const route = useRoute();
+  const { village, skill } = route.params;
   const [userState] = useContext(AuthContext);
   const [employee, setEmployee] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -64,7 +67,7 @@ const Hiring = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getAllEmployee();
+      const response = await getEmployeeByAddressAndSkill(village,skill);
       // console.log(response.data);
       setEmployee(response.data);
     };

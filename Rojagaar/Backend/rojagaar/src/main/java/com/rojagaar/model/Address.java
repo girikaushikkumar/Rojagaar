@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 public class Address {
     private String village;
-    private String District;
+    private String district;
     private String tourism;
     private String road;
     private String state;

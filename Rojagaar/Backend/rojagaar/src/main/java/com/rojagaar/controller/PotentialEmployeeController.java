@@ -30,4 +30,10 @@ public class PotentialEmployeeController {
         List<PotentialEmployee> potentialEmployees = this.potentialEmployeeService.getEmployeeByRole(role);
         return new ResponseEntity<>(potentialEmployees, HttpStatus.OK);
     }
+
+    @GetMapping("getEmployeeByAddressAndSkill/{village}/{skill}")
+    public ResponseEntity<List<PotentialEmployee>> getEmployeeByAddressAndSkill(@PathVariable String village,@PathVariable String skill) {
+        List<PotentialEmployee> potentialEmployees = this.potentialEmployeeService.getEmplyByAddressAndSkill(village,skill);
+        return new ResponseEntity<>(potentialEmployees,HttpStatus.OK);
+    }
 }

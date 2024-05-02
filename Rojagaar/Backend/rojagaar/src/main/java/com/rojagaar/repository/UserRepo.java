@@ -14,4 +14,7 @@ public interface UserRepo extends MongoRepository<User,String> {
     Optional<User> findByUserNameAndPassword(String userName, String password);
     @Query("{$or:[{'skills.skill': ?0}, {'skills.subSkills': ?0}]}")
     List<User> findBySkillOrSubSkill(String skillOrSubSkill);
+
+    @Query("{ 'address.village' : ?0, 'skills.skill' : ?1 }")
+    List<User> findByDistrictAndSkill(String village, String skill);
 }

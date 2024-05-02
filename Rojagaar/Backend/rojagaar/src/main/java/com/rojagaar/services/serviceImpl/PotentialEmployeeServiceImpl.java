@@ -36,4 +36,14 @@ public class PotentialEmployeeServiceImpl implements PotentialEmployeeService {
                 )).collect(Collectors.toList());
         return potentialEmployees;
     }
+
+    @Override
+    public List<PotentialEmployee> getEmplyByAddressAndSkill(String village, String skill) {
+        List<User> users = this.userRepo.findByDistrictAndSkill(village,skill);
+        List<PotentialEmployee> potentialEmployees = users.stream().
+                map((user)-> this.modelMapper.map(
+                        user,PotentialEmployee.class
+                )).collect(Collectors.toList());
+        return potentialEmployees;
+    }
 }

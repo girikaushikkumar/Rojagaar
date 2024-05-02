@@ -5,9 +5,10 @@ export const style = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#ffffff',
         borderRadius:horizontalScale(10),
-        margin: horizontalScale(10),
-        
+        margin: horizontalScale(5),
+        borderWidth:2,
+        borderColor: '#A3A3A3',
       },
 });

@@ -8,4 +8,6 @@ public interface PotentialEmployeeService {
     List<PotentialEmployee> getEmployeeByRole(String Role);
     List<PotentialEmployee> getAllEmployee();
 
+    List<PotentialEmployee> getEmplyByAddressAndSkill(String village, String skill);
+
 }

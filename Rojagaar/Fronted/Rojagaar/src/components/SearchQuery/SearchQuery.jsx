@@ -1,24 +1,20 @@
+import React from 'react';
 import { TextInput, View } from 'react-native';
-import React, { useState } from 'react';
 import { style } from './style';
 
-const SearchQuery = () => {
-    const [searchQuery,setSearchQuery] = useState('');
+const SearchQuery = ({ setSearchQuery }) => {
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+  };
 
-    const handleSearch = () => {
-
-    }
   return (
     <View style={style.container}>
-       <TextInput
-         placeholder='Search....'
-         value={searchQuery}
-         onChangeText={setSearchQuery}
-         onSubmitEditing={handleSearch}
-       />
+      <TextInput
+        placeholder='Search....'
+        onChangeText={handleSearch}
+      />
     </View>
-  )
+  );
 };
 
 export default SearchQuery;
-

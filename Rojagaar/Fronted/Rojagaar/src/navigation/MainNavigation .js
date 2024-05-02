@@ -40,6 +40,8 @@ import Hiring from '../screens/Hire/Hiring';
 import {faHireAHelper} from '@fortawesome/free-brands-svg-icons';
 import JobInvites from '../screens/JobInvites/JobInvites';
 import HiringStatus from '../screens/HiringStatus/HiringStatus';
+import Dashboard from '../screens/Dashboard/Dashboard';
+import Category from '../screens/Category/Category';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -126,15 +128,7 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
-      <Drawer.Screen
-        name={Routes.Profile}
-        component={Profile}
-        options={{
-          drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faUser} size={size} color={color} />
-          ),
-        }}
-      />
+      {/* n  */}
       <Drawer.Screen
         name={Routes.SavedJob}
         component={SavedJob}
@@ -202,7 +196,7 @@ const DrawerNavigator = ({job}) => {
         }}
       />
 
-<Drawer.Screen
+      <Drawer.Screen
         name={Routes.JobInvites}
         component={JobInvites}
         options={{
@@ -220,6 +214,15 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
+      <Drawer.Screen
+        name={Routes.Dashboard}
+        component={Dashboard}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faEye} size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -228,7 +231,13 @@ const AuthenticatedNavigator = () => {
   return <DrawerNavigator />;
 };
 
-const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
+const StackNavigator = ({
+  job,
+  jobPosterName,
+  jobPosterPhoto,
+  skill,
+  village,
+}) => {
   const navigation = useNavigation();
   return (
     <Stack.Navigator
@@ -246,7 +255,8 @@ const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
             </TouchableOpacity>
           );
         },
-      }}>
+      }}
+      initialRouteName={Routes.Dashboard}>
       <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
@@ -269,6 +279,13 @@ const StackNavigator = ({job, jobPosterName, jobPosterPhoto}) => {
         name={Routes.JobPostStatus}
         component={JobPostStatus}
         initialParams={job}
+      />
+      <Stack.Screen name={Routes.Dashboard} component={Dashboard} />
+      <Stack.Screen name={Routes.Category} component={Category} />
+      <Stack.Screen
+        name={Routes.Hiring}
+        component={Hiring}
+        initialParams={{skill, village}}
       />
     </Stack.Navigator>
   );
