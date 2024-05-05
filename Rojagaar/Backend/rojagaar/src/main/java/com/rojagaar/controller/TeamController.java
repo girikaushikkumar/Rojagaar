@@ -35,4 +35,10 @@ public class TeamController {
         List<TeamInfo> teamInfos = this.teamService.getAllTeam();
         return new ResponseEntity<>(teamInfos,HttpStatus.OK);
     }
+
+    @GetMapping("getTeamsByLeaderId/{leaderId}")
+    public ResponseEntity<List<Team>> getTeamsByLeaderId(@PathVariable String leaderId) {
+        List<Team> teams = this.teamService.findTeamInfoByLeaderId(leaderId);
+        return new ResponseEntity<>(teams,HttpStatus.OK);
+    }
 }

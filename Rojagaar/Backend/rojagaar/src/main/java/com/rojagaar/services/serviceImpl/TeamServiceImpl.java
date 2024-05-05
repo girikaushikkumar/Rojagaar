@@ -77,4 +77,10 @@ public class TeamServiceImpl implements TeamService {
         }
         return teamInfos;
     }
+
+    @Override
+    public List<Team> findTeamInfoByLeaderId(String leaderId) {
+        List<Team> teams = this.teamRepo.findByLeaderId(leaderId).get();
+        return teams;
+    }
 }

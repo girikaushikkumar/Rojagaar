@@ -33,4 +33,11 @@ public class JobInviteController {
         this.jobInviteService.updateJobInvitation(id,status);
         return new ResponseEntity<>(new ApiResponse("status updated successfully"),HttpStatus.OK);
     }
+
+    @GetMapping("HireStatus/{recruiterId}")
+    public ResponseEntity<List<JobInvite>> HireStatus(@PathVariable String recruiterId) {
+        List<JobInvite> jobInvites = this.jobInviteService.HireStatus(recruiterId);
+        return new ResponseEntity<>(jobInvites,HttpStatus.OK);
+    }
+
 }

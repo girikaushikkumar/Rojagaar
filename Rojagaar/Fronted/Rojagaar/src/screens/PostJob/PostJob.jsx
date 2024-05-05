@@ -134,7 +134,7 @@ const PostJob = () => {
               width={horizontalScale(323)}
               height={verticalScale(45)}
               fontSize={scaleFontSize(15)}
-              value={noOfPeople}
+              value={noOfPeople.toString()}
               setValue={setNoOfPeople}
             />
           </View>

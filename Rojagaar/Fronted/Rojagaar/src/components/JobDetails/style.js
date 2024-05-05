@@ -28,7 +28,7 @@ const style = StyleSheet.create({
         // marginTop:verticalScale(20),
         // marginLeft:horizontalScale(15),
         // marginRight:horizontalScale(15),
-        backgroundColor:'#dedddc',
+        backgroundColor:'#f0faf8',
         padding:horizontalScale(10),
         margin:horizontalScale(10),
         borderRadius:horizontalScale(10)

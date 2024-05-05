@@ -60,7 +60,7 @@ const ApplyJob = ({route,navigation}) => {
           <SubmitBtn title={'Apply'} width={324} height={60} handleSubmit={handleApply}/>
         </View>
       </ScrollView>
-      <FooterMenu />
+      {/* <FooterMenu /> */}
     </SafeAreaView>
   );
 };

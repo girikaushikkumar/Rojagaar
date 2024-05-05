@@ -6,6 +6,7 @@ const style = StyleSheet.create({
     posteContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        
       },
       avatarImage: {
         height: horizontalScale(40),
@@ -23,9 +24,11 @@ const style = StyleSheet.create({
       },
       container : {
         padding:horizontalScale(5),
-        backgroundColor:'#f2f2ed',
+        backgroundColor:'#dff5f1',
         borderRadius:horizontalScale(10),
-        margin:horizontalScale(5)
+        margin:horizontalScale(5),
+        borderWidth:2,
+        borderColor:'#ffffff'
       },
       subContainer: {
         flexDirection:'row',

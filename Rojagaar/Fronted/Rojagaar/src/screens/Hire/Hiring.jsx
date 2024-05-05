@@ -10,7 +10,11 @@ import {
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import style from './style';
-import {getAllEmployee, getEmployeeByAddressAndSkill, sendJobInvitation} from '../../api/Hire';
+import {
+  getAllEmployee,
+  getEmployeeByAddressAndSkill,
+  sendJobInvitation,
+} from '../../api/Hire';
 import globalStyle from '../../assets/style/globalStyle';
 import SearchQuery from '../../components/SearchQuery/SearchQuery';
 import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
@@ -18,16 +22,16 @@ import SubmitBtn from '../../components/Forms/SubmitBtn';
 import PopupWithInput from '../../components/PopupWithInput/PopupWithInput';
 import {AuthContext} from '../../context/authContext';
 import Rating from '../../components/Rating/Rating';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
+import {getRatingByUserId} from '../../api/Rating';
 
 const Hiring = () => {
   const route = useRoute();
-  const { village, skill } = route.params;
+  const {village, skill} = route.params;
   const [userState] = useContext(AuthContext);
   const [employee, setEmployee] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null); // State to store the selected employee
-
   const handleOpenModal = item => {
     // Pass the item as an argument
     setSelectedEmployee(item); // Set the selected employee
@@ -67,12 +71,19 @@ const Hiring = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getEmployeeByAddressAndSkill(village,skill);
+      const response = await getEmployeeByAddressAndSkill(village, skill);
       // console.log(response.data);
       setEmployee(response.data);
     };
     fetchData();
   }, []);
+
+  const getRating = async username => {
+    // console.log(username)
+    const response = await getRatingByUserId(username);
+    console.log(response.data)
+    return response.data;
+  };
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
@@ -111,10 +122,17 @@ const Hiring = () => {
             </View>
             <View style={style.subContainer}>
               <Text style={style.text}>Rating</Text>
-              <Rating rating={4} onRatingChange={(newRating) => console.log(newRating)} isModify={false}/>
+              <Rating
+                rating={
+                  getRating(item.username)
+                    ? getRating(item.username).ratingValue
+                    : 2
+                }
+                onRatingChange={newRating => console.log(newRating)}
+                isModify={false}
+              />
             </View>
-           
-           
+
             <TouchableOpacity
               style={style.btn}
               onPress={() => handleOpenModal(item)}>

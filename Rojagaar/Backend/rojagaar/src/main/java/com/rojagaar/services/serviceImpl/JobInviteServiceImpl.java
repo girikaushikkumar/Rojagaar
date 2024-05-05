@@ -30,4 +30,10 @@ public class JobInviteServiceImpl implements JobInviteService {
         jobInvite.setStatus(status);
         this.jobInviteRepo.save(jobInvite);
     }
+
+    @Override
+    public List<JobInvite> HireStatus(String recruiter) {
+        List<JobInvite> jobInvites = this.jobInviteRepo.findByRecruiter(recruiter);
+        return jobInvites;
+    }
 }

@@ -10,4 +10,6 @@ public interface TeamService {
     public void createTeam(Team team);
     public ApiResponse joinTeam(String teamId,String userName);
     public List<TeamInfo> getAllTeam();
+
+    public List<Team> findTeamInfoByLeaderId(String leaderId);
 }

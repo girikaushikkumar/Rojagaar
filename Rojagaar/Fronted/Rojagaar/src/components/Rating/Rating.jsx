@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar, faStarHalf, faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
+import { AuthContext } from '../../context/authContext';
+import { getRatingByUserId } from '../../api/Rating';
 
-const Rating = ({ rating, onRatingChange, isModify }) => {
-  const [selectedRating, setSelectedRating] = useState(rating || 0);
-
+const Rating = ({ onRatingChange, isModify, rating }) => {
+  const [userState] = useContext(AuthContext);
+  const [selectedRating, setSelectedRating] = useState(rating);
+  // console.log(selectedRating)
   const handleStarPress = (newRating) => {
     if (isModify) {
       setSelectedRating(newRating);
@@ -14,6 +17,8 @@ const Rating = ({ rating, onRatingChange, isModify }) => {
       }
     }
   };
+
+  
 
   return (
     <View style={styles.ratingContainer}>

@@ -10,4 +10,5 @@ public interface JobInviteService {
     public List<JobInvite> findAllInvitationByUserName(String username);
 
     public void updateJobInvitation(String id,String status);
+    public List<JobInvite> HireStatus(String recruiter);
 }

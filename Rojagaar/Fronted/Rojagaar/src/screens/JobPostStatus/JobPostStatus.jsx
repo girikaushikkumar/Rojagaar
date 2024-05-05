@@ -21,7 +21,7 @@ const JobPostStatus = ({route}) => {
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite,globalStyle.flex]}>
-      <HeaderText text={'Status of Applicant'}/>
+      {/* <HeaderText text={'Status of Applicant'}/> */}
       <FlatList
           data={status}
           renderItem={({item}) => (

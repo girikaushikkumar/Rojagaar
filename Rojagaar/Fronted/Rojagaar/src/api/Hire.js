@@ -51,3 +51,8 @@ export const updateJobInvitationStatus = async(id,status) => {
     `${API_BASE_URL}/jobInvite/updateJobInvitationStatus/${id}/${status}`);
   return response;
 }
+
+export const hireStatus = async(recruiterId) => {
+  const response = await axios.get(`${API_BASE_URL}/jobInvite/HireStatus/${recruiterId}`);
+  return response;
+}

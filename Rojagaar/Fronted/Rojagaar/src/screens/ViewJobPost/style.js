@@ -7,9 +7,11 @@ const style = StyleSheet.create({
         justifyContent:'space-between',
     },
     jobCardContainer: {
-        backgroundColor:'#e8edea',
+        backgroundColor:'#dce8e6',
         margin:horizontalScale(8),
         borderRadius:15,
+        borderWidth:2,
+        borderColor:'#ffffff'
     },
     btnContainer: {
         flexDirection:'row',

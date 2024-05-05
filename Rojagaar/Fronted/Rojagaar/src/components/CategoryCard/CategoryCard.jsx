@@ -23,13 +23,13 @@ export default CategoryCard
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#e6faf7',
         alignItems: 'center',
         height: verticalScale(120),
         width: horizontalScale(100),
         borderRadius: horizontalScale(8),
         borderWidth: 2,
-        borderColor: '#F1F0F0',
+        borderColor: '#ffffff',
       },
       img: {
         height: verticalScale(50),

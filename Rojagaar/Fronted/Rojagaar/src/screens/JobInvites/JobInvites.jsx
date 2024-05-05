@@ -2,7 +2,6 @@ import {
   Alert,
   FlatList,
   SafeAreaView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -81,22 +80,19 @@ const JobInvites = () => {
                     onPress={() =>
                       handleApplicationStatus(item.id, 'Accepted')
                     }>
-                    <FontAwesomeIcon
+                    {/* <FontAwesomeIcon
                       icon={faCheckCircle}
                       size={50}
                       color="#0be321"
-                    />
+                    /> */}
+                    <Text>Accept</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={style.Xmark}
                     onPress={() =>
-                      handleApplicationStatus(item.id, 'Rejected')
+                      handleApplicationStatus(item.id, 'Unavailable')
                     }>
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      size={50}
-                      color="#ed1111"
-                    />
+                    <Text>Unavailable</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
@@ -109,7 +105,7 @@ const JobInvites = () => {
                         color:
                           item.status === 'Accepted'
                             ? '#0be321'
-                            : item.status === 'Rejected'
+                            : item.status === 'Unavailable'
                             ? '#ed1111'
                             : 'black',
                       },

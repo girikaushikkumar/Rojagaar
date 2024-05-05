@@ -57,7 +57,7 @@ const SavedJob = ({navigation}) => {
         showsVerticalScrollIndicator={false}
       />
 
-      <FooterMenu />
+      {/* <FooterMenu /> */}
     </SafeAreaView>
   );
 };

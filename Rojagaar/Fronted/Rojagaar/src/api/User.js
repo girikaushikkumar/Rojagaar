@@ -54,8 +54,8 @@ export const updateSkills = async (skills,userName) => {
   return response;
 };
 
-export const updateLocation = async (userName,village,District,tourism,road,state,pincode,country) => {
-  const response = await axios.put(`${API_BASE_URL}/user/updateLocation/${userName}`,{village,District,tourism,road,state,pincode,country});
+export const updateLocation = async (userName,village,district,tourism,road,state,pincode,country) => {
+  const response = await axios.put(`${API_BASE_URL}/user/updateLocation/${userName}`,{village,district,tourism,road,state,pincode,country});
   return response;
 }
 

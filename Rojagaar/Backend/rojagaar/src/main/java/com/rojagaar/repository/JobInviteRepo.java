@@ -9,4 +9,6 @@ import java.util.List;
 public interface JobInviteRepo extends MongoRepository<JobInvite,String> {
     @Query("{'potentialEmployee.username': ?0}")
     List<JobInvite> findByUsername(String username);
+    @Query("{'recruiter': ?0}")
+    List<JobInvite> findByRecruiter(String recruiterId);
 }
