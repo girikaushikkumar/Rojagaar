@@ -42,6 +42,7 @@ import JobInvites from '../screens/JobInvites/JobInvites';
 import HiringStatus from '../screens/HiringStatus/HiringStatus';
 import Dashboard from '../screens/Dashboard/Dashboard';
 import Category from '../screens/Category/Category';
+import ViewTeam from '../screens/Team/ViewTeam/ViewTeam';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -287,6 +288,7 @@ const StackNavigator = ({
         component={Hiring}
         initialParams={{skill, village}}
       />
+      <Stack.Screen name={Routes.ViewTeam} component={ViewTeam}/>
     </Stack.Navigator>
   );
 };

@@ -231,6 +231,15 @@ const Dashboard = ({navigation}) => {
                 />
                 <Text style={style.text}>Join Team</Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                style={style.card}
+                onPress={() => navigation.navigate(Routes.ViewTeam)}>
+                <Image
+                  source={require('../../assets/images/dashboard/check-list.png')}
+                  style={style.img}
+                />
+                <Text style={style.text}>View</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

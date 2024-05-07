@@ -18,7 +18,6 @@ import {
 import globalStyle from '../../assets/style/globalStyle';
 import SearchQuery from '../../components/SearchQuery/SearchQuery';
 import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
-import SubmitBtn from '../../components/Forms/SubmitBtn';
 import PopupWithInput from '../../components/PopupWithInput/PopupWithInput';
 import {AuthContext} from '../../context/authContext';
 import Rating from '../../components/Rating/Rating';
@@ -32,6 +31,8 @@ const Hiring = () => {
   const [employee, setEmployee] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null); // State to store the selected employee
+  const [ratings, setRatings] = useState({});
+
   const handleOpenModal = item => {
     // Pass the item as an argument
     setSelectedEmployee(item); // Set the selected employee
@@ -79,11 +80,28 @@ const Hiring = () => {
   }, []);
 
   const getRating = async username => {
-    // console.log(username)
-    const response = await getRatingByUserId(username);
-    console.log(response.data)
-    return response.data;
+    try {
+      const response = await getRatingByUserId(username);
+      console.log(response.data)
+      return response.data;
+
+    } catch (error) {
+      console.error('Error fetching rating:', error);
+      return null; // return null or handle the error as needed
+    }
   };
+
+  useEffect(() => {
+    const fetchRatings = async () => {
+      const allRatings = await Promise.all(employee.map(user => getRating(user.username)));
+      const ratingsObject = allRatings.reduce((acc, rating) => {
+        acc[rating.username] = rating.ratingValue;
+        return acc;
+      }, {});
+      setRatings(ratingsObject);
+    };
+    fetchRatings();
+  }, [employee]);
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
@@ -123,13 +141,10 @@ const Hiring = () => {
             <View style={style.subContainer}>
               <Text style={style.text}>Rating</Text>
               <Rating
-                rating={
-                  getRating(item.username)
-                    ? getRating(item.username).ratingValue
-                    : 2
-                }
+               rating={ratings[item.username] || 0}
                 onRatingChange={newRating => console.log(newRating)}
                 isModify={false}
+                userName={item.username}
               />
             </View>
 

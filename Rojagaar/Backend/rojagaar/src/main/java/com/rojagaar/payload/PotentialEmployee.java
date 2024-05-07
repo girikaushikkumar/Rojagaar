@@ -2,6 +2,7 @@ package com.rojagaar.payload;
 
 import com.rojagaar.model.Address;
 import com.rojagaar.model.Photo;
+import com.rojagaar.model.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,5 @@ public class PotentialEmployee {
     private Address address;
     private Photo photo;
     List<Skills> skills;
+    private Rating rating;
 }

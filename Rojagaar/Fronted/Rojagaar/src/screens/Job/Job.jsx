@@ -8,6 +8,7 @@ import SearchQuery from '../../components/SearchQuery/SearchQuery';
 import {PostContext} from '../../context/PostContext';
 import {AuthContext} from '../../context/authContext';
 import {Routes} from '../../navigation/Routes';
+import { ActivityIndicator } from 'react-native';
 const Job = ({navigation}) => {
   const [job] = useContext(PostContext);
   const [userState] = useContext(AuthContext);
@@ -39,7 +40,7 @@ const Job = ({navigation}) => {
         showsVerticalScrollIndicator={false}
       />
 
-      <FooterMenu />
+      {/* <FooterMenu /> */}
     </SafeAreaView>
   );
 };

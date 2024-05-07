@@ -26,7 +26,7 @@ const style = StyleSheet.create({
   },
   container: {
     padding: horizontalScale(5),
-    backgroundColor: '#b4e0cf',
+    backgroundColor: '#ddedea',
     borderRadius: horizontalScale(10),
     margin: horizontalScale(5),
     borderWidth: 2,
@@ -37,7 +37,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: horizontalScale(10),
-    borderBottomWidth:1,
+    // borderBottomWidth:1,
     borderColor:'white'
   },
   text: {
@@ -54,28 +54,37 @@ const style = StyleSheet.create({
   choiceContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // padding: horizontalScale(5),
-    // width: horizontalScale(300),
-    // backgroundColor: '#e8e3e3',
-    alignItems: 'center',
-    justifyContent: 'space-around',
     marginLeft: horizontalScale(15),
-    borderWidth:1,
+    // borderWidth:1,
   },
   circle: {
-    width: horizontalScale(100),
-    height: horizontalScale(55),
+    width: horizontalScale(120),
+    height: horizontalScale(50),
     alignItems: 'center',
     justifyContent: 'center',
-    borderRightWidth:1
+    backgroundColor:'green',
+    borderRadius:horizontalScale(20),
+    borderWidth:2,
+    borderColor:'#9bbda4'
+    // borderRightWidth:1
     // borderColor: '#d6d2d2',
   },
   Xmark: {
-    width: horizontalScale(100),
-    height: horizontalScale(55),
+    width: horizontalScale(120),
+    height: horizontalScale(50),
     alignItems: 'center',
     justifyContent: 'center',
-    borderLeftWidth:1
+    backgroundColor:'#97999a',
+    borderRadius:horizontalScale(20),
+    borderWidth:2,
+    borderColor:'#b5bab6'
+    // borderLeftWidth:1
   },
+  choiceText: {
+    fontFamily: getFontFamily('Inter', 600),
+    fontSize: scaleFontSize(18),
+    fontWeight: 'bold',
+    color: '#ffffff',
+  }
 });
 export default style;

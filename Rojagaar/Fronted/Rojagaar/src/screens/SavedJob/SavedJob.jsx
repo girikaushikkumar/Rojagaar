@@ -19,7 +19,9 @@ const SavedJob = ({navigation}) => {
     const fetchJobs = async () => {
       try {
         const response = await getJobCartDetails(userState.user.userName);
-        setJob(response);
+        const sortedJobs = response.sort((a, b) => new Date(b.jobDto.jobPostedDate) - new Date(a.jobDto.jobPostedDate));
+
+        setJob(sortedJobs);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching jobs:', error);
@@ -33,7 +35,7 @@ const SavedJob = ({navigation}) => {
   return (
     <SafeAreaView
       style={[globalStyle.backgroundWhite, globalStyle.flex, style.container]}>
-      <HeaderText text={'Saved Job'}/>
+      {/* <HeaderText text={'Saved Job'}/> */}
       <FlatList
         data={job}
         renderItem={({item}) => (

@@ -19,4 +19,5 @@ export const Routes={
     HiringStatus:'Hiring Status',
     Dashboard:'Dashboard',
     Category: 'Category',
+    ViewTeam:'View Team',
 }

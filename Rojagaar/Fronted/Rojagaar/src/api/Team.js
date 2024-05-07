@@ -16,3 +16,8 @@ export const joinRequest = async(teamId,userName) => {
     const response = await axios.post(`${API_BASE_URL}/team/joinRequest/${teamId}/${userName}`);
     return response;
 }
+
+export const getTeamInfoByLeaderId = async(leaderId) => {
+    const response = await axios.get(`${API_BASE_URL}/team/getTeamsByLeaderId/${leaderId}`);
+    return response;
+}

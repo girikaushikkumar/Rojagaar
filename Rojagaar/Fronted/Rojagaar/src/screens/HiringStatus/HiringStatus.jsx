@@ -13,11 +13,44 @@ const HiringStatus = () => {
   useEffect(()=>{
     const fetchStatus = async() => {
       const response = await hireStatus(userState.user.userName);
-      setStatus(response.data);
+      const sortedJobInvites = response.data.sort((a, b) => new Date(b.jobInviteDate) - new Date(a.jobInviteDate));
+      setStatus(sortedJobInvites);
       
     }
     fetchStatus();
   },[status]);
+
+  function getTimeAgo(jobPostTimestamp) {
+    // Current timestamp
+    const currentTimestamp = Date.now();
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = currentTimestamp - jobPostTimestamp;
+
+    // Convert the time difference into seconds, minutes, hours, days, or months
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30); // Approximation, not precise
+
+    let timeAgo;
+
+    if (months > 0) {
+      timeAgo = months === 1 ? '1 month ago' : `${months} months ago`;
+    } else if (days > 0) {
+      timeAgo = days === 1 ? '1 day ago' : `${days} days ago`;
+    } else if (hours > 0) {
+      timeAgo = hours === 1 ? '1 hour ago' : `${hours} hours ago`;
+    } else if (minutes > 0) {
+      timeAgo = minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
+    } else {
+      timeAgo = seconds < 5 ? 'Just now' : `${seconds} seconds ago`;
+    }
+
+    return timeAgo;
+  };
+
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite,globalStyle.flex]}>
       <HeaderText text={'Status'}/>
@@ -52,6 +85,10 @@ const HiringStatus = () => {
             <View style={style.subContainer}>
               <Text style={style.text}>Address</Text>
               <Text style={style.value}>{item.potentialEmployee.address.village}{","}{item.potentialEmployee.address.district}</Text>
+            </View>
+            <View style ={style.subContainer}>
+              <Text style={style.text}>Send Invitation</Text>
+              <Text style={style.value}>{getTimeAgo(item.jobInviteDate)}</Text>
             </View>
             <View style={style.subContainer}>
                   <Text style={style.text}>Status:</Text>

@@ -4,10 +4,12 @@ import { getFontFamily } from "../../assets/fonts/helper";
 
 const style = StyleSheet.create({
     container:{
-        backgroundColor:'#e8edea',
+        backgroundColor:'#f0faf8',
         borderRadius:15,
         margin:horizontalScale(8),
-        padding:horizontalScale(10)
+        padding:horizontalScale(10),
+        borderWidth:2,
+        borderColor:'#ffffff'
     },
     posteContainer : {
         flexDirection:'row',

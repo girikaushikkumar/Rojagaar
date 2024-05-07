@@ -3,10 +3,12 @@ import { horizontalScale, scaleFontSize, verticalScale } from "../../../assets/s
 import { getFontFamily } from "../../../assets/fonts/helper";
 const style = StyleSheet.create({
     teamContainer:{
-        backgroundColor:'#c7d1c9',
+        backgroundColor:'#f0faf8',
         padding:horizontalScale(10),
         margin:horizontalScale(10),
         borderRadius:10,
+        borderWidth:2,
+        borderColor:'#ffffff'
     },
     teamName:{
         fontFamily:getFontFamily('Inter',600),

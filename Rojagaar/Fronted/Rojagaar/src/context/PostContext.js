@@ -12,7 +12,8 @@ const PostProvider = ({children}) => {
         const fetchJobs = async () => {
           try {
             const response = await getAllJob();
-            setJob(response.data);
+            const sortedJobs = response.data.sort((a, b) => new Date(b.jobDto.jobPostedDate) - new Date(a.jobDto.jobPostedDate));
+            setJob(sortedJobs);
             setLoading(false);
           } catch (error) {
             console.error('Error fetching jobs:', error);

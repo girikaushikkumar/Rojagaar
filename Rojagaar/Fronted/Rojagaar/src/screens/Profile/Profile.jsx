@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useLayoutEffect, useState} from 'react';
 import {
   SafeAreaView,
   Image,
@@ -32,6 +32,7 @@ import SkillsScreen from './SkillsScreen';
 import {updateUser} from '../../api/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LocationTab from './LocationTab';
+import { ActivityIndicator } from 'react-native';
 const Profile = () => {
   const [userState, setUserState] = useContext(AuthContext);
   const [name, setName] = useState(userState.user.name);
@@ -40,6 +41,7 @@ const Profile = () => {
   const [age, SetAge] = useState(userState.user.age);
   const [gender, setGender] = useState(userState.user.gender);
   const [editMode, setEditMode] = useState(false);
+  const [renderedContent, setRenderedContent] = useState(null);
 
   const [activeTab, setActiveTab] = useState('BASIC DETAILS');
 
@@ -50,6 +52,161 @@ const Profile = () => {
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
+
+  // useLayoutEffect(() => {
+  //   if (editMode) {
+  //     setRenderedContent(<BasicDetailsContentEditMode />);
+  //   } else {
+  //     setRenderedContent(<BasicDetailsContentViewMode />);
+  //   }
+  // }, [editMode]);
+
+  const BasicDetailsContentEditMode = () => (
+    <View>
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faUserTie} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Name</Text>
+
+          <TextInput
+            style={style.textInput}
+            placeholder="Enter Fullname"
+            onChangeText={text => setName(text)}
+            value={name}
+          />
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faMobileScreen} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Mobile</Text>
+
+          <TextInput
+            style={style.textInput}
+            placeholder="Enter Phone Number"
+            onChangeText={text => setPhoneNo(text)}
+            value={phoneNo.toString()}
+          />
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faEnvelope} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Email</Text>
+            <TextInput
+              style={style.textInput}
+              placeholder="Enter Email"
+              onChangeText={text => setEmail(text)}
+              value={email}
+              keyboardType="default"
+            />
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faPersonCane} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Age</Text>
+        
+            <TextInput
+              style={style.textInput}
+              placeholder="Enter Age"
+              onChangeText={text => SetAge(text)}
+              value={age.toString()}
+            />
+         
+        </View>
+      </View>
+
+      <View style={[style.basicInfoContainer, {borderBottomWidth: 2}]}>
+        <FontAwesomeIcon icon={faVenusMars} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Gender</Text>
+        
+            <Picker
+              selectedValue={gender}
+              style={style.picker}
+              onValueChange={itemValue => setGender(itemValue)}>
+              <Picker.Item label="Select Gender" value="" />
+              <Picker.Item label="Male" value="male" />
+              <Picker.Item label="Female" value="female" />
+              <Picker.Item label="Other" value="other" />
+            </Picker>
+         
+        </View>
+      </View>
+      <TouchableOpacity
+        onPress={editMode ? handleUpdate : handleEdit}
+        style={style.button}>
+        <Text style={style.buttonText}>{editMode ? 'Update' : 'Edit'}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  const BasicDetailsContentViewMode = () => (
+    <View>
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faUserTie} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Name</Text>
+          
+          <Text style={style.textValue}>{name}</Text>
+        </View>
+      </View>
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faUser} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>User Name</Text>
+          <Text style={style.textValue}>{userState.user.userName}</Text>
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faMobileScreen} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Mobile</Text>
+          <Text style={style.textValue}>{phoneNo}</Text>
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faEnvelope} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Email</Text>
+          
+            <Text style={style.textValue}>{email}</Text>
+       
+        </View>
+      </View>
+
+      <View style={style.basicInfoContainer}>
+        <FontAwesomeIcon icon={faPersonCane} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Age</Text>
+         
+            <Text style={style.textValue}>{age}</Text>
+          
+        </View>
+      </View>
+
+      <View style={[style.basicInfoContainer, {borderBottomWidth: 2}]}>
+        <FontAwesomeIcon icon={faVenusMars} size={24} style={style.icon} />
+        <View style={style.textContainer}>
+          <Text style={style.textKey}>Gender</Text>
+          
+            <Text style={style.textValue}>{gender}</Text>
+        
+        </View>
+      </View>
+      <TouchableOpacity
+        onPress={editMode ? handleUpdate : handleEdit}
+        style={style.button}>
+        <Text style={style.buttonText}>{editMode ? 'Update' : 'Edit'}</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   const BasicDetailsContent = () => (
     <View>
@@ -62,7 +219,7 @@ const Profile = () => {
               style={style.textInput}
               placeholder="Enter Fullname"
               onChangeText={text => setName(text)}
-              value={name}
+              value={'jkkkjj'}
             />
           ) : (
             // Render Text component in view mode
@@ -106,6 +263,7 @@ const Profile = () => {
               placeholder="Enter Email"
               onChangeText={text => setEmail(text)}
               value={email}
+              keyboardType="default"
             />
           ) : (
             // Render Text component in view mode
@@ -163,7 +321,7 @@ const Profile = () => {
 
   const LocationContent = () => (
     <View>
-      <LocationTab/>
+      <LocationTab />
     </View>
   );
 
@@ -190,7 +348,7 @@ const Profile = () => {
       );
 
       if (response.status === 200) {
-        console.log(response.data);
+        // console.log(response.data);
         const responseData = {
           user: response.data,
           token: userState.token,
@@ -208,7 +366,7 @@ const Profile = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'BASIC DETAILS':
-        return <BasicDetailsContent />;
+        return <BasicDetailsContent/>;
       case 'LOCATION':
         return <LocationContent />;
       case 'SKILL':
@@ -267,7 +425,7 @@ const Profile = () => {
 
         <View>{renderContent()}</View>
       </ScrollView>
-      <FooterMenu />
+      {/* <FooterMenu /> */}
     </SafeAreaView>
   );
 };

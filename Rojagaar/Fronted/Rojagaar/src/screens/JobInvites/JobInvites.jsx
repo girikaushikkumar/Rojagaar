@@ -27,7 +27,9 @@ const JobInvites = () => {
       const response = await findAllInvitationByUserName(
         userState.user.userName,
       );
-      setJobInvite(response.data);
+      const sortedJobInvites = response.data.sort((a, b) => new Date(b.jobInviteDate) - new Date(a.jobInviteDate));
+
+      setJobInvite(sortedJobInvites);
     };
     fetchData();
   }, [jobInvite]);
@@ -39,12 +41,38 @@ const JobInvites = () => {
     } catch (error) {
       console.log(error);
     }
-    // try {
-    //   const response = await updateJobStatus(id, st);
-    //   Alert.alert(response.data.message);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+
+  };
+
+  function getTimeAgo(jobPostTimestamp) {
+    // Current timestamp
+    const currentTimestamp = Date.now();
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = currentTimestamp - jobPostTimestamp;
+
+    // Convert the time difference into seconds, minutes, hours, days, or months
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30); // Approximation, not precise
+
+    let timeAgo;
+
+    if (months > 0) {
+      timeAgo = months === 1 ? '1 month ago' : `${months} months ago`;
+    } else if (days > 0) {
+      timeAgo = days === 1 ? '1 day ago' : `${days} days ago`;
+    } else if (hours > 0) {
+      timeAgo = hours === 1 ? '1 hour ago' : `${hours} hours ago`;
+    } else if (minutes > 0) {
+      timeAgo = minutes === 1 ? '1 minute ago' : `${minutes} minutes ago`;
+    } else {
+      timeAgo = seconds < 5 ? 'Just now' : `${seconds} seconds ago`;
+    }
+
+    return timeAgo;
   };
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
@@ -73,6 +101,12 @@ const JobInvites = () => {
                 <Text style={style.text}>Description:</Text>
                 <Text style={style.value}>{item.description}</Text>
               </View>
+              <View style={style.subContainer}>
+                <Text style={style.text}>Invite</Text>
+                {/* <Text style={style.value}>{new Date(item.jobInviteDate).toLocaleDateString()}</Text> */}
+                <Text  style={style.value}>{getTimeAgo(item.jobInviteDate)}</Text>
+              </View>
+              
               {item.status === 'Pending' ? (
                 <View style={style.choiceContainer}>
                   <TouchableOpacity
@@ -85,14 +119,14 @@ const JobInvites = () => {
                       size={50}
                       color="#0be321"
                     /> */}
-                    <Text>Accept</Text>
+                    <Text style={style.choiceText}>Accept</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={style.Xmark}
                     onPress={() =>
                       handleApplicationStatus(item.id, 'Unavailable')
                     }>
-                    <Text>Unavailable</Text>
+                    <Text style={style.choiceText}>Unavailable</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
