@@ -18,7 +18,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Photo {
     @Id
     private String id;
-
     @JsonDeserialize(using = BinaryDeserializer.class)
     private Binary image;
 }

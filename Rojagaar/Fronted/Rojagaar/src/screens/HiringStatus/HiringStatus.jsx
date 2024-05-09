@@ -53,7 +53,6 @@ const HiringStatus = () => {
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite,globalStyle.flex]}>
-      <HeaderText text={'Status'}/>
       <FlatList
         data={status}
         renderItem={({item}) => (

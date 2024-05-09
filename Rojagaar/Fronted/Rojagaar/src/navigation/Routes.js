@@ -20,4 +20,6 @@ export const Routes={
     Dashboard:'Dashboard',
     Category: 'Category',
     ViewTeam:'View Team',
+    ViewJoinRequest:'View Request',
+    ViewMemeber:'View Member'
 }

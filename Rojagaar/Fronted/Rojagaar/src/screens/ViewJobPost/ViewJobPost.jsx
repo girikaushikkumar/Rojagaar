@@ -46,7 +46,6 @@ const ViewJobPost = ({navigation}) => {
   return (
     <SafeAreaView
       style={[globalStyle.backgroundWhite, globalStyle.flex, style.container]}>
-      <HeaderText text={'Job Post'} />
       <FlatList
         data={job}
         renderItem={({item}) => (

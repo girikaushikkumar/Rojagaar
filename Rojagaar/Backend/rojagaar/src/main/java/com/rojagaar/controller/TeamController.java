@@ -1,6 +1,7 @@
 package com.rojagaar.controller;
 
 import com.rojagaar.model.Team;
+import com.rojagaar.model.User;
 import com.rojagaar.payload.ApiResponse;
 import com.rojagaar.payload.TeamInfo;
 import com.rojagaar.services.TeamService;
@@ -40,5 +41,16 @@ public class TeamController {
     public ResponseEntity<List<Team>> getTeamsByLeaderId(@PathVariable String leaderId) {
         List<Team> teams = this.teamService.findTeamInfoByLeaderId(leaderId);
         return new ResponseEntity<>(teams,HttpStatus.OK);
+    }
+
+    @PostMapping("addMember/{teamId}/{memberId}")
+    public ResponseEntity<ApiResponse> addMember(@PathVariable String teamId, @PathVariable String memberId) {
+        ApiResponse apiResponse = this.teamService.addTeamMember(teamId,memberId);
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
+    }
+    @PostMapping("rejectRequest/{teamId}/{memberId}")
+    public ResponseEntity<ApiResponse> rejectRequest(@PathVariable String teamId,@PathVariable String memberId) {
+        ApiResponse apiResponse = this.teamService.rejectRequest(teamId,memberId);
+        return new ResponseEntity<>(apiResponse,HttpStatus.OK);
     }
 }

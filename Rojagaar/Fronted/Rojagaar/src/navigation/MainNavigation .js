@@ -11,6 +11,7 @@ import {getFontFamily} from '../assets/fonts/helper';
 import {horizontalScale, scaleFontSize} from '../assets/style/scaling';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
+  faArrowLeft,
   faBars,
   faBookmark,
   faCirclePlus,
@@ -43,6 +44,8 @@ import HiringStatus from '../screens/HiringStatus/HiringStatus';
 import Dashboard from '../screens/Dashboard/Dashboard';
 import Category from '../screens/Category/Category';
 import ViewTeam from '../screens/Team/ViewTeam/ViewTeam';
+import ViewJoinRequest from '../screens/Team/ViewJoinRequest/ViewJoinRequest';
+import ViewMember from '../screens/Team/ViewTeamMember/ViewMember';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -121,21 +124,52 @@ const DrawerNavigator = ({job}) => {
         },
       }}>
       <Drawer.Screen
-        name="Home"
+        name="Back"
         component={StackNavigator}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faArrowLeft} size={size}/>
+          ),
+          drawerActiveTintColor:'#000',
+          drawerActiveBackgroundColor: '#ffffff',
+        }}
+      />
+      <Drawer.Screen
+        name="Home"
+        component={Dashboard}
         options={{
           drawerIcon: ({color, size}) => (
             <FontAwesomeIcon icon={faHouse} size={size} color={color} />
           ),
         }}
       />
-      {/* n  */}
+
       <Drawer.Screen
-        name={Routes.SavedJob}
-        component={SavedJob}
+        name="My Work Order"
+        component={JobInvites}
         options={{
           drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faBookmark} size={size} color={color} />
+            <FontAwesomeIcon icon={faLayerGroup} size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name={Routes.Hiring}
+        component={Category}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faHireAHelper} size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name={Routes.Job}
+        component={Job}
+        options={{
+          drawerIcon: ({color, size}) => (
+            <FontAwesomeIcon icon={faLayerGroup} size={size} color={color} />
           ),
         }}
       />
@@ -150,24 +184,6 @@ const DrawerNavigator = ({job}) => {
         }}
       />
 
-      <Drawer.Screen
-        name={Routes.ViewJobPost}
-        component={ViewJobPost}
-        options={{
-          drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faEye} size={size} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={Routes.ApplicationStatus}
-        component={ApplicationStatus}
-        options={{
-          drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faEye} size={size} color={color} />
-          ),
-        }}
-      />
       <Drawer.Screen
         name={Routes.CreateTeam}
         component={CreateTeam}
@@ -186,44 +202,6 @@ const DrawerNavigator = ({job}) => {
           ),
         }}
       />
-
-      <Drawer.Screen
-        name={Routes.Hiring}
-        component={Hiring}
-        options={{
-          drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faHireAHelper} size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Drawer.Screen
-        name={Routes.JobInvites}
-        component={JobInvites}
-        options={{
-          drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faLayerGroup} size={size} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={Routes.HiringStatus}
-        component={HiringStatus}
-        options={{
-          drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faEye} size={size} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={Routes.Dashboard}
-        component={Dashboard}
-        options={{
-          drawerIcon: ({color, size}) => (
-            <FontAwesomeIcon icon={faEye} size={size} color={color} />
-          ),
-        }}
-      />
     </Drawer.Navigator>
   );
 };
@@ -238,6 +216,8 @@ const StackNavigator = ({
   jobPosterPhoto,
   skill,
   village,
+  member,
+  teamId
 }) => {
   const navigation = useNavigation();
   return (
@@ -258,6 +238,7 @@ const StackNavigator = ({
         },
       }}
       initialRouteName={Routes.Dashboard}>
+       <Stack.Screen name={Routes.Dashboard} component={Dashboard} />
       <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
@@ -281,14 +262,20 @@ const StackNavigator = ({
         component={JobPostStatus}
         initialParams={job}
       />
-      <Stack.Screen name={Routes.Dashboard} component={Dashboard} />
+     
       <Stack.Screen name={Routes.Category} component={Category} />
       <Stack.Screen
         name={Routes.Hiring}
         component={Hiring}
         initialParams={{skill, village}}
       />
-      <Stack.Screen name={Routes.ViewTeam} component={ViewTeam}/>
+      <Stack.Screen name={Routes.JobInvites} component={JobInvites}/>
+      <Stack.Screen name={Routes.ViewTeam} component={ViewTeam} />
+      <Stack.Screen name={Routes.ApplicationStatus} component={ApplicationStatus} />
+      <Stack.Screen name={Routes.ViewJobPost} component={ViewJobPost}/>
+      <Stack.Screen name={Routes.HiringStatus} component={HiringStatus}/>
+      <Stack.Screen name={Routes.ViewJoinRequest} component={ViewJoinRequest} initialParams={{teamId,member}}/>
+      <Stack.Screen name={Routes.ViewMemeber} component={ViewMember} initialParams={{member}}/>
     </Stack.Navigator>
   );
 };

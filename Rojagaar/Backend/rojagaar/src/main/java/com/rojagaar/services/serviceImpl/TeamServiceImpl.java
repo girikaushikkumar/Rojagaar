@@ -83,4 +83,72 @@ public class TeamServiceImpl implements TeamService {
         List<Team> teams = this.teamRepo.findByLeaderId(leaderId).get();
         return teams;
     }
+
+    @Override
+    public ApiResponse addTeamMember(String teamId, String memberId) {
+        Team team = teamRepo.findById(teamId).orElse(null);
+        if (team == null) {
+            return new ApiResponse("Team not found");
+        }
+
+        User member = this.userRepo.findByUserName(memberId).orElse(null);
+        if (member == null) {
+            return new ApiResponse("User not found");
+        }
+
+        if (member == null) {
+            return new ApiResponse("User not found");
+        }
+        if(team.getTeamMember() == null) {
+            List<User> teamMembers = new ArrayList<>();
+            teamMembers.add(member);
+            team.setTeamMember(teamMembers);
+        }
+        else{
+            team.getTeamMember().add(member);
+        }
+
+        if(team.getJoinRequest() != null ) {
+            for(User user:team.getJoinRequest()) {
+                if(user.getUsername().equals(memberId)) {
+                    team.getJoinRequest().remove(user);
+                    break;
+                }
+            }
+        }
+        this.teamRepo.save(team);
+
+        return new ApiResponse("added successfully");
+    }
+
+    @Override
+    public ApiResponse rejectRequest(String teamId, String memberId) {
+        Team team = teamRepo.findById(teamId).orElse(null);
+        if (team == null) {
+            return new ApiResponse("Team not found");
+        }
+
+        User member = this.userRepo.findByUserName(memberId).orElse(null);
+        if (member == null) {
+            return new ApiResponse("User not found");
+        }
+
+        if (member == null) {
+            return new ApiResponse("User not found");
+        }
+
+        if(team.getJoinRequest() != null ) {
+            for(User user:team.getJoinRequest()) {
+                if(user.getUsername().equals(memberId)) {
+                    team.getJoinRequest().remove(user);
+                    break;
+                }
+            }
+        }
+        this.teamRepo.save(team);
+
+        return new ApiResponse("remove successfully");
+    }
+
+
 }

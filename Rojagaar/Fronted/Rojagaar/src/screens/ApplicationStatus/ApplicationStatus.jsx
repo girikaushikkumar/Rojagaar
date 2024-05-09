@@ -9,7 +9,6 @@ const ApplicationStatus = () => {
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
       <View style={style.container}>
-        <HeaderText text={'Application Status'} />
       </View>
       <View style={globalStyle.flex}>
         <ApplicationStatusTabNavigation />
