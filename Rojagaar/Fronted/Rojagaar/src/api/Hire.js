@@ -1,15 +1,17 @@
 import axios from 'axios';
-const API_BASE_URL = 'http://192.168.42.244:8080/api';
+
+// const API_BASE_URL = 'https://rojagaar-backend.onrender.com/api';
+
 
 export const getAllEmployee = async (district,skill) => {
   const response = await axios.get(
-    `${API_BASE_URL}/potentialEmployee/getEmployeeByAddressAndSkill`,
+    '/potentialEmployee/getEmployeeByAddressAndSkill',
   );
   return response;
 };
 export const getEmployeeByAddressAndSkill = async (district,skill) => {
   const response = await axios.get(
-    `${API_BASE_URL}/potentialEmployee/getEmployeeByAddressAndSkill/${district}/${skill}`,
+    `/potentialEmployee/getEmployeeByAddressAndSkill/${district}/${skill}`,
   );
   return response;
 };
@@ -25,7 +27,7 @@ export const sendJobInvitation = async (
   status,
   potentialEmployee,
 ) => {
-  const response = await axios.post(`${API_BASE_URL}/jobInvite/sendInvite`, {
+  const response = await axios.post('/jobInvite/sendInvite', {
     recruiter,
     recruiterName,
     recruiterPhoto,
@@ -41,18 +43,18 @@ export const sendJobInvitation = async (
 
 export const findAllInvitationByUserName = async username => {
   const response = await axios.get(
-    `${API_BASE_URL}/jobInvite/findAllInvitationByUserName/${username}`,
+    `/jobInvite/findAllInvitationByUserName/${username}`,
   );
   return response;
 };
 
 export const updateJobInvitationStatus = async(id,status) => {
   const response = await axios.put(
-    `${API_BASE_URL}/jobInvite/updateJobInvitationStatus/${id}/${status}`);
+    `/jobInvite/updateJobInvitationStatus/${id}/${status}`);
   return response;
 }
 
-export const hireStatus = async(recruiterId) => {
-  const response = await axios.get(`${API_BASE_URL}/jobInvite/HireStatus/${recruiterId}`);
+export const hireStatus = async(recruiterId,token) => {
+  const response = await axios.get(`/jobInvite/HireStatus/${recruiterId}`);
   return response;
 }

@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://192.168.42.244:8080/api';
+// const API_BASE_URL = 'http://192.168.42.244:8080/api';
+// const API_BASE_URL = 'https://rojagaar-backend.onrender.com/api';
+
 
 export const createTeam = async (teamName, roles, leaderId) => {
-  const response = await axios.post(`${API_BASE_URL}/team/createTeam`, {
+  const response = await axios.post('/team/createTeam', {
     teamName,
     roles,
     leaderId,
@@ -12,27 +14,27 @@ export const createTeam = async (teamName, roles, leaderId) => {
 };
 
 export const getTeamInfo = async () => {
-  const response = await axios.get(`${API_BASE_URL}/team/getTeamInfo`);
+  const response = await axios.get('/team/getTeamInfo');
   return response;
 };
 
 export const joinRequest = async (teamId, userName) => {
   const response = await axios.post(
-    `${API_BASE_URL}/team/joinRequest/${teamId}/${userName}`,
+    `/team/joinRequest/${teamId}/${userName}`,
   );
   return response;
 };
 
 export const getTeamInfoByLeaderId = async leaderId => {
   const response = await axios.get(
-    `${API_BASE_URL}/team/getTeamsByLeaderId/${leaderId}`,
+    `/team/getTeamsByLeaderId/${leaderId}`,
   );
   return response;
 };
 
 export const addMember = async (teamId, memberId) => {
   const response = await axios.post(
-    `${API_BASE_URL}/team/addMember/${teamId}/${memberId}`,
+    `/team/addMember/${teamId}/${memberId}`,
   );
 
   return response;
@@ -40,7 +42,7 @@ export const addMember = async (teamId, memberId) => {
 
 export const rejectRequest = async (teamId, memberId) => {
     const response = await axios.post(
-      `${API_BASE_URL}/team/rejectRequest/${teamId}/${memberId}`,
+      `/team/rejectRequest/${teamId}/${memberId}`,
     );
   
     return response;

@@ -21,5 +21,6 @@ export const Routes={
     Category: 'Category',
     ViewTeam:'View Team',
     ViewJoinRequest:'View Request',
-    ViewMemeber:'View Member'
+    ViewMemeber:'View Member',
+    HireTeam:'Hire Team'
 }

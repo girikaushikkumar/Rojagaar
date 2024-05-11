@@ -1,5 +1,7 @@
 import axios from 'axios';
-const API_BASE_URL = 'http://192.168.42.244:8080/api';
+// const API_BASE_URL = 'http://192.168.42.244:8080/api';
+// const API_BASE_URL = 'https://rojagaar-backend.onrender.com/api';
+
 
 export const uploadImage = async (image, id) => {
     try {
@@ -7,7 +9,7 @@ export const uploadImage = async (image, id) => {
         formData.append('image', image); // Assuming 'image' is the name expected by the server
 
         const response = await axios.post(
-            `${API_BASE_URL}/photo/add`,
+            '/photo/add',
             formData,
             {
                 headers: {

@@ -45,5 +45,18 @@ const style = StyleSheet.create({
         fontSize: scaleFontSize(15),
         fontWeight: 'bold',
       },
+      ratingBtn: {
+        backgroundColor:'#278c20',
+        width:horizontalScale(100),
+        height:verticalScale(42),
+        borderRadius:horizontalScale(10),
+        alignItems:'center',
+        justifyContent:'center'
+      },
+      btnText: {
+        color:'#ffffff',
+        fontSize:scaleFontSize(17),
+        fontWeight:'bold'
+      }
 });
 export default style;

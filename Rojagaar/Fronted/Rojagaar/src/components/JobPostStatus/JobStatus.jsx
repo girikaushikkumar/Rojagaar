@@ -11,6 +11,7 @@ import style from './style';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCheckCircle, faCircleXmark} from '@fortawesome/free-solid-svg-icons';
 import {updateJobStatus} from '../../api/Application';
+import NamingAvatar from '../NamingAvatar/NamingAvatar';
 const JobStatus = ({status}) => {
   const handleApplicationStatus = async (id, st) => {
     try {

@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -12,6 +13,8 @@ const AuthProvider = ({children}) => {
 
     // default axios settings
     // axios.defaults.baseURL = 'http://192.168.42.244:8080/api';
+    axios.defaults.baseURL = 'https://rojagaar-backend.onrender.com/api';
+
 
     // get initial storage data
     useEffect(() => {

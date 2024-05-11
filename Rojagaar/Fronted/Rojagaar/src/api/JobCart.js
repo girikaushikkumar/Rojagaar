@@ -1,11 +1,13 @@
 import axios from 'axios';
 import {Alert} from 'react-native';
 
-const API_BASE_URL = 'http://192.168.42.244:8080/api';
+// const API_BASE_URL = 'http://192.168.42.244:8080/api';
+// const API_BASE_URL = 'https://rojagaar-backend.onrender.com/api';
+
 
 const addJobToCart = async (JobId, JobSeekerId) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/jobCart/addJob`, {
+    const response = await axios.post('/jobCart/addJob', {
       JobId,
       JobSeekerId,
     });
@@ -20,7 +22,7 @@ const addJobToCart = async (JobId, JobSeekerId) => {
 
 const getJobCartDetails = async (jobSeekerId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/jobCart/getCardDetails`, {
+      const response = await axios.get('/jobCart/getCardDetails', {
         params: {
           jobSeekerId: jobSeekerId,
         }

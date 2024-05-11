@@ -33,7 +33,8 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width:horizontalScale(90),
-        height:verticalScale(40)
+        height:verticalScale(40),
+        marginTop:verticalScale(10)
       },
       btntext: {
         fontFamily: getFontFamily('Inter', 600),
@@ -42,7 +43,7 @@ const style = StyleSheet.create({
       },
       subContainer: {
         flexDirection:'row',
-        justifyContent:'space-between',
+        marginTop:verticalScale(5)
       },
       text : {
         fontFamily:getFontFamily('Inter',600),
@@ -54,6 +55,7 @@ const style = StyleSheet.create({
         fontFamily:getFontFamily('Inter',600),
         fontSize:scaleFontSize(15),
         fontWeight:'bold',
+        marginLeft:horizontalScale(15)
     },
     rating: {
         flex: 1,

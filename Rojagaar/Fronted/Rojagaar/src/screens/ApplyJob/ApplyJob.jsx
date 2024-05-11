@@ -1,4 +1,4 @@
-import {SafeAreaView, Text, View, Image, ScrollView, Alert} from 'react-native';
+import { SafeAreaView, Text, View, Image, ScrollView, Alert } from 'react-native';
 import React, { useContext } from 'react';
 import globalStyle from '../../assets/style/globalStyle';
 import HeaderText from '../../components/HeaderText/HeaderText';
@@ -11,13 +11,14 @@ import { AuthContext } from '../../context/authContext';
 import { Routes } from '../../navigation/Routes';
 import { applyJob } from '../../api/Application';
 
-const ApplyJob = ({route,navigation}) => {
-  const {job, jobPosterName, jobPosterPhoto} = route.params;
+const ApplyJob = ({ route, navigation }) => {
+  // Moved the useContext hook inside the component body
   const [userState] = useContext(AuthContext);
-  // console.log(userState);
-  const handleApply = async() => {
+  const { job, jobPosterName, jobPosterPhoto } = route.params;
+//  console.log(userState);
+  const handleApply = async () => {
     try {
-      const response = await applyJob(userState.user.userName,job.id,new Date(),"Pending");
+      const response = await applyJob(userState.user.userName, job.id, new Date(), "Pending");
       Alert.alert(response.data.message);
       navigation.navigate(Routes.Job);
     } catch (error) {
@@ -57,7 +58,7 @@ const ApplyJob = ({route,navigation}) => {
           jobPosterPhoto={jobPosterPhoto}
         />
         <View style={style.button}>
-          <SubmitBtn title={'Apply'} width={324} height={60} handleSubmit={handleApply}/>
+          <SubmitBtn title={'Apply'} width={324} height={60} handleSubmit={handleApply} />
         </View>
       </ScrollView>
       {/* <FooterMenu /> */}

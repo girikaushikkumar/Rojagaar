@@ -23,15 +23,16 @@ import {AuthContext} from '../../context/authContext';
 import Rating from '../../components/Rating/Rating';
 import {useRoute} from '@react-navigation/native';
 import {getRatingByUserId} from '../../api/Rating';
+import { Routes } from '../../navigation/Routes';
 
-const Hiring = () => {
+const Hiring = ({navigation}) => {
   const route = useRoute();
   const {village, skill} = route.params;
   const [userState] = useContext(AuthContext);
   const [employee, setEmployee] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null); // State to store the selected employee
-  const [ratings, setRatings] = useState({});
+  // const [ratings, setRatings] = useState({});
 
   const handleOpenModal = item => {
     // Pass the item as an argument
@@ -60,7 +61,8 @@ const Hiring = () => {
           'Pending',
           selectedEmployee,
         );
-        console.log(response.data);
+        navigation.navigate(Routes.HiringStatus)
+        // console.log(response.data);
       } catch (error) {}
       // Perform any action with the submitted description and selected employee data
     } else {
@@ -73,39 +75,18 @@ const Hiring = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getEmployeeByAddressAndSkill(village, skill);
-      // console.log(response.data);
+      console.log(response.data);
+
       setEmployee(response.data);
     };
     fetchData();
   }, []);
 
-  const getRating = async username => {
-    try {
-      const response = await getRatingByUserId(username);
-      console.log(response.data)
-      return response.data;
-
-    } catch (error) {
-      console.error('Error fetching rating:', error);
-      return null; // return null or handle the error as needed
-    }
-  };
-
-  useEffect(() => {
-    const fetchRatings = async () => {
-      const allRatings = await Promise.all(employee.map(user => getRating(user.username)));
-      const ratingsObject = allRatings.reduce((acc, rating) => {
-        acc[rating.username] = rating.ratingValue;
-        return acc;
-      }, {});
-      setRatings(ratingsObject);
-    };
-    fetchRatings();
-  }, [employee]);
+  
 
   return (
     <SafeAreaView style={[globalStyle.backgroundWhite, globalStyle.flex]}>
-      <SearchQuery />
+      {/* <SearchQuery /> */}
       <FlatList
         data={employee}
         renderItem={({item}) => (
@@ -141,11 +122,12 @@ const Hiring = () => {
             <View style={style.subContainer}>
               <Text style={style.text}>Rating</Text>
               <Rating
-               rating={ratings[item.username] || 0}
+                rating={item.rating ? item.rating.ratingValue : 0}
                 onRatingChange={newRating => console.log(newRating)}
                 isModify={false}
                 userName={item.username}
               />
+              <Text>{item.rating ? item.rating.noOfRating : 0}</Text>
             </View>
 
             <TouchableOpacity

@@ -136,7 +136,7 @@ public class UserController {
 
         JwtAuthResponse response = new JwtAuthResponse();
         response.setToken(token);
-        System.out.println(token);
+//        System.out.println(token);
         response.setMessage("User successfully logged in");
         UserDto user = this.userService.getUserDetails(request.getUserName());
 

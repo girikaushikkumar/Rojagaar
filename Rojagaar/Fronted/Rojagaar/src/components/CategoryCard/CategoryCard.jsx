@@ -6,10 +6,15 @@ import { useNavigation } from '@react-navigation/native';
 import Hiring from '../../screens/Hire/Hiring';
 import { Routes } from '../../navigation/Routes';
 
-const CategoryCard = ({ imageSource, skill, village }) => {
+const CategoryCard = ({ imageSource, skill, village,team }) => {
     const navigation = useNavigation();
     const onPressCard = () => {
-      navigation.navigate(Routes.Hiring,{village,skill});
+      if(team) {
+        navigation.navigate(Routes.HireTeam,{village,skill})
+      } else {
+        navigation.navigate(Routes.Hiring,{village,skill});
+      }
+      
     } 
     return (
       <TouchableOpacity style={styles.card} onPress={onPressCard}>

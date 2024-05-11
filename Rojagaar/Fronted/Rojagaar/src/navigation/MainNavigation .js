@@ -46,6 +46,7 @@ import Category from '../screens/Category/Category';
 import ViewTeam from '../screens/Team/ViewTeam/ViewTeam';
 import ViewJoinRequest from '../screens/Team/ViewJoinRequest/ViewJoinRequest';
 import ViewMember from '../screens/Team/ViewTeamMember/ViewMember';
+import TeamHire from '../screens/Hire/TeamHire';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -124,7 +125,7 @@ const DrawerNavigator = ({job}) => {
         },
       }}>
       <Drawer.Screen
-        name="Back"
+        name="Stack"
         component={StackNavigator}
         options={{
           drawerIcon: ({color, size}) => (
@@ -134,6 +135,7 @@ const DrawerNavigator = ({job}) => {
           drawerActiveBackgroundColor: '#ffffff',
         }}
       />
+
       <Drawer.Screen
         name="Home"
         component={Dashboard}
@@ -217,7 +219,7 @@ const StackNavigator = ({
   skill,
   village,
   member,
-  teamId
+  teamId,
 }) => {
   const navigation = useNavigation();
   return (
@@ -238,7 +240,7 @@ const StackNavigator = ({
         },
       }}
       initialRouteName={Routes.Dashboard}>
-       <Stack.Screen name={Routes.Dashboard} component={Dashboard} />
+      <Stack.Screen name={Routes.Dashboard} component={Dashboard} />
       <Stack.Screen name={Routes.Job} component={Job} />
       <Stack.Screen name={Routes.Profile} component={Profile} />
       <Stack.Screen name={Routes.SavedJob} component={SavedJob} />
@@ -262,20 +264,33 @@ const StackNavigator = ({
         component={JobPostStatus}
         initialParams={job}
       />
-     
+
       <Stack.Screen name={Routes.Category} component={Category} />
       <Stack.Screen
         name={Routes.Hiring}
         component={Hiring}
         initialParams={{skill, village}}
       />
-      <Stack.Screen name={Routes.JobInvites} component={JobInvites}/>
+      <Stack.Screen name={Routes.JobInvites} component={JobInvites} />
       <Stack.Screen name={Routes.ViewTeam} component={ViewTeam} />
-      <Stack.Screen name={Routes.ApplicationStatus} component={ApplicationStatus} />
-      <Stack.Screen name={Routes.ViewJobPost} component={ViewJobPost}/>
-      <Stack.Screen name={Routes.HiringStatus} component={HiringStatus}/>
-      <Stack.Screen name={Routes.ViewJoinRequest} component={ViewJoinRequest} initialParams={{teamId,member}}/>
-      <Stack.Screen name={Routes.ViewMemeber} component={ViewMember} initialParams={{member}}/>
+      <Stack.Screen
+        name={Routes.ApplicationStatus}
+        component={ApplicationStatus}
+      />
+      <Stack.Screen name={Routes.ViewJobPost} component={ViewJobPost} />
+      <Stack.Screen name={Routes.HiringStatus} component={HiringStatus} />
+      <Stack.Screen
+        name={Routes.ViewJoinRequest}
+        component={ViewJoinRequest}
+        initialParams={{teamId, member}}
+      />
+      <Stack.Screen
+        name={Routes.ViewMemeber}
+        component={ViewMember}
+        initialParams={{member}}
+      />
+      <Stack.Screen name={Routes.CreateTeam} component={CreateTeam} />
+      <Stack.Screen name={Routes.HireTeam} component={TeamHire}  initialParams={{skill, village}}/>
     </Stack.Navigator>
   );
 };

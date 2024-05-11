@@ -82,9 +82,7 @@ const Profile = () => {
 
   const BasicDetailsContent = () => (
     <View>
-       <View style={{marginHorizontal: 40}}>
-        <Button title="Select Document" onPress={selectDoc} />
-      </View>
+      
       <View style={style.basicInfoContainer}>
         <FontAwesomeIcon icon={faUserTie} size={24} style={style.icon} />
         <View style={style.textContainer}>

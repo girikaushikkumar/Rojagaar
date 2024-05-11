@@ -13,9 +13,9 @@ public class RatingController {
     @Autowired
     private RatingService ratingService;
 
-    @PostMapping("addRating/{userId}")
-    public ResponseEntity<Rating> addRating(@RequestBody Rating rating, @PathVariable String userId) {
-        Rating rating1 = this.ratingService.addRating(userId,rating);
+    @PostMapping("addRating/{userId}/{ratingValue}")
+    public ResponseEntity<Rating> addRating(@PathVariable String userId, @PathVariable int ratingValue) {
+        Rating rating1 = this.ratingService.addRating(userId,ratingValue);
         return new ResponseEntity<>(rating1, HttpStatus.OK);
     }
 

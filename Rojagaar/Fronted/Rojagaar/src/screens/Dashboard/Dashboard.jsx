@@ -20,6 +20,7 @@ import {
   faLocationArrow,
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
+import NamingAvatar from '../../components/NamingAvatar/NamingAvatar';
 
 const Dashboard = ({navigation}) => {
   const [userState] = useContext(AuthContext);
@@ -81,7 +82,7 @@ const Dashboard = ({navigation}) => {
               ) : (
                 <NamingAvatar
                   name={userState.user.name}
-                  avatarSize={100}
+                  avatarSize={120}
                   textSize={45}
                   padding={5}
                 />
@@ -148,7 +149,7 @@ const Dashboard = ({navigation}) => {
                   source={require('../../assets/images/dashboard/status.png')}
                   style={style.img}
                 />
-                <Text style={style.text}>Hire Status</Text>
+                <Text style={style.text}>Status</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -172,7 +173,7 @@ const Dashboard = ({navigation}) => {
                   source={require('../../assets/images/dashboard/status.png')}
                   style={style.img}
                 />
-                <Text style={style.text}>Application Status</Text>
+                <Text style={style.text}>Status</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={style.card}
@@ -181,7 +182,7 @@ const Dashboard = ({navigation}) => {
                   source={require('../../assets/images/dashboard/save.png')}
                   style={style.img}
                 />
-                <Text style={style.text}>Saved Job</Text>
+                <Text style={style.text}>Saved</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -196,7 +197,7 @@ const Dashboard = ({navigation}) => {
                   source={require('../../assets/images/dashboard/posting.png')}
                   style={style.img}
                 />
-                <Text style={style.text}>Post Job</Text>
+                <Text style={style.text}>Post</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={style.card}
@@ -220,7 +221,7 @@ const Dashboard = ({navigation}) => {
                   source={require('../../assets/images/dashboard/diversity.png')}
                   style={style.img}
                 />
-                <Text style={style.text}>Create Team</Text>
+                <Text style={style.text}>Create</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={style.card}
@@ -229,7 +230,7 @@ const Dashboard = ({navigation}) => {
                   source={require('../../assets/images/dashboard/add.png')}
                   style={style.img}
                 />
-                <Text style={style.text}>Join Team</Text>
+                <Text style={style.text}>Join</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={style.card}

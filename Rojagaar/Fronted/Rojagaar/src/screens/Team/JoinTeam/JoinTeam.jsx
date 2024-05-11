@@ -12,8 +12,9 @@ import {getTeamInfo, joinRequest} from '../../../api/Team';
 import globalStyle from '../../../assets/style/globalStyle';
 import HeaderText from '../../../components/HeaderText/HeaderText';
 import { AuthContext } from '../../../context/authContext';
+import { Routes } from '../../../navigation/Routes';
 
-const JoinTeam = () => {
+const JoinTeam = ({navigation}) => {
   const [team, setTeam] = useState([]);
   const [userState] = useContext(AuthContext);
 
@@ -29,6 +30,7 @@ const JoinTeam = () => {
     try {
       const response = await joinRequest(teamId,userState.user.userName);
       Alert.alert(response.data.message);
+      navigation.navigate(Routes.Dashboard)
     } catch (error) {
       console.log(error);
       Alert.alert("Something went worng.....")

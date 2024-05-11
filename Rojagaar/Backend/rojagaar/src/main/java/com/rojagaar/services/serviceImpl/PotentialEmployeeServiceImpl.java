@@ -1,7 +1,9 @@
 package com.rojagaar.services.serviceImpl;
 
+import com.rojagaar.model.Rating;
 import com.rojagaar.model.User;
 import com.rojagaar.payload.PotentialEmployee;
+import com.rojagaar.repository.RatingRepo;
 import com.rojagaar.repository.UserRepo;
 import com.rojagaar.services.PotentialEmployeeService;
 import org.modelmapper.ModelMapper;
@@ -16,6 +18,9 @@ public class PotentialEmployeeServiceImpl implements PotentialEmployeeService {
     private UserRepo userRepo;
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    private RatingRepo ratingRepo;
     @Override
     public List<PotentialEmployee> getEmployeeByRole(String role) {
         List<User> users = this.userRepo.findBySkillOrSubSkill(role);
@@ -44,6 +49,14 @@ public class PotentialEmployeeServiceImpl implements PotentialEmployeeService {
                 map((user)-> this.modelMapper.map(
                         user,PotentialEmployee.class
                 )).collect(Collectors.toList());
+        List<Rating> ratingList = this.ratingRepo.findAll();
+        for(PotentialEmployee potentialEmployee: potentialEmployees) {
+            for (Rating rating : ratingList) {
+                if(potentialEmployee.getUsername().equals(rating.getUserId())) {
+                    potentialEmployee.setRating(rating);
+                }
+            }
+        }
         return potentialEmployees;
     }
 }

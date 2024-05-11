@@ -65,7 +65,7 @@ const ViewJobPost = ({navigation}) => {
         )}
         showsVerticalScrollIndicator={false}
       />
-      <FooterMenu />
+      {/* <FooterMenu /> */}
     </SafeAreaView>
   );
 };

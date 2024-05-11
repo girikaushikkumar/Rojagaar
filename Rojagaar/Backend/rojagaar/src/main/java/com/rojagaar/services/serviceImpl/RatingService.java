@@ -12,16 +12,19 @@ public class RatingService {
     @Autowired
     private RatingRepo ratingRepo;
 
-    public Rating addRating(String userId, Rating rating) {
-        rating.setUserId(userId);
+    public Rating addRating(String userId, int ratingValue) {
+
         Optional<Rating> optionalExistingRating = ratingRepo.findByUserId(userId);
         if (optionalExistingRating.isPresent()) {
             Rating existingRating = optionalExistingRating.get();
-            double newRatingValue = ((existingRating.getRatingValue() * existingRating.getNoOfRating()) + rating.getRatingValue()) / (existingRating.getNoOfRating() + 1);
+            double newRatingValue = ((existingRating.getRatingValue() * existingRating.getNoOfRating()) + ratingValue) / (existingRating.getNoOfRating() + 1);
             existingRating.setRatingValue(newRatingValue);
             existingRating.setNoOfRating(existingRating.getNoOfRating() + 1);
             return ratingRepo.save(existingRating);
         } else {
+            Rating rating = new Rating();
+            rating.setUserId(userId);
+            rating.setRatingValue(ratingValue);
             rating.setNoOfRating(1);
             return ratingRepo.save(rating);
         }

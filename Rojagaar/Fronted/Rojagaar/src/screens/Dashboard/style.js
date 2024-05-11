@@ -125,7 +125,7 @@ const style = StyleSheet.create({
     height:verticalScale(120),
     width:horizontalScale(120),
     borderRadius:horizontalScale(80),
-    borderWidth:4,
+    borderWidth:horizontalScale(4),
     borderColor:'#ffffff',
   },
   profileImageContainer:{
